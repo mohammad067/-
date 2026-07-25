@@ -17,3 +17,7 @@ All notable changes to the **Rice Shop** project will be documented in this file
 - Implemented interactive component demonstrations and system-state togglers (Loading, Empty, and Error States) inside the main homepage path (`src/app/page.tsx`).
 - Created modular layout primitives: `Container.tsx`, `Section.tsx`, `MaxWidth.tsx`, `PageWrapper.tsx`, and `MainLayout.tsx`.
 - Implemented App Router layout segments: `loading.tsx` (Loading Layout), `error.tsx` (Error Layout), and `not-found.tsx` (Not Found Layout).
+- Created functional E2E test scripts inside `tests/storefront.spec.ts` supporting full multi-state validation under Playwright.
+- Implemented the complete, production-ready Product Catalog feature under Feature-Based Architecture constraints.
+- Developed ProductCard, ProductGrid, ProductFilters, ProductSort, ProductSearch, ProductPagination, and ProductSkeleton primitives under `src/features/product-catalog/components/`.
+- Configured the robust `/products` catalog listing view and single `/products/[slug]` detail page with full dynamic SEO metadata support.
