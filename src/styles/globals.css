@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --radius-xs: 4px;
+
+  --animate-fade-in: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-slide-up: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-scale-up: scale-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scale-up {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Light Theme Variables */
+:root {
+  --background: #F8F6F2; /* Warm Alabaster Rice White */
+  --foreground: #1E2522; /* Obsidian Deep Green/Gray */
+
+  --primary: #2F5D50; /* Organic Luxury Deep Forest Green */
+  --primary-foreground: #F8F6F2;
+
+  --accent: #C8A75D; /* Editorial Rich Gold */
+  --accent-foreground: #1E2522;
+
+  --card: #FFFFFF;
+  --card-foreground: #1E2522;
+
+  --muted: #EADFD3; /* Wheat Muted Tint */
+  --muted-foreground: #6B7C75;
+
+  --border: #E5E2DA;
+  --input: #E5E2DA;
+  --ring: #2F5D50;
+}
+
+/* Dark Theme Variables */
+.dark {
+  --background: #0E1412; /* Deep Charcoal Green Base */
+  --foreground: #F1EFEA;
+
+  --primary: #C8A75D; /* Gold becomes primary highlight in Dark Mode */
+  --primary-foreground: #0E1412;
+
+  --accent: #2F5D50; /* Green becomes accent */
+  --accent-foreground: #F1EFEA;
+
+  --card: #141D19; /* Rich dark-green tile background */
+  --card-foreground: #F1EFEA;
+
+  --muted: #1E2A24;
+  --muted-foreground: #A2B3AC;
+
+  --border: #1E2A24;
+  --input: #1E2A24;
+  --ring: #C8A75D;
+}
+
+/* Base resets & typography */
+html, body {
+  min-height: 100vh;
+  color: var(--foreground);
+  background-color: var(--background);
+  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* Premium utility styles */
+.glass {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dark .glass {
+  background: rgba(20, 29, 25, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-premium {
+  background: rgba(248, 246, 242, 0.65);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(47, 93, 80, 0.06);
+  box-shadow: 0 10px 40px -15px rgba(47, 93, 80, 0.08);
+}
+
+.dark .glass-premium {
+  background: rgba(14, 20, 18, 0.75);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(200, 167, 93, 0.08);
+  box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.5);
+}
+
+/* Smooth active focus highlights */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 2px rgba(200, 167, 93, 0.2);
+}
