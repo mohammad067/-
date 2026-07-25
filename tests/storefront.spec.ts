@@ -32,22 +32,22 @@ test.describe("Premium Rice Shop Storefront - Phase 5 E2E Audit", () => {
     await expect(visualizerSection).toBeVisible();
 
     // Click on the Loading State simulator button
-    await page.get_by_role("button", name="شبیه‌سازی حالت Loading").click();
+    await page.getByRole("button", { name: "شبیه‌سازی حالت Loading" }).click();
     const loadingCaption = page.locator("text=در حال بارگذاری شالیزار هنر");
     await expect(loadingCaption).toBeVisible();
 
     // Click on the Empty State simulator button
-    await page.get_by_role("button", name="شبیه‌سازی حالت Empty").click();
+    await page.getByRole("button", { name: "شبیه‌سازی حالت Empty" }).click();
     const emptyTitle = page.locator("text=هیچ رقمی یافت نشد");
     await expect(emptyTitle).toBeVisible();
 
     // Click on the Error State simulator button
-    await page.get_by_role("button", name="شبیه‌سازی حالت Error").click();
+    await page.getByRole("button", { name: "شبیه‌سازی حالت Error" }).click();
     const errorTitle = page.locator("text=عدم پاسخ‌دهی سرور کشت مرکزی");
     await expect(errorTitle).toBeVisible();
 
     // Restore to normal view
-    await page.get_by_role("button", name="نمایش محتوای محصولات ممتاز").click();
+    await page.getByRole("button", { name: "نمایش محتوای محصولات ممتاز" }).click();
     const firstProduct = page.locator("text=برنج هاشمی فوق ممتاز گیلان").first();
     await expect(firstProduct).toBeVisible();
   });

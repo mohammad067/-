@@ -64,6 +64,12 @@ This document provides a live view of completed, in-progress, and upcoming imple
 - [x] Build the responsive, SEO-optimized Catalog Page `/products` and single Product Detail Page `/products/[slug]`.
 - [x] Verify production compilation with zero errors and zero warnings.
 
+### Phase 6: Home Storefront Experience
+- [x] Establish a comprehensive luxury storefront Home Page layout at `/` incorporating the floating premium Hero banner, Featured Rice varieties, core values, category grids, editorial stories, interactive testimonials, and news subscription CTA sections.
+- [x] Build the highly custom `QuickViewModal.tsx` component to allow users to preview granular details of individual products seamlessly directly from the landing grid.
+- [x] Relocate the temporary Phase 4/5 interactive design-system showcase and component demo to `/design-system` to maintain modularity.
+- [x] Verify flawless Next.js 15 compilation and zero static compilation/TypeScript warnings.
+
 ---
 
 ## In Progress Tasks
