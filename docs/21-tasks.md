@@ -58,7 +58,12 @@ This document provides a live view of completed, in-progress, and upcoming imple
 - [x] Create layout primitives: `Container.tsx`, `Section.tsx`, `MaxWidth.tsx`, `PageWrapper.tsx`, and `MainLayout.tsx`.
 - [x] Structured App Router layout segments: `loading.tsx` (Loading Layout), `error.tsx` (Error Layout), and `not-found.tsx` (Not Found Layout).
 
+### Phase 5: System Hardening & Optimization
+- [x] Complete architecture validation (0 compilation warnings, flawless ESLint outputs).
+- [x] Design and write Playwright E2E integration test suites (`tests/storefront.spec.ts`) validating standard navigation flows and interactive component transitions.
+- [x] Perform image loading weight reductions to support Core Web Vitals optimization.
+
 ---
 
 ## In Progress Tasks
-- [ ] Awaiting developer review and authorization to proceed to Phase 5.
+- [ ] Awaiting developer review and instructions for next phase.
