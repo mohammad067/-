@@ -8,7 +8,10 @@ export const ThemeToggle: React.FC = () => {
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
-    setIsDarkMode(isDark);
+    const timer = setTimeout(() => {
+      setIsDarkMode(isDark);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const toggleTheme = () => {

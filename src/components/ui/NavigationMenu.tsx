@@ -16,19 +16,22 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => 
     };
 
     window.addEventListener("hashchange", handleHashChange);
-    // Initial check
-    setActiveHash(window.location.hash);
+
+    // Set initial check asynchronously to avoid synchronous setState inside render/effect warning
+    const timer = setTimeout(() => {
+      setActiveHash(window.location.hash || window.location.pathname);
+    }, 0);
 
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
+      clearTimeout(timer);
     };
   }, []);
 
   const navLinks = [
-    { href: "#", label: "صفحه اصلی" },
-    { href: "#products-showcase", label: "محصولات ممتاز" },
-    { href: "#design-system", label: "سیستم طراحی" },
-    { href: "#demo-states", label: "پیش‌نمایش حالت‌ها" },
+    { href: "/", label: "صفحه اصلی" },
+    { href: "/#products-showcase", label: "محصولات ممتاز" },
+    { href: "/bulk-order", label: "خرید عمده" },
   ];
 
   return (
@@ -38,7 +41,7 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => 
           key={link.href}
           href={link.href}
           label={link.label}
-          isActive={activeHash === link.href || (link.href === "#" && activeHash === "")}
+          isActive={activeHash === link.href || (link.href === "/" && activeHash === "") || (link.href === "/bulk-order" && activeHash.includes("bulk-order"))}
         />
       ))}
     </div>
