@@ -12,7 +12,15 @@ export const Footer: React.FC = () => {
         <div className="md:col-span-2 flex flex-col gap-5">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-full bg-primary/10 dark:bg-accent/10 flex items-center justify-center border border-primary/20 dark:border-accent/25">
-              <span className="text-primary dark:text-accent font-serif font-semibold text-lg">ش</span>
+
+
+
+
+
+
+
+
+
             </div>
             <Typography variant="h3" className="font-bold text-primary dark:text-accent tracking-wide">
               طلای شالیزار
