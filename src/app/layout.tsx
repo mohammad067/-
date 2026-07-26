@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://rice-shop.ir",
   },
+  icons: {
+    icon: "/icon.png",   // ← اینجا مسیر لوگو را مشخص می‌کنیم
+  },
 };
 
 export default function RootLayout({
