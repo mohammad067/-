@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     canonical: "https://rice-shop.ir",
   },
   icons: {
-    icon: "/icon.png",   // ← اینجا مسیر لوگو را مشخص می‌کنیم
+    icon: "/icon.png",   
   },
 };
 
