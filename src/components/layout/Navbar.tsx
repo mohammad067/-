@@ -15,6 +15,17 @@ import { Button } from "../ui/Button";
 export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const handleSearchClick = () => {
+    // Scroll or focus on search elements in /products page or homepage
+    const searchInput = document.getElementById("catalog-search-input");
+    if (searchInput) {
+      searchInput.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => searchInput.focus(), 500);
+    } else {
+      window.location.href = "/products";
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full px-4 md:px-8 py-4 transition-all duration-300">
       <nav className="max-w-7xl mx-auto rounded-full glass-premium px-6 py-3.5 flex items-center justify-between">
@@ -36,13 +47,18 @@ export const Navbar: React.FC = () => {
           <WishlistButton />
 
           {/* Cart Button */}
-          <CartButton itemCount={1} />
+          <CartButton />
 
           {/* Search Button */}
-          <SearchButton />
+          <SearchButton onClick={handleSearchClick} />
 
           {/* User Sign-In Account Button CTA */}
-          <Button variant="primary" size="sm" className="hidden lg:inline-flex bg-primary text-white border-none">
+          <Button
+            variant="primary"
+            size="sm"
+            className="hidden lg:inline-flex bg-primary text-white border-none"
+            onClick={() => alert("فرم عضویت طلایی / ورود مشتری به زودی راه‌اندازی می‌گردد.")}
+          >
             ورود / ثبت‌نام
           </Button>
 

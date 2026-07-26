@@ -1,16 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Globe } from "lucide-react";
 
 export const LanguageSwitcher: React.FC = () => {
   const [lang, setLang] = useState<"fa" | "en">("fa");
 
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang") as "fa" | "en";
+    if (savedLang) {
+      const timer = setTimeout(() => {
+        setLang(savedLang);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const toggleLanguage = () => {
     const nextLang = lang === "fa" ? "en" : "fa";
     setLang(nextLang);
-    // In real next-intl apps, we would trigger URL transitions, but here we show premium interactive feedback.
-    alert(`تغییر زبان به شبیه‌ساز ${nextLang.toUpperCase()} فعال گردید.`);
+    localStorage.setItem("lang", nextLang);
+    alert(`تغییر زبان به ${nextLang === "fa" ? "فارسی" : "انگلیسی"} شبیه‌سازی شد.`);
   };
 
   return (

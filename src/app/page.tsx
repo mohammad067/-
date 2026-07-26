@@ -24,9 +24,11 @@ import {
   Mail,
   ArrowDown,
   Eye,
-  Layers
+  Layers,
+  Heart
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 // Testimonials Mock Database
 const TESTIMONIALS = [
@@ -129,23 +131,24 @@ export default function HomePage() {
       {/* SECTION 1: Cinematic Floating Hero */}
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden px-4 py-20 text-center">
         <div className="absolute inset-0 z-0">
-    <img
-      src="/hero-bg.avif"
-      alt="شالیزار شمال ایران"
-      loading="eager"
-      decoding="async"
-      className="w-full h-full object-cover"
-    />
-<div className="absolute inset-0 bg-black/50" />
+          <Image
+            src="/hero-bg.avif"
+            alt="شالیزار شمال ایران"
+            fill
+            priority
+            className="object-cover"
+          />
+          {/* Strict Dark Overlay with gold-tinted subtle ambient gradient to guarantee high text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/85 z-10" />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center gap-8 px-4 md:px-0">
+        <div className="relative z-20 max-w-5xl mx-auto flex flex-col items-center gap-8 px-4 md:px-0">
           <motion.div
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <Badge variant="accent" className="gap-2 px-4 py-2 bg-accent/10 text-accent border border-accent/30 text-sm">
+            <Badge variant="accent" className="gap-2 px-4 py-2 bg-accent/20 text-accent border border-accent/40 text-sm font-semibold shadow-lg">
               <Sparkles className="w-4 h-4 text-accent fill-accent" />
               ارگانیک‌ترین برداشت شالیزارهای شمال ایران - ۱۴۰۳
             </Badge>
@@ -159,15 +162,15 @@ export default function HomePage() {
           >
             <Typography
               variant="h1"
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary dark:text-accent font-serif leading-tight max-w-4xl"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#C8A75D] font-serif leading-tight max-w-4xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
             >
               عطر شالیزار، <br />
-              <span className="text-foreground dark:text-white font-medium">در طعم بی تکرار اصالت</span>
+              <span className="text-white font-medium">در طعم بی تکرار اصالت</span>
             </Typography>
 
             <Typography
               variant="serif-subtitle"
-              className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed mt-4"
+              className="text-lg md:text-2xl text-[#EADFD3] max-w-2xl mx-auto font-light leading-relaxed mt-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
             >
               خرید مستقیم و شناسنامه‌دار برنج ممتاز از کشاورزان نمونه آستانه اشرفیه و فریدونکنار با بسته‌بندی نفیس و گارانتی طلایی پخت.
             </Typography>
@@ -180,12 +183,12 @@ export default function HomePage() {
             className="flex flex-wrap gap-4 justify-center items-center mt-6"
           >
             <Link href="/products">
-              <Button variant="accent" size="lg" className="shadow-lg hover:scale-105 active:scale-97">
+              <Button variant="accent" size="lg" className="shadow-2xl hover:scale-105 active:scale-97">
                 مشاهده محصولات
               </Button>
             </Link>
             <a href="#editorial-story">
-              <Button variant="outline" size="lg" className="border-primary/20 dark:border-accent/20 hover:bg-muted/10">
+              <Button variant="outline" size="lg" className="border-white/35 text-white hover:bg-white/10 shadow-lg">
                 درباره ما
               </Button>
             </a>
@@ -194,7 +197,7 @@ export default function HomePage() {
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="mt-12 hidden md:flex flex-col items-center gap-2 text-muted-foreground text-xs font-light cursor-pointer"
+            className="mt-12 hidden md:flex flex-col items-center gap-2 text-[#EADFD3] text-xs font-light cursor-pointer"
             onClick={() => {
               document.getElementById("featured-collection")?.scrollIntoView({ behavior: "smooth" });
             }}
@@ -401,7 +404,7 @@ export default function HomePage() {
             </Typography>
 
             <Typography variant="body" className="text-muted-foreground text-sm md:text-base leading-relaxed font-light">
-              روند بوجاری و بهینه‌سازی دانه در کارخانه طلای شالیزار با ۳ مرحله فیلتر بوجار لوکس و کنترل رطوبت هوشمند صورت می‌پذیرد تا برنج تا زمان بازگشایی در خانه شما، تمام عطر طبیعی، چربی کره‌ای ماندگار و سفیدی درخشان خود را بدون کوچک‌ترین خرده حفظ نماید.
+              روند بوجاری و بهینه‌سازی دانه در کارخانه طلای شالیزار با ۳ مرحله فیلتر بوجار لوکس و کنترل رطوبت هوشمند صورت می‌پذیرد تا برنج تا زمان بازگشایی در خانه شما، تمام عطر طبیعی, چربی کره‌ای ماندگار و سفیدی درخشان خود را بدون کوچک‌ترین خرده حفظ نماید.
             </Typography>
 
             <div className="flex items-center gap-4 mt-4 justify-start">

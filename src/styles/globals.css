@@ -84,13 +84,15 @@
   --ring: #C8A75D;
 }
 
-/* Base resets & typography */
-html, body {
+/* Base resets & typography - Strictly Vazirmatn globally */
+html, body, button, input, select, textarea {
   min-height: 100vh;
   color: var(--foreground);
   background-color: var(--background);
-  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif !important;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  line-height: 1.75;
+  letter-spacing: normal !important;
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 

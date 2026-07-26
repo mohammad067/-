@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "./Logo";
 import { X, PhoneCall } from "lucide-react";
 import { Button } from "./Button";
+import Link from "next/link";
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -13,10 +14,10 @@ interface MobileNavigationProps {
 
 export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) => {
   const navLinks = [
-    { href: "#", label: "صفحه اصلی" },
-    { href: "#products-showcase", label: "محصولات ممتاز" },
-    { href: "#design-system", label: "سیستم طراحی" },
-    { href: "#demo-states", label: "پیش‌نمایش حالت‌ها" },
+    { href: "/", label: "صفحه اصلی" },
+    { href: "/products", label: "محصولات ممتاز" },
+    { href: "/#editorial-story", label: "درباره ما" },
+    { href: "/#footer", label: "تماس با ما" },
   ];
 
   return (
@@ -56,14 +57,14 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onCl
               {/* Nav Links */}
               <div className="flex flex-col gap-5 mt-6">
                 {navLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.href}
                     href={link.href}
                     onClick={onClose}
                     className="text-lg font-medium text-foreground hover:text-accent transition-colors py-1.5"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
