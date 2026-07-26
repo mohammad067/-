@@ -15,9 +15,8 @@ interface MobileNavigationProps {
 export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) => {
   const navLinks = [
     { href: "/", label: "صفحه اصلی" },
-    { href: "/products", label: "محصولات ممتاز" },
-    { href: "/#editorial-story", label: "درباره ما" },
-    { href: "/#footer", label: "تماس با ما" },
+    { href: "/#products-showcase", label: "محصولات ممتاز" },
+    { href: "/bulk-order", label: "خرید عمده" },
   ];
 
   return (

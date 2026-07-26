@@ -8,46 +8,42 @@ interface NavigationMenuProps {
 }
 
 export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => {
-  const [activePath, setActivePath] = useState("");
+  const [activeHash, setActiveHash] = useState("");
 
   useEffect(() => {
-    // Avoid synchronous state changes inside effect trigger
-    const updatePath = () => {
-      setActivePath(window.location.pathname + window.location.hash);
+    const handleHashChange = () => {
+      setActiveHash(window.location.hash);
     };
-    updatePath();
-    window.addEventListener("popstate", updatePath);
-    window.addEventListener("hashchange", updatePath);
+
+    window.addEventListener("hashchange", handleHashChange);
+
+    // Set initial check asynchronously to avoid synchronous setState inside render/effect warning
+    const timer = setTimeout(() => {
+      setActiveHash(window.location.hash || window.location.pathname);
+    }, 0);
+
     return () => {
-      window.removeEventListener("popstate", updatePath);
-      window.removeEventListener("hashchange", updatePath);
+      window.removeEventListener("hashchange", handleHashChange);
+      clearTimeout(timer);
     };
   }, []);
 
   const navLinks = [
     { href: "/", label: "صفحه اصلی" },
-    { href: "/products", label: "محصولات ممتاز" },
-    { href: "/#editorial-story", label: "درباره ما" },
-    { href: "/#footer", label: "تماس با ما" },
+    { href: "/#products-showcase", label: "محصولات ممتاز" },
+    { href: "/bulk-order", label: "خرید عمده" },
   ];
 
   return (
     <div className={`flex items-center gap-8 ${className || ""}`}>
-      {navLinks.map((link) => {
-        const isActive = activePath === link.href ||
-          (link.href === "/" && (activePath === "/" || activePath === "")) ||
-          (link.href === "/#editorial-story" && activePath.endsWith("#editorial-story")) ||
-          (link.href === "/#footer" && activePath.endsWith("#footer"));
-
-        return (
-          <NavigationItem
-            key={link.href}
-            href={link.href}
-            label={link.label}
-            isActive={isActive}
-          />
-        );
-      })}
+      {navLinks.map((link) => (
+        <NavigationItem
+          key={link.href}
+          href={link.href}
+          label={link.label}
+          isActive={activeHash === link.href || (link.href === "/" && activeHash === "") || (link.href === "/bulk-order" && activeHash.includes("bulk-order"))}
+        />
+      ))}
     </div>
   );
 };

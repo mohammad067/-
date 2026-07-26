@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Star, MapPin, Calendar, Weight, ShoppingBag, Heart } from "lucide-react";
+import { X, Star, MapPin, Calendar, Weight, ShoppingBag } from "lucide-react";
 import { Typography } from "@/components/ui/Typography";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Product } from "../types";
-import { useStore } from "@/stores/store";
 
 interface QuickViewModalProps {
   product: Product | null;
@@ -15,18 +14,9 @@ interface QuickViewModalProps {
 }
 
 export const QuickViewModal: React.FC<QuickViewModalProps> = ({ product, onClose }) => {
-  const { wishlist, toggleWishlist, addToCart } = useStore();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setMounted(true), 0);
-    return () => clearTimeout(timer);
-  }, []);
-
   if (!product) return null;
 
   const {
-    id,
     name,
     variety,
     province,
@@ -44,19 +34,6 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ product, onClose
   const finalPrice = discountPercent ? price * (1 - discountPercent / 100) : price;
   const formattedPrice = finalPrice.toLocaleString("fa-IR") + " تومان";
   const formattedOldPrice = price.toLocaleString("fa-IR") + " تومان";
-
-  const isWishlisted = mounted && wishlist.includes(id);
-
-  const handleAddToCart = () => {
-    if (!inStock) return;
-    addToCart({ id, name, price: finalPrice });
-    alert(`کیسه ${name} با موفقیت به سبد خرید اضافه گردید.`);
-    onClose();
-  };
-
-  const handleToggleWishlist = () => {
-    toggleWishlist(id);
-  };
 
   return (
     <AnimatePresence>
@@ -93,7 +70,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ product, onClose
               <div className="absolute top-1/4 left-1/4 w-60 h-60 bg-[#C8A75D]/10 rounded-full blur-[70px]" />
               <div className="z-10 w-24 h-24 rounded-full bg-white/45 dark:bg-black/30 backdrop-blur-md border border-white/40 flex flex-col items-center justify-center shadow-lg">
                 <span className="text-primary dark:text-accent font-serif text-3xl font-bold">{imageChar}</span>
-                <span className="text-[10px] text-muted-foreground/80 tracking-tight mt-0.5">۱۰۰٪ اصل</span>
+                <span className="text-[10px] text-muted-foreground/80 tracking-tight mt-0.5 font-light">۱۰۰٪ اصل</span>
               </div>
               {discountPercent && (
                 <Badge variant="accent" className="absolute top-4 right-4 text-[10px] font-bold">
@@ -117,21 +94,10 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ product, onClose
                   {name}
                 </Typography>
 
-                <div className="flex items-center gap-4 mt-1 justify-start">
-                  <div className="flex items-center gap-1">
-                    <Star className="w-3.5 h-3.5 text-accent fill-accent" />
-                    <span className="text-xs font-semibold">{rating.toLocaleString("fa-IR")}</span>
-                    <span className="text-xs text-muted-foreground font-light">امتیاز خریداران</span>
-                  </div>
-
-                  {/* Quick-view Wishlist Action */}
-                  <button
-                    onClick={handleToggleWishlist}
-                    className="flex items-center gap-1 text-xs text-muted-foreground hover:text-red-500 transition-colors cursor-pointer"
-                  >
-                    <Heart className={`w-4 h-4 ${isWishlisted ? "text-red-500 fill-red-500" : ""}`} />
-                    <span>{isWishlisted ? "حذف از علاقه‌مندی‌ها" : "افزودن به علاقه‌مندی‌ها"}</span>
-                  </button>
+                <div className="flex items-center gap-2 mt-1">
+                  <Star className="w-3.5 h-3.5 text-accent fill-accent" />
+                  <span className="text-xs font-semibold">{rating.toLocaleString("fa-IR")}</span>
+                  <span className="text-xs text-muted-foreground font-light">امتیاز خریداران</span>
                 </div>
               </div>
 
@@ -166,7 +132,6 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ product, onClose
                 <Button
                   variant="accent"
                   size="sm"
-                  onClick={handleAddToCart}
                   disabled={!inStock}
                   className="px-6 py-2.5 text-xs font-bold gap-1.5"
                 >

@@ -7,7 +7,6 @@ export const ThemeToggle: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    // Avoid synchronous state changes directly within effect block
     const isDark = document.documentElement.classList.contains("dark");
     const timer = setTimeout(() => {
       setIsDarkMode(isDark);
@@ -16,15 +15,12 @@ export const ThemeToggle: React.FC = () => {
   }, []);
 
   const toggleTheme = () => {
-    const root = document.documentElement;
-    if (root.classList.contains("dark")) {
-      root.classList.remove("dark");
+    if (document.documentElement.classList.contains("dark")) {
+      document.documentElement.classList.remove("dark");
       setIsDarkMode(false);
-      localStorage.setItem("theme", "light");
     } else {
-      root.classList.add("dark");
+      document.documentElement.classList.add("dark");
       setIsDarkMode(true);
-      localStorage.setItem("theme", "dark");
     }
   };
 

@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Search } from "lucide-react";
-import { Input } from "@/components/ui/Input";
 
 interface ProductSearchProps {
   searchQuery: string;
@@ -11,17 +10,16 @@ interface ProductSearchProps {
 
 export const ProductSearch: React.FC<ProductSearchProps> = ({ searchQuery, setSearchQuery }) => {
   return (
-    <div className="relative w-full md:w-80">
-      <Input
-        id="catalog-search-input"
+    <div className="relative w-full max-w-md">
+      <input
         type="text"
-        placeholder="جستجوی رقم (هاشمی، صدری، مازندران...)"
+        placeholder="جستجوی نام رقم برنج یا شهر..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full pr-12 pl-4 py-3 rounded-full text-xs text-right border-border/60 bg-background/50 backdrop-blur-md"
+        className="w-full pl-5 pr-12 py-3 rounded-full border border-border bg-white/20 dark:bg-black/5 text-foreground text-xs font-light transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-right"
       />
-      <div className="absolute top-1/2 right-4 -translate-y-1/2 text-muted-foreground">
-        <Search className="w-4 h-4" />
+      <div className="absolute top-1/2 right-4 -translate-y-1/2 text-muted-foreground flex items-center justify-center">
+        <Search className="w-4 h-4 stroke-1.5" />
       </div>
     </div>
   );
