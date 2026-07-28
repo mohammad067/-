@@ -17,7 +17,6 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => 
 
     window.addEventListener("hashchange", handleHashChange);
 
-    // Set initial check asynchronously to avoid synchronous setState inside render/effect warning
     const timer = setTimeout(() => {
       setActiveHash(window.location.hash || window.location.pathname);
     }, 0);
@@ -30,9 +29,10 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => 
 
   const navLinks = [
     { href: "/", label: "صفحه اصلی" },
-    { href: "/#products-showcase", label: "محصولات ممتاز" },
+    { href: "/products", label: "محصولات ممتاز" },
     { href: "/bulk-order", label: "خرید عمده" },
     { href: "/order-tracking", label: "پیگیری سفارش" },
+    { href: "/blog", label: "مقالات" },
   ];
 
   return (
@@ -42,7 +42,13 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => 
           key={link.href}
           href={link.href}
           label={link.label}
-          isActive={activeHash === link.href || (link.href === "/" && activeHash === "") || (link.href === "/bulk-order" && activeHash.includes("bulk-order")) || (link.href === "/order-tracking" && activeHash.includes("order-tracking"))}
+          isActive={
+            activeHash === link.href ||
+            (link.href === "/" && activeHash === "") ||
+            (link.href === "/bulk-order" && activeHash.includes("bulk-order")) ||
+            (link.href === "/order-tracking" && activeHash.includes("order-tracking")) ||
+            (link.href === "/blog" && activeHash.includes("blog"))
+          }
         />
       ))}
     </div>
