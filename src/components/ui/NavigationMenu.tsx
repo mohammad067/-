@@ -32,6 +32,7 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => 
     { href: "/", label: "صفحه اصلی" },
     { href: "/#products-showcase", label: "محصولات ممتاز" },
     { href: "/bulk-order", label: "خرید عمده" },
+    { href: "/order-tracking", label: "پیگیری سفارش" },
   ];
 
   return (
@@ -41,7 +42,7 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => 
           key={link.href}
           href={link.href}
           label={link.label}
-          isActive={activeHash === link.href || (link.href === "/" && activeHash === "") || (link.href === "/bulk-order" && activeHash.includes("bulk-order"))}
+          isActive={activeHash === link.href || (link.href === "/" && activeHash === "") || (link.href === "/bulk-order" && activeHash.includes("bulk-order")) || (link.href === "/order-tracking" && activeHash.includes("order-tracking"))}
         />
       ))}
     </div>

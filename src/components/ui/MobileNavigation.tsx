@@ -17,6 +17,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onCl
     { href: "/", label: "صفحه اصلی" },
     { href: "/#products-showcase", label: "محصولات ممتاز" },
     { href: "/bulk-order", label: "خرید عمده" },
+    { href: "/order-tracking", label: "پیگیری سفارش" },
   ];
 
   return (
