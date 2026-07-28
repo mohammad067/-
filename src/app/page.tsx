@@ -129,14 +129,15 @@ export default function HomePage() {
       {/* SECTION 1: Cinematic Floating Hero */}
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden px-4 py-20 text-center">
         <div className="absolute inset-0 z-0">
-    <img
-      src="/hero-bg.avif"
-      alt="شالیزار شمال ایران"
-      loading="eager"
-      decoding="async"
-      className="w-full h-full object-cover"
-    />
-<div className="absolute inset-0 bg-black/50" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero-bg.avif"
+            alt="شالیزار شمال ایران"
+            loading="eager"
+            decoding="async"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center gap-8 px-4 md:px-0">

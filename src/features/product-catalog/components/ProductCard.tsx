@@ -60,7 +60,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     setIsAdding(true);
     // Simulate real premium delay
     setTimeout(() => {
-      addToCart({ id, name, price: finalPrice });
+      addToCart({ id, name, price: finalPrice, weight, imageChar });
       setIsAdding(false);
       setAdded(true);
       setTimeout(() => setAdded(false), 2000);

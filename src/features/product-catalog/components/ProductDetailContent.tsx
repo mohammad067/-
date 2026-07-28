@@ -70,7 +70,7 @@ export const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ prod
     if (!inStock || isAdding) return;
     setIsAdding(true);
     setTimeout(() => {
-      addToCart({ id, name, price: finalPrice });
+      addToCart({ id, name, price: finalPrice, weight, imageChar });
       setIsAdding(false);
       setAdded(true);
       setTimeout(() => setAdded(false), 2000);
