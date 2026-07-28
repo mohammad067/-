@@ -22,14 +22,18 @@ export default function BulkOrderPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.phone || !formData.quantity) {
-      setError("لطفاً تمامی فیلدهای ستاره‌دار را تکمیل بفرمایید.");
+    const iranianMobileRegex = /^09\d{9}$/;
+
+    if (!formData.name.trim() || !formData.phone.trim() || !formData.quantity.trim()) {
+      setError("لطفاً تمامی فیلدهای ستاره‌دار (نام و نام خانوادگی، شماره همراه، و میزان مورد نیاز) را تکمیل بفرمایید.");
       return;
     }
-    if (formData.phone.length < 11) {
-      setError("شماره همراه وارد شده باید ۱۱ رقمی باشد.");
+
+    if (!iranianMobileRegex.test(formData.phone.trim())) {
+      setError("شماره همراه معتبر نیست. شماره همراه باید با ۰۹ شروع شده و ۱۱ رقم باشد (مثال: ۰۹۱۲۳۴۵۶۷۸۹).");
       return;
     }
+
     setError("");
     setSubmitted(true);
   };

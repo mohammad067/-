@@ -2,6 +2,7 @@ import React from "react";
 import { Typography } from "@/components/ui/Typography";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { Logo } from "../ui/Logo";
 import { Instagram, Send, Youtube } from "lucide-react";
 
 export const Footer: React.FC = () => {
@@ -10,13 +11,8 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-right">
         {/* Brand & Description */}
         <div className="md:col-span-2 flex flex-col gap-5">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-full bg-primary/10 dark:bg-accent/10 flex items-center justify-center border border-primary/20 dark:border-accent/25">
-              <span className="text-primary dark:text-accent font-serif font-semibold text-lg">ش</span>
-            </div>
-            <Typography variant="h3" className="font-bold text-primary dark:text-accent tracking-wide">
-              طلای شالیزار
-            </Typography>
+          <div className="mb-2">
+            <Logo />
           </div>
           <Typography variant="body-sm" className="max-w-md text-muted-foreground leading-relaxed text-sm">
             مجموعه طلای شالیزار با تکیه بر نسل‌ها تجربه کشاورزی اصیل، مرغوب‌ترین ارقام برنج ارگانیک و درجه یک ایرانی را به صورت دست‌چین و با بسته‌بندی‌های لوکس و نفیس به خانه‌های شما هدیه می‌دهد. کیفیت اصیل ایرانی شایسته سفره‌های شماست.
