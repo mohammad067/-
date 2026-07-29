@@ -530,7 +530,7 @@ export default function OrderTrackingPage() {
   return (
     <MainLayout>
       {/* Cinematic Elegant Hero Background Wrapper */}
-      <section className="relative py-24 px-4 overflow-hidden text-center border-b border-border/20 bg-gradient-to-b from-[#2F5D50]/15 via-[#0E1412] to-[#0E1412] dark:via-[#0A100E] dark:to-[#0A100E]">
+      <section className="relative py-24 px-4 overflow-hidden text-center border-b border-border/20 bg-gradient-to-b from-[#2F5D50]/15 via-background to-background dark:via-[#0A100E] dark:to-[#0A100E]">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/5 via-transparent to-transparent" />
         </div>
@@ -553,13 +553,13 @@ export default function OrderTrackingPage() {
           >
             <Typography
               variant="h1"
-              className="text-4xl md:text-5xl font-extrabold tracking-tight text-white font-serif leading-tight"
+              className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground dark:text-white font-serif leading-tight"
             >
               پیگیری سفارش
             </Typography>
             <Typography
               variant="body"
-              className="text-sm md:text-base text-[#D9D9D9] max-w-xl mx-auto mt-3 font-light leading-relaxed"
+              className="text-sm md:text-base text-muted-foreground dark:text-[#D9D9D9] max-w-xl mx-auto mt-3 font-light leading-relaxed"
             >
               با وارد کردن اطلاعات سفارش، آخرین وضعیت سفارش خود را مشاهده کنید.
             </Typography>
