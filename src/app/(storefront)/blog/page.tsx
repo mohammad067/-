@@ -39,10 +39,10 @@ export default function BlogPage() {
     <MainLayout>
       <div className="max-w-5xl mx-auto w-full px-4 md:px-8 py-16 text-right">
         {/* Page Header */}
-        <div className="flex flex-col gap-2 mb-12 text-right items-start md:items-end">
+        <div className="flex flex-col gap-2 mb-12 text-right items-start">
           <Badge variant="accent" className="w-fit gap-1.5 px-3 py-1 bg-accent/10 text-accent font-semibold">
             <BookOpen className="w-4 h-4 text-accent" />
-            فرهنگ‌نامه و وبلاگ تخصصی شالیزار
+            وبلاگ تخصصی شالیزار
           </Badge>
           <Typography variant="serif-title" className="text-3xl md:text-5xl font-bold mt-2 leading-tight">
             وبلاگ طلای شالیزار
@@ -97,7 +97,7 @@ export default function BlogPage() {
               <div className="px-6 pb-6 pt-3 flex justify-between items-center border-t border-border/10">
                 <span className="text-[10px] text-muted-foreground font-light">{article.readTime}</span>
                 <span className="flex items-center gap-1 text-accent hover:text-primary transition-colors text-xs font-bold cursor-pointer">
-                  ادامه مطلب لوکس
+                  ادامه مطلب
                   <ArrowLeft className="w-3.5 h-3.5" />
                 </span>
               </div>
