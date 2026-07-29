@@ -14,14 +14,12 @@ import {
   AlertCircle,
   ArrowRight,
   ArrowLeft,
-  ShoppingBag,
   ShieldCheck,
   Calendar
 } from "lucide-react";
 import { useCatalogStore } from "../../product-catalog/store";
 import { Button } from "@/components/ui/Button";
 import { Typography } from "@/components/ui/Typography";
-import { Badge } from "@/components/ui/Badge";
 
 // Premium Iranian Provinces list
 const PROVINCES = [
@@ -663,13 +661,27 @@ export const CheckoutWizard: React.FC = () => {
                       <strong>{toPersianNum(phone)}</strong> ارسال خواهد شد.
                     </div>
 
-                    <Button
-                      variant="accent"
-                      onClick={handleCloseAndReset}
-                      className="px-10 py-3.5 text-xs font-bold rounded-full hover:scale-102 transition-transform cursor-pointer"
-                    >
-                      بازگشت به شالیزار و اتمام فرآیند
-                    </Button>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
+                      <Button
+                        variant="accent"
+                        onClick={handleCloseAndReset}
+                        className="px-8 py-3.5 text-xs font-bold rounded-full hover:scale-102 transition-transform cursor-pointer bg-gradient-to-r from-[#C8A75D] to-[#E5C983] text-[#0A100E] border-none shadow-[0_0_15px_rgba(200,167,93,0.3)] hover:shadow-[0_0_25px_rgba(200,167,93,0.6)]"
+                      >
+                        بازگشت به شالیزار و اتمام فرآیند
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          // Navigate to order-tracking with params, closing the wizard
+                          setIsCheckoutOpen(false);
+                          clearCart();
+                          window.location.href = `/order-tracking?orderId=${orderId}&mobile=${phone}`;
+                        }}
+                        className="px-8 py-3.5 text-xs font-bold rounded-full hover:scale-102 transition-transform cursor-pointer border border-[#C8A75D]/40 text-white hover:text-[#C8A75D] hover:bg-[#C8A75D]/10 hover:shadow-[0_0_15px_rgba(200,167,93,0.2)]"
+                      >
+                        جزئیات سفارش
+                      </Button>
+                    </div>
                   </div>
                 )}
               </div>
