@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Typography } from "@/components/ui/Typography";
 import { Button } from "@/components/ui/Button";
-import { Card, CardHeader, CardBody, CardFooter } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { Glass } from "@/components/ui/Glass";
