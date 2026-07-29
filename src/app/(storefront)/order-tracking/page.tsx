@@ -213,313 +213,315 @@ function OrderTrackingContent() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto w-full px-4 md:px-8 py-12 flex-grow flex flex-col justify-center">
-      <AnimatePresence mode="wait">
-        {!isSearched ? (
-          /* SEARCH INPUT FORM CARD */
-          <motion.div
-            key="tracking-form"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ type: "spring", stiffness: 100, damping: 15 }}
-          >
-            <div className="max-w-xl mx-auto shadow-[0_0_50px_rgba(47,93,80,0.08)] rounded-3xl border border-[#C8A75D]/20 p-8 md:p-10 text-right bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA]">
-              <div className="p-0 pb-6 border-b border-[#C8A75D]/20 flex flex-col gap-3">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-r from-[#C8A75D] to-[#E5C983] text-[#0A100E] flex items-center justify-center shadow-[0_0_20px_rgba(200,167,93,0.2)]">
-                  <Search className="w-7 h-7" />
+    <div className="w-full bg-white dark:bg-[#0E1412] transition-colors duration-500 py-12">
+      <div className="max-w-5xl mx-auto w-full px-4 md:px-8 flex-grow flex flex-col justify-center">
+        <AnimatePresence mode="wait">
+          {!isSearched ? (
+            /* SEARCH INPUT FORM CARD */
+            <motion.div
+              key="tracking-form"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ type: "spring", stiffness: 100, damping: 15 }}
+            >
+              <div className="max-w-xl mx-auto shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] rounded-3xl border border-[#C8A75D]/20 p-8 md:p-10 text-right bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA]">
+                <div className="p-0 pb-6 border-b border-[#C8A75D]/20 flex flex-col gap-3">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-r from-[#C8A75D] to-[#E5C983] text-[#0A100E] flex items-center justify-center shadow-[0_0_20px_rgba(200,167,93,0.2)]">
+                    <Search className="w-7 h-7" />
+                  </div>
+                  <Typography variant="h3" className="text-2xl font-bold text-[#1E2522] dark:text-[#F1EFEA]">
+                    رهگیری اصالت و وضعیت مرسوله
+                  </Typography>
+                  <Typography variant="body-sm" className="text-[#3F4F4A] dark:text-[#A2B3AC] text-xs font-light leading-relaxed">
+                    شماره فاکتور خرید (مثال: TS-24081254) به همراه شماره موبایل خود را جهت رصد زنده و دقیق بوجاری و تحویل پستی وارد فرمایید.
+                  </Typography>
                 </div>
-                <Typography variant="h3" className="text-2xl font-bold text-[#1E2522] dark:text-[#F1EFEA]">
-                  رهگیری اصالت و وضعیت مرسوله
-                </Typography>
-                <Typography variant="body-sm" className="text-[#6B7C75] dark:text-[#A2B3AC] text-xs font-light leading-relaxed">
-                  شماره فاکتور خرید (مثال: TS-24081254) به همراه شماره موبایل خود را جهت رصد زنده و دقیق بوجاری و تحویل پستی وارد فرمایید.
-                </Typography>
+
+                <div className="p-0 pt-6">
+                  <form onSubmit={handleTracking} className="flex flex-col gap-6">
+                    {/* Order ID Input */}
+                    <div className="flex flex-col gap-2.5">
+                      <label htmlFor="orderId" className="text-xs font-bold text-[#1E2522]/80 dark:text-[#F1EFEA]/80 pr-1 flex items-center gap-1.5 justify-start">
+                        <Hash className="w-4 h-4 text-[#C8A75D]" />
+                        کد پیگیری شالیزار
+                      </label>
+                      <input
+                        id="orderId"
+                        type="text"
+                        placeholder="TS-24081254 یا SHALI-xxxxxx"
+                        value={orderIdInput}
+                        onChange={(e) => setOrderIdInput(e.target.value)}
+                        className={`px-5 py-4 text-center text-sm font-semibold tracking-widest font-mono rounded-xl border border-[#E5E2DA] dark:border-[#1E2A24] bg-white dark:bg-[#0E1412] text-[#1E2522] dark:text-[#F1EFEA] placeholder-[#3F4F4A]/40 dark:placeholder-[#A2B3AC]/40 focus:border-[#C8A75D] focus:ring-1 focus:ring-[#C8A75D] ${errors.orderId ? "border-red-500 focus:ring-red-500" : ""}`}
+                        aria-invalid={!!errors.orderId}
+                        aria-describedby={errors.orderId ? "orderId-error" : undefined}
+                      />
+                      {errors.orderId && (
+                        <span id="orderId-error" className="text-xs text-red-500 mt-1 font-semibold block">
+                          {errors.orderId}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Mobile Input */}
+                    <div className="flex flex-col gap-2.5">
+                      <label htmlFor="mobile" className="text-xs font-bold text-[#1E2522]/80 dark:text-[#F1EFEA]/80 pr-1 flex items-center gap-1.5 justify-start">
+                        <Phone className="w-4 h-4 text-[#C8A75D]" />
+                        شماره موبایل گیرنده
+                      </label>
+                      <input
+                        id="mobile"
+                        type="text"
+                        placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹"
+                        value={mobileInput}
+                        onChange={(e) => setMobileInput(e.target.value)}
+                        className={`px-5 py-4 text-center text-sm font-semibold tracking-widest font-mono rounded-xl border border-[#E5E2DA] dark:border-[#1E2A24] bg-white dark:bg-[#0E1412] text-[#1E2522] dark:text-[#F1EFEA] placeholder-[#3F4F4A]/40 dark:placeholder-[#A2B3AC]/40 focus:border-[#C8A75D] focus:ring-1 focus:ring-[#C8A75D] ${errors.mobile ? "border-red-500 focus:ring-red-500" : ""}`}
+                        aria-invalid={!!errors.mobile}
+                        aria-describedby={errors.mobile ? "mobile-error" : undefined}
+                      />
+                      {errors.mobile && (
+                        <span id="mobile-error" className="text-xs text-red-500 mt-1 font-semibold block">
+                          {errors.mobile}
+                        </span>
+                      )}
+                    </div>
+
+                    <Button
+                      type="submit"
+                      variant="accent"
+                      size="lg"
+                      className="w-full py-4 text-xs font-extrabold shadow-[0_4px_20px_rgba(200,167,93,0.3)] bg-gradient-to-r from-[#C8A75D] to-[#E5C983] text-[#0A100E] hover:shadow-[0_0_25px_rgba(200,167,93,0.6)] hover:scale-102 transition-all mt-4 border-none"
+                    >
+                      پیگیری وضعیت سفارش
+                    </Button>
+                  </form>
+                </div>
               </div>
-
-              <div className="p-0 pt-6">
-                <form onSubmit={handleTracking} className="flex flex-col gap-6">
-                  {/* Order ID Input */}
-                  <div className="flex flex-col gap-2.5">
-                    <label htmlFor="orderId" className="text-xs font-bold text-[#1E2522]/80 dark:text-[#F1EFEA]/80 pr-1 flex items-center gap-1.5 justify-start">
-                      <Hash className="w-4 h-4 text-[#C8A75D]" />
-                      کد پیگیری شالیزار
-                    </label>
-                    <input
-                      id="orderId"
-                      type="text"
-                      placeholder="TS-24081254 یا SHALI-xxxxxx"
-                      value={orderIdInput}
-                      onChange={(e) => setOrderIdInput(e.target.value)}
-                      className={`px-5 py-4 text-center text-sm font-semibold tracking-widest font-mono rounded-xl border border-[#E5E2DA] dark:border-[#1E2A24] bg-white dark:bg-[#0E1412] text-[#1E2522] dark:text-[#F1EFEA] placeholder-[#6B7C75]/40 dark:placeholder-[#A2B3AC]/40 focus:border-[#C8A75D] focus:ring-1 focus:ring-[#C8A75D] ${errors.orderId ? "border-red-500 focus:ring-red-500" : ""}`}
-                      aria-invalid={!!errors.orderId}
-                      aria-describedby={errors.orderId ? "orderId-error" : undefined}
-                    />
-                    {errors.orderId && (
-                      <span id="orderId-error" className="text-xs text-red-500 mt-1 font-semibold block">
-                        {errors.orderId}
-                      </span>
-                    )}
+            </motion.div>
+          ) : searchedOrder ? (
+            /* PREMIUM RESULTS VIEW & TIMELINE EXPERIENCE */
+            <motion.div
+              key="tracking-success"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 90, damping: 14 }}
+              className="flex flex-col gap-8 text-right w-full"
+            >
+              {/* Header / Meta Card */}
+              <div className="p-6 md:p-8 border border-[#C8A75D]/20 shadow-2xl rounded-3xl flex flex-col md:flex-row justify-between items-center gap-6 bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA]">
+                <div className="flex flex-col gap-2 text-center md:text-right">
+                  <div className="flex items-center gap-2 justify-center md:justify-start">
+                    <Badge variant="accent" className="bg-[#C8A75D] text-[#0A100E] font-mono font-bold text-xs">
+                      {searchedOrder.orderId}
+                    </Badge>
+                    <span className="text-xl md:text-2xl font-extrabold text-[#1E2522] dark:text-[#F1EFEA]">
+                      وضعیت نهایی مرسوله
+                    </span>
                   </div>
-
-                  {/* Mobile Input */}
-                  <div className="flex flex-col gap-2.5">
-                    <label htmlFor="mobile" className="text-xs font-bold text-[#1E2522]/80 dark:text-[#F1EFEA]/80 pr-1 flex items-center gap-1.5 justify-start">
-                      <Phone className="w-4 h-4 text-[#C8A75D]" />
-                      شماره موبایل گیرنده
-                    </label>
-                    <input
-                      id="mobile"
-                      type="text"
-                      placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹"
-                      value={mobileInput}
-                      onChange={(e) => setMobileInput(e.target.value)}
-                      className={`px-5 py-4 text-center text-sm font-semibold tracking-widest font-mono rounded-xl border border-[#E5E2DA] dark:border-[#1E2A24] bg-white dark:bg-[#0E1412] text-[#1E2522] dark:text-[#F1EFEA] placeholder-[#6B7C75]/40 dark:placeholder-[#A2B3AC]/40 focus:border-[#C8A75D] focus:ring-1 focus:ring-[#C8A75D] ${errors.mobile ? "border-red-500 focus:ring-red-500" : ""}`}
-                      aria-invalid={!!errors.mobile}
-                      aria-describedby={errors.mobile ? "mobile-error" : undefined}
-                    />
-                    {errors.mobile && (
-                      <span id="mobile-error" className="text-xs text-red-500 mt-1 font-semibold block">
-                        {errors.mobile}
-                      </span>
-                    )}
-                  </div>
-
-                  <Button
-                    type="submit"
-                    variant="accent"
-                    size="lg"
-                    className="w-full py-4 text-xs font-extrabold shadow-[0_4px_20px_rgba(200,167,93,0.3)] bg-gradient-to-r from-[#C8A75D] to-[#E5C983] text-[#0A100E] hover:shadow-[0_0_25px_rgba(200,167,93,0.6)] hover:scale-102 transition-all mt-4 border-none"
-                  >
-                    پیگیری وضعیت سفارش
-                  </Button>
-                </form>
-              </div>
-            </div>
-          </motion.div>
-        ) : searchedOrder ? (
-          /* PREMIUM RESULTS VIEW & TIMELINE EXPERIENCE */
-          <motion.div
-            key="tracking-success"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 90, damping: 14 }}
-            className="flex flex-col gap-8 text-right w-full"
-          >
-            {/* Header / Meta Card */}
-            <div className="p-6 md:p-8 border border-[#C8A75D]/20 shadow-2xl rounded-3xl flex flex-col md:flex-row justify-between items-center gap-6 bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA]">
-              <div className="flex flex-col gap-2 text-center md:text-right">
-                <div className="flex items-center gap-2 justify-center md:justify-start">
-                  <Badge variant="accent" className="bg-[#C8A75D] text-[#0A100E] font-mono font-bold text-xs">
-                    {searchedOrder.orderId}
-                  </Badge>
-                  <span className="text-xl md:text-2xl font-extrabold text-[#1E2522] dark:text-[#F1EFEA]">
-                    وضعیت نهایی مرسوله
+                  <span className="text-[#3F4F4A] dark:text-[#A2B3AC] text-xs font-semibold">
+                    سفارش تحت کارشناسی اصالت دانه طلایی و تضمین کشت ارگانیک
                   </span>
                 </div>
-                <span className="text-[#6B7C75] dark:text-[#A2B3AC] text-xs">
-                  سفارش تحت کارشناسی اصالت دانه طلایی و تضمین کشت ارگانیک
-                </span>
+
+                <div className="flex flex-col items-center md:items-end gap-2 text-xs text-[#3F4F4A] dark:text-[#A2B3AC]">
+                  <span>کد رهگیری پستی: <strong className="font-mono text-[#C8A75D] text-sm">{searchedOrder.trackingNumber}</strong></span>
+                  <span>تخمین زمان تحویل: <strong className="text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.estimatedDeliveryDate}</strong></span>
+                </div>
               </div>
 
-              <div className="flex flex-col items-center md:items-end gap-2 text-xs text-[#6B7C75] dark:text-[#A2B3AC]">
-                <span>کد رهگیری پستی: <strong className="font-mono text-[#C8A75D] text-sm">{searchedOrder.trackingNumber}</strong></span>
-                <span>تخمین زمان تحویل: <strong className="text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.estimatedDeliveryDate}</strong></span>
-              </div>
-            </div>
-
-            {/* Luxurious Vertical/Horizontal Process Tracking Timeline */}
-            <div className="p-6 md:p-10 border border-[#C8A75D]/20 shadow-2xl rounded-3xl bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA]">
-              <span className="block text-lg font-bold text-[#2F5D50] dark:text-[#C8A75D] border-b border-[#E5E2DA] dark:border-[#1E2A24]/30 pb-4 mb-8">
-                روند زنده بوجاری، بسته‌بندی و ارسال محصول
-              </span>
-
-              {/* Vertical timeline experience optimized for responsive displays */}
-              <div className="relative flex flex-col gap-8 pl-4 pr-6">
-                {/* Visual Connector Line */}
-                <div className="absolute top-[20px] bottom-[20px] right-[40px] w-[2px] bg-[#E5E2DA] dark:bg-[#1E2A24] z-0" />
-                <div
-                  className="absolute top-[20px] right-[40px] w-[2px] bg-[#C8A75D] z-0 transition-all duration-1000"
-                  style={{
-                    height: `${(searchedOrder.currentStep / 6) * 100}%`
-                  }}
-                />
-
-                {TIMELINE_STEPS.map((step, idx) => {
-                  const StepIcon = step.icon;
-                  const isCompleted = idx < searchedOrder.currentStep;
-                  const isCurrent = idx === searchedOrder.currentStep;
-                  const isUpcoming = idx > searchedOrder.currentStep;
-
-                  return (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex items-start gap-5 z-10 relative"
-                    >
-                      {/* Step metadata timing */}
-                      <div className="hidden sm:flex flex-col items-end justify-start text-[11px] text-[#6B7C75] dark:text-[#A2B3AC] w-24 pt-1">
-                        <span>{step.time}</span>
-                      </div>
-
-                      {/* Timeline status point */}
-                      <div className="relative flex items-center justify-center">
-                        {isCompleted && (
-                          <div className="w-10 h-10 rounded-full bg-[#2F5D50] text-white flex items-center justify-center shadow-[0_0_15px_rgba(47,93,80,0.3)] border border-[#2F5D50]/30">
-                            <span className="text-sm font-bold">✓</span>
-                          </div>
-                        )}
-                        {isCurrent && (
-                          <div className="w-10 h-10 rounded-full bg-[#C8A75D] text-[#0A100E] flex items-center justify-center shadow-[0_0_20px_rgba(200,167,93,0.5)] border border-[#C8A75D] animate-pulse">
-                            <StepIcon className="w-4.5 h-4.5" />
-                          </div>
-                        )}
-                        {isUpcoming && (
-                          <div className="w-10 h-10 rounded-full bg-[#E5E2DA] dark:bg-[#1E2A24] text-[#6B7C75]/40 dark:text-[#A2B3AC]/40 flex items-center justify-center border border-[#E5E2DA] dark:border-[#1E2A24]">
-                            <StepIcon className="w-4.5 h-4.5" />
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Description block with high accessibility contrast */}
-                      <div className="flex-1 flex flex-col text-right">
-                        <span
-                          className={`text-sm font-bold ${
-                            isCurrent ? "text-[#2F5D50] dark:text-[#C8A75D]" : isCompleted ? "text-[#1E2522] dark:text-[#F1EFEA]" : "text-[#6B7C75]/50 dark:text-[#A2B3AC]/50"
-                          }`}
-                        >
-                          {step.label}
-                        </span>
-                        <span className={`text-xs mt-1 leading-relaxed ${isUpcoming ? "text-[#6B7C75]/30 dark:text-[#A2B3AC]/30" : "text-[#6B7C75] dark:text-[#A2B3AC]"}`}>
-                          {step.desc}
-                        </span>
-                        <span className="text-[10px] text-[#6B7C75] dark:text-[#A2B3AC] sm:hidden mt-0.5 font-light">{step.time}</span>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Information Grid Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Card 1: Client & Payment Details */}
-              <div className="p-6 md:p-8 border border-[#C8A75D]/15 shadow-2xl rounded-3xl bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA] hover:border-[#C8A75D]/30 transition-all duration-300">
-                <span className="block text-base font-extrabold text-[#C8A75D] border-b border-[#E5E2DA] dark:border-[#1E2A24]/30 pb-3 mb-4 flex items-center gap-2 justify-start">
-                  <User className="w-4 h-4" />
-                  اطلاعات خریدار و پرداخت
+              {/* Luxurious Vertical/Horizontal Process Tracking Timeline */}
+              <div className="p-6 md:p-10 border border-[#C8A75D]/20 shadow-2xl rounded-3xl bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA]">
+                <span className="block text-lg font-bold text-[#2F5D50] dark:text-[#C8A75D] border-b border-[#E5E2DA] dark:border-[#1E2A24]/30 pb-4 mb-8">
+                  روند زنده بوجاری، بسته‌بندی و ارسال محصول
                 </span>
 
-                <div className="flex flex-col gap-3.5 text-xs">
-                  <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
-                    <span className="text-[#6B7C75] dark:text-[#A2B3AC]">نام خریدار</span>
-                    <span className="font-semibold text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.customerName}</span>
+                {/* Vertical timeline experience optimized for responsive displays */}
+                <div className="relative flex flex-col gap-8 pl-4 pr-6">
+                  {/* Visual Connector Line */}
+                  <div className="absolute top-[20px] bottom-[20px] right-[40px] w-[2px] bg-[#E5E2DA] dark:bg-[#1E2A24] z-0" />
+                  <div
+                    className="absolute top-[20px] right-[40px] w-[2px] bg-[#C8A75D] z-0 transition-all duration-1000"
+                    style={{
+                      height: `${(searchedOrder.currentStep / 6) * 100}%`
+                    }}
+                  />
+
+                  {TIMELINE_STEPS.map((step, idx) => {
+                    const StepIcon = step.icon;
+                    const isCompleted = idx < searchedOrder.currentStep;
+                    const isCurrent = idx === searchedOrder.currentStep;
+                    const isUpcoming = idx > searchedOrder.currentStep;
+
+                    return (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        className="flex items-start gap-5 z-10 relative"
+                      >
+                        {/* Step metadata timing */}
+                        <div className="hidden sm:flex flex-col items-end justify-start text-[11px] text-[#3F4F4A] dark:text-[#A2B3AC] w-24 pt-1 font-semibold">
+                          <span>{step.time}</span>
+                        </div>
+
+                        {/* Timeline status point */}
+                        <div className="relative flex items-center justify-center">
+                          {isCompleted && (
+                            <div className="w-10 h-10 rounded-full bg-[#2F5D50] text-white flex items-center justify-center shadow-[0_0_15px_rgba(47,93,80,0.3)] border border-[#2F5D50]/30">
+                              <span className="text-sm font-bold">✓</span>
+                            </div>
+                          )}
+                          {isCurrent && (
+                            <div className="w-10 h-10 rounded-full bg-[#C8A75D] text-[#0A100E] flex items-center justify-center shadow-[0_0_20px_rgba(200,167,93,0.5)] border border-[#C8A75D] animate-pulse">
+                              <StepIcon className="w-4.5 h-4.5" />
+                            </div>
+                          )}
+                          {isUpcoming && (
+                            <div className="w-10 h-10 rounded-full bg-[#E5E2DA] dark:bg-[#1E2A24] text-[#3F4F4A]/40 dark:text-[#A2B3AC]/40 flex items-center justify-center border border-[#E5E2DA] dark:border-[#1E2A24]">
+                              <StepIcon className="w-4.5 h-4.5" />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Description block with high accessibility contrast */}
+                        <div className="flex-1 flex flex-col text-right">
+                          <span
+                            className={`text-sm font-bold ${
+                              isCurrent ? "text-[#2F5D50] dark:text-[#C8A75D]" : isCompleted ? "text-[#1E2522] dark:text-[#F1EFEA]" : "text-[#3F4F4A]/50 dark:text-[#A2B3AC]/50"
+                            }`}
+                          >
+                            {step.label}
+                          </span>
+                          <span className={`text-xs mt-1 leading-relaxed font-medium ${isUpcoming ? "text-[#3F4F4A]/40 dark:text-[#A2B3AC]/30" : "text-[#3F4F4A] dark:text-[#A2B3AC]"}`}>
+                            {step.desc}
+                          </span>
+                          <span className="text-[10px] text-[#3F4F4A] dark:text-[#A2B3AC] sm:hidden mt-0.5 font-semibold">{step.time}</span>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Information Grid Section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Card 1: Client & Payment Details */}
+                <div className="p-6 md:p-8 border border-[#C8A75D]/15 shadow-2xl rounded-3xl bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA] hover:border-[#C8A75D]/30 transition-all duration-300">
+                  <span className="block text-base font-extrabold text-[#C8A75D] border-b border-[#E5E2DA] dark:border-[#1E2A24]/30 pb-3 mb-4 flex items-center gap-2 justify-start">
+                    <User className="w-4 h-4" />
+                    اطلاعات خریدار و پرداخت
+                  </span>
+
+                  <div className="flex flex-col gap-3.5 text-xs">
+                    <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
+                      <span className="text-[#3F4F4A] dark:text-[#A2B3AC] font-semibold">نام خریدار</span>
+                      <span className="font-bold text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.customerName}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
+                      <span className="text-[#3F4F4A] dark:text-[#A2B3AC] font-semibold">شماره همراه</span>
+                      <span className="font-mono font-bold text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.mobile}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
+                      <span className="text-[#3F4F4A] dark:text-[#A2B3AC] font-semibold">تاریخ ثبت فاکتور</span>
+                      <span className="font-bold text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.date}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
+                      <span className="text-[#3F4F4A] dark:text-[#A2B3AC] font-semibold">وضعیت تایید مالی</span>
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md">
+                        {searchedOrder.paymentStatus}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <span className="text-[#3F4F4A] dark:text-[#A2B3AC] font-semibold">مجموع کل فاکتور</span>
+                      <span className="font-black text-[#1E2522] dark:text-[#F1EFEA] text-sm">{searchedOrder.amount}</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
-                    <span className="text-[#6B7C75] dark:text-[#A2B3AC]">شماره همراه</span>
-                    <span className="font-mono font-semibold text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.mobile}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
-                    <span className="text-[#6B7C75] dark:text-[#A2B3AC]">تاریخ ثبت فاکتور</span>
-                    <span className="font-semibold text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.date}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
-                    <span className="text-[#6B7C75] dark:text-[#A2B3AC]">وضعیت تایید مالی</span>
-                    <span className="font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md">
-                      {searchedOrder.paymentStatus}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="text-[#6B7C75] dark:text-[#A2B3AC]">مجموع کل فاکتور</span>
-                    <span className="font-bold text-[#1E2522] dark:text-[#F1EFEA] text-sm">{searchedOrder.amount}</span>
+                </div>
+
+                {/* Card 2: Courier & Shipping Info */}
+                <div className="p-6 md:p-8 border border-[#C8A75D]/15 shadow-2xl rounded-3xl bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA] hover:border-[#C8A75D]/30 transition-all duration-300">
+                  <span className="block text-base font-extrabold text-[#C8A75D] border-b border-[#E5E2DA] dark:border-[#1E2A24]/30 pb-3 mb-4 flex items-center gap-2 justify-start">
+                    <Truck className="w-4 h-4" />
+                    اطلاعات لجستیک و ارسال مرسوله
+                  </span>
+
+                  <div className="flex flex-col gap-3.5 text-xs">
+                    <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
+                      <span className="text-[#3F4F4A] dark:text-[#A2B3AC] font-semibold">شرکت همکار لجستیک</span>
+                      <span className="font-bold text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.courier}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
+                      <span className="text-[#3F4F4A] dark:text-[#A2B3AC] font-semibold">روش ارسال منتخب</span>
+                      <span className="font-bold text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.deliveryMethod}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
+                      <span className="text-[#3F4F4A] dark:text-[#A2B3AC] font-semibold">وزن خالص کیسه برنج</span>
+                      <span className="font-bold text-[#1E2522] dark:text-[#F1EFEA] flex items-center gap-1">
+                        <Scale className="w-3.5 h-3.5 text-[#C8A75D]" />
+                        {searchedOrder.weight}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-start py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
+                      <span className="text-[#3F4F4A] dark:text-[#A2B3AC] shrink-0 font-semibold">نشانی تحویل گیرنده</span>
+                      <span className="font-bold text-[#1E2522] dark:text-[#F1EFEA] text-left leading-relaxed max-w-[200px]">{searchedOrder.shippingAddress}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <span className="text-[#3F4F4A] dark:text-[#A2B3AC] font-semibold">بارنامه پستی (MOCK)</span>
+                      <span className="font-mono font-bold text-[#C8A75D] tracking-wider bg-[#C8A75D]/10 px-2.5 py-1 rounded-md">
+                        {searchedOrder.trackingNumber}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Card 2: Courier & Shipping Info */}
-              <div className="p-6 md:p-8 border border-[#C8A75D]/15 shadow-2xl rounded-3xl bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA] hover:border-[#C8A75D]/30 transition-all duration-300">
-                <span className="block text-base font-extrabold text-[#C8A75D] border-b border-[#E5E2DA] dark:border-[#1E2A24]/30 pb-3 mb-4 flex items-center gap-2 justify-start">
-                  <Truck className="w-4 h-4" />
-                  اطلاعات لجستیک و ارسال مرسوله
-                </span>
-
-                <div className="flex flex-col gap-3.5 text-xs">
-                  <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
-                    <span className="text-[#6B7C75] dark:text-[#A2B3AC]">شرکت همکار لجستیک</span>
-                    <span className="font-semibold text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.courier}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
-                    <span className="text-[#6B7C75] dark:text-[#A2B3AC]">روش ارسال منتخب</span>
-                    <span className="font-semibold text-[#1E2522] dark:text-[#F1EFEA]">{searchedOrder.deliveryMethod}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
-                    <span className="text-[#6B7C75] dark:text-[#A2B3AC]">وزن خالص کیسه برنج</span>
-                    <span className="font-semibold text-[#1E2522] dark:text-[#F1EFEA] flex items-center gap-1">
-                      <Scale className="w-3.5 h-3.5 text-[#C8A75D]" />
-                      {searchedOrder.weight}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-start py-2 border-b border-[#E5E2DA]/50 dark:border-[#1E2A24]/30">
-                    <span className="text-[#6B7C75] dark:text-[#A2B3AC] shrink-0">نشانی تحویل گیرنده</span>
-                    <span className="font-semibold text-[#1E2522] dark:text-[#F1EFEA] text-left leading-relaxed max-w-[200px]">{searchedOrder.shippingAddress}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="text-[#6B7C75] dark:text-[#A2B3AC]">بارنامه پستی (MOCK)</span>
-                    <span className="font-mono font-bold text-[#C8A75D] tracking-wider bg-[#C8A75D]/10 px-2.5 py-1 rounded-md">
-                      {searchedOrder.trackingNumber}
-                    </span>
-                  </div>
+              {/* Back controls */}
+              <div className="flex justify-center mt-6">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={resetSearch}
+                  className="px-10 py-3.5 text-xs font-bold rounded-full border border-[#C8A75D]/30 text-[#1E2522] dark:text-[#F1EFEA] hover:text-[#C8A75D] hover:bg-[#C8A75D]/10 hover:shadow-[0_0_15px_rgba(200,167,93,0.2)] transition-all cursor-pointer"
+                >
+                  پیگیری مرسوله دیگر
+                </Button>
+              </div>
+            </motion.div>
+          ) : (
+            /* PREMIUM EMPTY STATE CARD */
+            <motion.div
+              key="tracking-empty"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="text-center max-w-md mx-auto"
+            >
+              <div className="p-10 border border-[#C8A75D]/20 shadow-2xl rounded-3xl flex flex-col items-center gap-6 bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA]">
+                <div className="w-16 h-16 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center">
+                  <XCircle className="w-9 h-9" />
                 </div>
+                <span className="text-2xl font-bold text-[#1E2522] dark:text-[#F1EFEA]">
+                  سفارشی پیدا نشد
+                </span>
+                <span className="text-sm text-[#3F4F4A] dark:text-[#A2B3AC] leading-relaxed font-light">
+                  اطلاعات وارد شده صحیح نیست یا سفارشی با این مشخصات در تعاونی کشاورزان طلای شالیزار وجود ندارد. لطفاً شماره فاکتور خود را مجدد بررسی فرمایید.
+                </span>
+                <Button
+                  variant="accent"
+                  size="lg"
+                  onClick={resetSearch}
+                  className="w-full font-bold mt-2 shadow-lg bg-[#C8A75D] hover:bg-[#E5C983] text-[#0A100E] border-none"
+                >
+                  تلاش مجدد
+                </Button>
               </div>
-            </div>
-
-            {/* Back controls */}
-            <div className="flex justify-center mt-6">
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={resetSearch}
-                className="px-10 py-3.5 text-xs font-bold rounded-full border border-[#C8A75D]/30 text-[#1E2522] dark:text-[#F1EFEA] hover:text-[#C8A75D] hover:bg-[#C8A75D]/10 hover:shadow-[0_0_15px_rgba(200,167,93,0.2)] transition-all cursor-pointer"
-              >
-                پیگیری مرسوله دیگر
-              </Button>
-            </div>
-          </motion.div>
-        ) : (
-          /* PREMIUM EMPTY STATE CARD */
-          <motion.div
-            key="tracking-empty"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.4 }}
-            className="text-center max-w-md mx-auto"
-          >
-            <div className="p-10 border border-[#C8A75D]/20 shadow-2xl rounded-3xl flex flex-col items-center gap-6 bg-white dark:bg-[#141D19] text-[#1E2522] dark:text-[#F1EFEA]">
-              <div className="w-16 h-16 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center">
-                <XCircle className="w-9 h-9" />
-              </div>
-              <span className="text-2xl font-bold text-[#1E2522] dark:text-[#F1EFEA]">
-                سفارشی پیدا نشد
-              </span>
-              <span className="text-sm text-[#6B7C75] dark:text-[#A2B3AC] leading-relaxed font-light">
-                اطلاعات وارد شده صحیح نیست یا سفارشی با این مشخصات در تعاونی کشاورزان طلای شالیزار وجود ندارد. لطفاً شماره فاکتور خود را مجدد بررسی فرمایید.
-              </span>
-              <Button
-                variant="accent"
-                size="lg"
-                onClick={resetSearch}
-                className="w-full font-bold mt-2 shadow-lg bg-[#C8A75D] hover:bg-[#E5C983] text-[#0A100E] border-none"
-              >
-                تلاش مجدد
-              </Button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
