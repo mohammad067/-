@@ -4,7 +4,7 @@ import React from "react";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Typography } from "@/components/ui/Typography";
 import { Badge } from "@/components/ui/Badge";
-import { Card, CardHeader, CardBody, CardFooter } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { BookOpen, Calendar, User, ArrowLeft } from "lucide-react";
 
 const ARTICLES = [

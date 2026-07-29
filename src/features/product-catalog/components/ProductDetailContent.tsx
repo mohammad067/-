@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, MapPin, ShoppingBag, ArrowRight, ShieldCheck, Flame, Info, Check, Calendar, Weight, Heart } from "lucide-react";
+import { Star, MapPin, ShoppingBag, ArrowRight, ShieldCheck, Flame, Info, Check, Heart } from "lucide-react";
 import { Typography } from "@/components/ui/Typography";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -20,7 +20,6 @@ interface ProductDetailContentProps {
 export const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ product }) => {
   const {
     id,
-    slug,
     name,
     variety,
     province,

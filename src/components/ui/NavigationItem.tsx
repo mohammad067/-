@@ -25,12 +25,12 @@ export const NavigationItem: React.FC<NavigationItemProps> = ({ href, label, isA
       {isActive && (
         <motion.span
           layoutId="activeUnderline"
-          className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-full"
+          className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent rounded-full"
           transition={{ type: "spring", stiffness: 380, damping: 30 }}
         />
       )}
       {!isActive && (
-        <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full" />
+        <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full" />
       )}
     </a>
   );
