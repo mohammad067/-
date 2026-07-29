@@ -9,8 +9,19 @@ export const LanguageSwitcher: React.FC = () => {
   const toggleLanguage = () => {
     const nextLang = lang === "fa" ? "en" : "fa";
     setLang(nextLang);
-    // In real next-intl apps, we would trigger URL transitions, but here we show premium interactive feedback.
-    alert(`تغییر زبان به شبیه‌ساز ${nextLang.toUpperCase()} فعال گردید.`);
+
+    // Smooth, premium in-app UI language localization feedback
+    const toast = document.createElement("div");
+    toast.className = "fixed bottom-8 left-8 z-50 glass-premium px-6 py-4 rounded-3xl border border-accent/25 shadow-2xl text-xs font-bold text-foreground animate-scale-up direction-rtl";
+    toast.innerHTML = nextLang === "fa"
+      ? "زبان رابط کاربری به فارسی تنظیم گردید."
+      : "User interface simulator language set to ENGLISH.";
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.add("opacity-0", "translate-y-2");
+      toast.style.transition = "all 0.5s ease";
+      setTimeout(() => toast.remove(), 500);
+    }, 3000);
   };
 
   return (

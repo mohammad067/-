@@ -27,8 +27,9 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => 
   const navLinks = [
     { href: "#", label: "صفحه اصلی" },
     { href: "#products-showcase", label: "محصولات ممتاز" },
-    { href: "#design-system", label: "سیستم طراحی" },
-    { href: "#demo-states", label: "پیش‌نمایش حالت‌ها" },
+    { href: "#categories-section", label: "دسته‌بندی‌ها" },
+    { href: "#editorial-story", label: "داستان شالیزار" },
+    { href: "#testimonials-section", label: "رضایت مشتریان" },
   ];
 
   return (

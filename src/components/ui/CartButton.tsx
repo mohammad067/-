@@ -8,7 +8,12 @@ interface CartButtonProps {
   itemCount?: number;
 }
 
-export const CartButton: React.FC<CartButtonProps> = ({ onClick, itemCount = 1 }) => {
+import { useCartStore } from "@/features/cart/store";
+
+export const CartButton: React.FC<CartButtonProps> = ({ onClick }) => {
+  const items = useCartStore((state) => state.items);
+  const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <button
       onClick={onClick}
@@ -16,8 +21,10 @@ export const CartButton: React.FC<CartButtonProps> = ({ onClick, itemCount = 1 }
       title="سبد خرید شما"
     >
       <ShoppingBag className="w-5 h-5 stroke-1.5" />
-      {itemCount > 0 && (
-        <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent animate-pulse" />
+      {totalCount > 0 && (
+        <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-accent text-[10px] text-accent-foreground font-bold flex items-center justify-center animate-scale-up">
+          {totalCount.toLocaleString("fa-IR")}
+        </span>
       )}
     </button>
   );
