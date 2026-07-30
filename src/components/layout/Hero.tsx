@@ -18,12 +18,7 @@ export const Hero: React.FC = () => {
     <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden px-4 py-20 text-center">
       {/* Cinematic Luxury Background Overlay */}
       <div className="absolute inset-0 z-0">
-<<<<<<< HEAD
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#2F5D50]/55 via-[#0E1412]/80 to-[#0E1412]/95" />
-        {/* Soft, beautiful floating golden and green blurred orbs for organic feel */}
-        <div className="absolute top-1/4 left-1/4 w-[35rem] h-[35rem] bg-[#C8A75D]/15 rounded-full blur-[140px] mix-blend-screen animate-pulse duration-5000" />
-        <div className="absolute bottom-1/4 right-1/4 w-[40rem] h-[40rem] bg-[#2F5D50]/25 rounded-full blur-[160px] mix-blend-screen animate-pulse duration-7000" />
-=======
+
         {HERO_BACKGROUND_IMAGE ? (
           <>
             {/* Background Image */}
@@ -43,7 +38,7 @@ export const Hero: React.FC = () => {
             <div className="absolute bottom-1/4 right-1/4 w-[40rem] h-[40rem] bg-[#2F5D50]/15 rounded-full blur-[140px] mix-blend-screen animate-pulse duration-7000" />
           </>
         )}
->>>>>>> origin/main
+
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center gap-8 px-4 md:px-0">
@@ -70,13 +65,11 @@ export const Hero: React.FC = () => {
             variant="h1"
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#C8A75D] font-serif leading-tight max-w-4xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
           >
-<<<<<<< HEAD
-            عطر شالیزار شمال، <br className="hidden sm:inline" />
-            <span className="text-white font-medium">تجلی اصیل سفره ایرانی</span>
-=======
+
+
             عطر شالیزار، <br className="hidden sm:inline" />
             <span className="text-foreground dark:text-white font-medium">در طعم بی تکرار اصالت</span>
->>>>>>> origin/main
+
           </Typography>
 
           <Typography
