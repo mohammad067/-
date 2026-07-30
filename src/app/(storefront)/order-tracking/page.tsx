@@ -331,7 +331,7 @@ function OrderTrackingContent() {
               </div>
 
               {/* Luxurious Vertical/Horizontal Process Tracking Timeline */}
-              <div className="p-6 md:p-10 border border-[#C8A75D]/20 shadow-2xl rounded-3xl bg-white dark:bg-[#e7ece9] text-[#1E2522] dark:text-[#F1EFEA]">
+              <div className="p-6 md:p-10 border border-[#C8A75D]/20 shadow-2xl rounded-3xl bg-white dark:bg-[#d8e1dd] text-[#1E2522] dark:text-[#F1EFEA]">
                 <span className="block text-lg font-bold text-[#2F5D50] dark:text-[#C8A75D] border-b border-[#E5E2DA] dark:border-[#1E2A24]/30 pb-4 mb-8">
                   روند زنده بوجاری، بسته‌بندی و ارسال محصول
                 </span>
