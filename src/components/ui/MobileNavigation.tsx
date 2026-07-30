@@ -76,7 +76,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onCl
                 <PhoneCall className="w-4 h-4 text-accent" />
               </div>
               <Button variant="primary" className="w-full bg-primary text-white" onClick={onClose}>
-                ورود / ثبت‌نام طلایی
+                ورود / ثبت‌ نام طلایی
               </Button>
             </div>
           </motion.div>

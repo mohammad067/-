@@ -46,6 +46,7 @@ export const CartButton: React.FC<CartButtonProps> = ({ itemCount }) => {
       {/* Global Checkout Wizard portal */}
       <CheckoutWizard />
     </>
+
   );
 };
 
