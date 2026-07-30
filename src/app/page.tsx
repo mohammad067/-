@@ -24,9 +24,12 @@ import {
   Mail,
   ArrowDown,
   Eye,
-  Layers
+  Layers,
+  Heart
 } from "lucide-react";
 import Link from "next/link";
+import { useCartStore } from "@/features/cart/store";
+import { useWishlistStore } from "@/features/wishlist/store";
 
 // Testimonials Mock Database
 const TESTIMONIALS = [
@@ -118,6 +121,48 @@ export default function HomePage() {
     "priceRange": "$$$"
   };
 
+  const wishlistItems = useWishlistStore((state) => state.items);
+  const toggleWishlistItem = useWishlistStore((state) => state.toggleItem);
+  const addItem = useCartStore((state) => state.addItem);
+
+  const toggleWishlist = (id: string) => {
+    const exists = wishlistItems.includes(id);
+    toggleWishlistItem(id);
+
+    // Toast notification for user action feed
+    const toast = document.createElement("div");
+    toast.className = "fixed bottom-8 left-8 z-50 glass-premium px-6 py-4 rounded-3xl border border-accent/25 shadow-2xl text-xs font-bold text-foreground animate-scale-up direction-rtl";
+    toast.innerHTML = exists
+      ? "محصول از لیست علاقه‌مندی‌ها حذف گردید."
+      : "محصول به لیست علاقه‌مندی‌های شما اضافه شد! ❤️";
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.add("opacity-0", "translate-y-2");
+      toast.style.transition = "all 0.5s ease";
+      setTimeout(() => toast.remove(), 500);
+    }, 3000);
+  };
+
+  const handleAddToCart = (prod: Product) => {
+    addItem({
+      id: prod.id,
+      name: prod.name,
+      price: prod.price,
+      weight: prod.weight,
+      imageChar: prod.imageChar
+    });
+
+    const toast = document.createElement("div");
+    toast.className = "fixed bottom-8 left-8 z-50 glass-premium px-6 py-4 rounded-3xl border border-accent/25 shadow-2xl text-xs font-bold text-foreground animate-scale-up direction-rtl";
+    toast.innerHTML = `کیسه برنج ${prod.name} به سبد خرید شما اضافه گردید! 🛒`;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.add("opacity-0", "translate-y-2");
+      toast.style.transition = "all 0.5s ease";
+      setTimeout(() => toast.remove(), 500);
+    }, 3000);
+  };
+
   return (
     <MainLayout>
       {/* Structured data injection */}
@@ -128,7 +173,9 @@ export default function HomePage() {
 
       {/* SECTION 1: Cinematic Floating Hero */}
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden px-4 py-20 text-center">
+        {/* Full-width premium background layout structure */}
         <div className="absolute inset-0 z-0">
+
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/hero-bg.avif"
@@ -138,6 +185,7 @@ export default function HomePage() {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/50" />
+
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center gap-8 px-4 md:px-0">
@@ -146,7 +194,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <Badge variant="accent" className="gap-2 px-4 py-2 bg-accent/10 text-accent border border-accent/30 text-sm">
+            <Badge variant="accent" className="gap-2 px-4 py-2 bg-accent/15 text-[#C8A75D] border border-accent/40 text-sm shadow-[0_0_15px_rgba(200,167,93,0.15)]">
               <Sparkles className="w-4 h-4 text-accent fill-accent" />
               ارگانیک‌ترین برداشت شالیزارهای شمال ایران - ۱۴۰۳
             </Badge>
@@ -160,15 +208,15 @@ export default function HomePage() {
           >
             <Typography
               variant="h1"
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary dark:text-accent font-serif leading-tight max-w-4xl"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#C8A75D] font-serif leading-tight max-w-4xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
             >
               عطر شالیزار، <br />
-              <span className="text-foreground dark:text-white font-medium">در طعم بی تکرار اصالت</span>
+              <span className="text-white font-medium">در طعم بی تکرار اصالت</span>
             </Typography>
 
             <Typography
               variant="serif-subtitle"
-              className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed mt-4"
+              className="text-lg md:text-2xl text-slate-100 max-w-2xl mx-auto font-light leading-relaxed mt-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
             >
               خرید مستقیم و شناسنامه‌دار برنج ممتاز از کشاورزان نمونه آستانه اشرفیه و فریدونکنار با بسته‌بندی نفیس و گارانتی طلایی پخت.
             </Typography>
@@ -181,12 +229,12 @@ export default function HomePage() {
             className="flex flex-wrap gap-4 justify-center items-center mt-6"
           >
             <Link href="/products">
-              <Button variant="accent" size="lg" className="shadow-lg hover:scale-105 active:scale-97">
+              <Button variant="accent" size="lg" className="shadow-lg hover:scale-105 active:scale-97 font-bold border border-accent/30 hover:shadow-[0_0_25px_rgba(200,167,93,0.45)]">
                 مشاهده محصولات
               </Button>
             </Link>
             <a href="#editorial-story">
-              <Button variant="outline" size="lg" className="border-primary/20 dark:border-accent/20 hover:bg-muted/10">
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm">
                 درباره ما
               </Button>
             </a>
@@ -195,7 +243,7 @@ export default function HomePage() {
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="mt-12 hidden md:flex flex-col items-center gap-2 text-muted-foreground text-xs font-light cursor-pointer"
+            className="mt-12 hidden md:flex flex-col items-center gap-2 text-slate-200 text-xs font-light cursor-pointer"
             onClick={() => {
               document.getElementById("featured-collection")?.scrollIntoView({ behavior: "smooth" });
             }}
@@ -226,8 +274,9 @@ export default function HomePage() {
           {MOCK_PRODUCTS.map((prod) => {
             const finalPrice = prod.discountPercent ? prod.price * (1 - prod.discountPercent / 100) : prod.price;
             const formattedPrice = finalPrice.toLocaleString("fa-IR") + " تومان";
+            const inWishlist = wishlistItems.includes(prod.id);
             return (
-              <Card key={prod.id} variant="glass-premium" className="flex flex-col h-full text-right hover:shadow-2xl transition-all duration-500">
+              <Card key={prod.id} variant="glass-premium" className="flex flex-col h-full text-right hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-border/10">
                 <div className="relative h-56 bg-gradient-to-b from-[#2F5D50]/10 to-transparent flex items-center justify-center border-b border-border/20 overflow-hidden group">
                   <div className="absolute inset-0 bg-primary/2 group-hover:scale-105 transition-transform duration-700" />
 
@@ -245,6 +294,15 @@ export default function HomePage() {
                   <Badge variant={prod.inStock ? "success" : "warning"} className="absolute top-4 left-4 text-[9px] font-medium">
                     {prod.inStock ? "موجود" : "پیش‌فروش"}
                   </Badge>
+
+                  {/* Top-Right Heart Wishlist toggle */}
+                  <button
+                    onClick={() => toggleWishlist(prod.id)}
+                    className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/60 dark:bg-black/40 backdrop-blur-md border border-white/20 hover:scale-110 active:scale-95 transition-all text-red-500 cursor-pointer"
+                    title="افزودن به علاقه‌مندی‌ها"
+                  >
+                    <Heart className={`w-3.5 h-3.5 transition-all ${inWishlist ? "fill-red-500 scale-110" : "text-muted-foreground"}`} />
+                  </button>
 
                   <div className="absolute bottom-3 right-4 flex items-center gap-1 px-2 py-0.5 rounded-md glass text-[10px] font-semibold">
                     <span>{prod.rating.toLocaleString("fa-IR")}</span>
@@ -284,11 +342,14 @@ export default function HomePage() {
                       <Eye className="w-3 h-3" />
                       پیش‌نمایش
                     </Button>
-                    <Link href={`/products/${prod.slug}`} className="w-full">
-                      <Button variant="accent" size="sm" className="py-2 text-[11px] font-bold w-full flex items-center justify-center">
-                        جزئیات رقم
-                      </Button>
-                    </Link>
+                    <Button
+                      variant="accent"
+                      size="sm"
+                      onClick={() => handleAddToCart(prod)}
+                      className="py-2 text-[11px] font-bold w-full flex items-center justify-center hover:shadow-[0_0_15px_rgba(200,167,93,0.35)]"
+                    >
+                      خرید نقدی
+                    </Button>
                   </div>
                 </CardFooter>
               </Card>

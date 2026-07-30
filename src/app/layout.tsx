@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl">
+    <html lang="fa" dir="rtl" className="scroll-smooth">
       <head>
         <link
           href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
@@ -39,7 +39,7 @@ export default function RootLayout({
           type="text/css"
         />
       </head>
-      <body className="antialiased min-h-screen font-sans selection:bg-[#C8A75D] selection:text-[#0E1412]">
+      <body className="antialiased min-h-screen font-sans selection:bg-[#C8A75D] selection:text-[#0E1412] bg-[#F8F6F2] text-[#1E2522] dark:bg-[#0E1412] dark:text-[#F1EFEA]">
         {children}
       </body>
     </html>

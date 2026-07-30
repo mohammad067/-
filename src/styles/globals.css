@@ -89,7 +89,7 @@ html, body {
   min-height: 100vh;
   color: var(--foreground);
   background-color: var(--background);
-  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif !important;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   transition: background-color 0.5s ease, color 0.5s ease;
   line-height: 1.75;
@@ -99,6 +99,10 @@ html, body {
 /* Ensure Vazirmatn is applied to all elements globally */
 *, *::before, *::after {
   font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif !important;
 }
 
 /* Custom premium scrollbar */
