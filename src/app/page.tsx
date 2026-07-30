@@ -175,10 +175,17 @@ export default function HomePage() {
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden px-4 py-20 text-center">
         {/* Full-width premium background layout structure */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#2F5D50]/55 via-[#0E1412]/80 to-[#0E1412]/95" />
-          {/* Subtle green and gold radial lighting */}
-          <div className="absolute top-1/4 left-1/4 w-[35rem] h-[35rem] bg-[#C8A75D]/15 rounded-full blur-[140px] mix-blend-screen animate-pulse duration-5000" />
-          <div className="absolute bottom-1/4 right-1/4 w-[40rem] h-[40rem] bg-[#2F5D50]/25 rounded-full blur-[160px] mix-blend-screen animate-pulse duration-7000" />
+
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero-bg.avif"
+            alt="شالیزار شمال ایران"
+            loading="eager"
+            decoding="async"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50" />
+
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center gap-8 px-4 md:px-0">

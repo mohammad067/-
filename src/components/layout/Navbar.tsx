@@ -12,7 +12,11 @@ import { ThemeToggle } from "../ui/ThemeToggle";
 import { LanguageSwitcher } from "../ui/LanguageSwitcher";
 import { Button } from "../ui/Button";
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onAuthOpen?: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onAuthOpen }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -42,7 +46,12 @@ export const Navbar: React.FC = () => {
           <SearchButton />
 
           {/* User Sign-In Account Button CTA */}
-          <Button variant="primary" size="sm" className="hidden lg:inline-flex bg-primary text-white border-none">
+          <Button
+            variant="primary"
+            size="sm"
+            className="hidden lg:inline-flex bg-primary text-white border-none cursor-pointer"
+            onClick={onAuthOpen}
+          >
             ورود / ثبت‌نام
           </Button>
 

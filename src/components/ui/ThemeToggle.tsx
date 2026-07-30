@@ -7,15 +7,13 @@ export const ThemeToggle: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    const isDark = savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-      setIsDarkMode(true);
-    } else {
-      document.documentElement.classList.remove("dark");
-      setIsDarkMode(false);
-    }
+
+    const isDark = document.documentElement.classList.contains("dark");
+    const timer = setTimeout(() => {
+      setIsDarkMode(isDark);
+    }, 0);
+    return () => clearTimeout(timer);
+
   }, []);
 
   const toggleTheme = () => {
