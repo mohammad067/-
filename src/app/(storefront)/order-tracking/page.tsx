@@ -233,7 +233,7 @@ function OrderTrackingContent() {
                     رهگیری اصالت و وضعیت مرسوله
                   </Typography>
                   <Typography variant="body-sm" className="text-[#5C6B63] text-xs font-light leading-relaxed">
-                    شماره فاکتور خرید (مثال: TS-24081254) به همراه شماره موبایل خود را جهت رصد زنده و تحویل پستی وارد فرمایید.
+                    شماره فاکتور خرید (مثال: TS-24081254) به همراه شماره موبایل خود را جهت رصد زنده و دقیق بوجاری و تحویل پستی وارد فرمایید.
                   </Typography>
                 </div>
 
