@@ -18,6 +18,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onCl
     { href: "/#products-showcase", label: "محصولات ممتاز" },
     { href: "/bulk-order", label: "خرید عمده" },
     { href: "/order-tracking", label: "پیگیری سفارش" },
+    { href: "/blog", label: " مقالات "},
   ];
 
   return (
@@ -72,11 +73,11 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onCl
             {/* Bottom Actions */}
             <div className="flex flex-col gap-4 border-t border-border/20 pt-6">
               <div className="flex items-center gap-3 justify-end text-muted-foreground">
-                <span className="text-sm font-light">پشتیبانی: ۰۱۳-۳۳۴۴۵۵۶۶</span>
+                <span className="text-sm font-light">پشتیبانی: 09199724318</span>
                 <PhoneCall className="w-4 h-4 text-accent" />
               </div>
               <Button variant="primary" className="w-full bg-primary text-white" onClick={onClose}>
-                ورود / ثبت‌ نام طلایی
+                ورود / ثبت‌ نام
               </Button>
             </div>
           </motion.div>
