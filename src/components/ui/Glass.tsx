@@ -15,9 +15,9 @@ export const Glass = React.forwardRef<HTMLDivElement, GlassProps>(
         className={clsx(
           "transition-all duration-500",
           {
-            "bg-white/20 dark:bg-black/10 backdrop-blur-sm": intensity === "low",
+            "bg-white/30 dark:bg-[#141D19]/80 backdrop-blur-sm": intensity === "low",
             "glass": intensity === "medium",
-            "glass-premium": intensity === "high",
+            "glass-premium dark:!bg-[#141D19]/90 dark:border-white/10": intensity === "high",
 
             "border-none": borderSize === "none",
             "border border-white/20 dark:border-white/5": borderSize === "thin",
