@@ -55,7 +55,7 @@
   --card-foreground: #1E2522;
 
   --muted: #EADFD3; /* Wheat Muted Tint */
-  --muted-foreground: #6B7C75;
+  --muted-foreground: #5C6B63; /* کمی تیره‌تر برای کنتراست بهتر */
 
   --border: #E5E2DA;
   --input: #E5E2DA;
@@ -67,17 +67,17 @@
   --background: #0E1412; /* Deep Charcoal Green Base */
   --foreground: #F1EFEA;
 
-  --primary: #C8A75D; /* Gold becomes primary highlight in Dark Mode */
-  --primary-foreground: #0E1412;
+  --primary: #2F5D50; /* سبز عمیق بماند */
+  --primary-foreground: #F1EFEA;
 
-  --accent: #2F5D50; /* Green becomes accent */
-  --accent-foreground: #F1EFEA;
+  --accent: #C8A75D; /* طلایی بماند */
+  --accent-foreground: #0E1412;
 
   --card: #141D19; /* Rich dark-green tile background */
   --card-foreground: #F1EFEA;
 
   --muted: #1E2A24;
-  --muted-foreground: #A2B3AC;
+  --muted-foreground: #A2B3AC; /* کمی روشن‌تر برای خوانایی */
 
   --border: #1E2A24;
   --input: #1E2A24;
