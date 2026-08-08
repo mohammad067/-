@@ -35,6 +35,7 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => 
     { href: "/#products-showcase", label: "محصولات ممتاز" },
     { href: "/bulk-order", label: "خرید عمده" },
     { href: "/order-tracking", label: "پیگیری سفارش" },
+    
     { href: "/blog", label: " مقالات "},
   ];
 
