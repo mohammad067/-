@@ -194,7 +194,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <Badge variant="accent" className="gap-2 px-4 py-2 bg-accent/15 text-accent border border-accent/40 text-sm shadow-[0_0_15px_rgba(200,167,93,0.15)]">
+            <Badge variant="accent" className="gap-2 px-4 py-2 bg-accent/15 text-[#C8A75D] border border-accent/40 text-sm shadow-[0_0_15px_rgba(200,167,93,0.15)]">
               <Sparkles className="w-4 h-4 text-accent fill-accent" />
               ارگانیک‌ترین برداشت شالیزارهای شمال ایران - ۱۴۰۳
             </Badge>
@@ -208,7 +208,7 @@ export default function HomePage() {
           >
             <Typography
               variant="h1"
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-accent font-serif leading-tight max-w-4xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#C8A75D] font-serif leading-tight max-w-4xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
             >
               عطر شالیزار، <br />
               <span className="text-white font-medium">در طعم بی تکرار اصالت</span>
@@ -277,11 +277,11 @@ export default function HomePage() {
             const inWishlist = wishlistItems.includes(prod.id);
             return (
               <Card key={prod.id} variant="glass-premium" className="flex flex-col h-full text-right hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-border/10">
-                <div className="relative h-56 bg-gradient-to-b from-primary/10 to-transparent flex items-center justify-center border-b border-border/20 overflow-hidden group">
+                <div className="relative h-56 bg-gradient-to-b from-[#2F5D50]/10 to-transparent flex items-center justify-center border-b border-border/20 overflow-hidden group">
                   <div className="absolute inset-0 bg-primary/2 group-hover:scale-105 transition-transform duration-700" />
 
                   <div className="z-10 w-20 h-24 rounded-full bg-white/50 dark:bg-black/40 backdrop-blur-md border border-white/40 flex flex-col items-center justify-center shadow-lg group-hover:rotate-12 transition-all duration-700">
-                    <span className="text-foreground font-serif text-xl font-bold">{prod.imageChar}</span>
+                    <span className="text-primary dark:text-accent font-serif text-xl font-bold">{prod.imageChar}</span>
                     <span className="text-[8px] text-muted-foreground mt-0.5 font-light">۱۰۰٪ اصل</span>
                   </div>
 
@@ -315,7 +315,7 @@ export default function HomePage() {
                     <MapPin className="w-3 h-3 text-accent" />
                     {prod.province}، {prod.region}
                   </span>
-                  <Typography variant="h3" className="text-lg font-bold text-foreground mt-1 line-clamp-1">
+                  <Typography variant="h3" className="text-lg font-bold text-primary dark:text-foreground mt-1 line-clamp-1">
                     {prod.name}
                   </Typography>
                 </CardHeader>
@@ -329,7 +329,7 @@ export default function HomePage() {
                 <CardFooter className="p-5 pt-3 flex flex-col gap-3 border-t border-border/20">
                   <div className="flex justify-between items-center w-full">
                     <span className="text-[10px] text-muted-foreground font-light">بسته‌بندی {prod.weight}</span>
-                    <span className="text-sm font-bold text-foreground">{formattedPrice}</span>
+                    <span className="text-sm font-bold text-primary dark:text-accent">{formattedPrice}</span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2 w-full mt-1">
@@ -359,14 +359,14 @@ export default function HomePage() {
       </section>
 
       {/* SECTION 3: Why Choose Us */}
-      <section className="bg-primary/5 dark:bg-background py-24 w-full border-t border-b border-border/20">
+      <section className="bg-primary/5 dark:bg-[#070b09] py-24 w-full border-t border-b border-border/20">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex flex-col gap-2 text-center mb-16">
             <Badge variant="accent" className="w-fit mx-auto gap-1">
               <ShieldCheck className="w-3.5 h-3.5 text-accent" />
               تعهدات طلایی شالیزار به سفره شما
             </Badge>
-            <Typography variant="serif-title" className="text-3xl md:text-5xl font-bold mt-2 text-foreground">
+            <Typography variant="serif-title" className="text-3xl md:text-5xl font-bold mt-2">
               چرا برنج ما متمایز است؟
             </Typography>
             <Typography variant="body" className="max-w-xl mx-auto text-muted-foreground mt-2 leading-relaxed">
@@ -380,10 +380,10 @@ export default function HomePage() {
                 <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-2">
                   {item.icon}
                 </div>
-                <Typography variant="h4" className="font-bold text-foreground">
+                <Typography variant="h4" className="font-bold text-primary dark:text-accent">
                   {item.title}
                 </Typography>
-                <Typography variant="body-sm" className="text-muted-foreground text-sm leading-relaxed">
+                <Typography variant="body-sm" className="text-muted-foreground text-xs leading-relaxed">
                   {item.desc}
                 </Typography>
               </Glass>
@@ -414,7 +414,7 @@ export default function HomePage() {
               <Glass rounded="lg" className="p-6 flex flex-col justify-between h-48 border border-border/40 hover:border-accent hover:shadow-xl transition-all duration-500">
                 <div className="flex flex-col gap-1">
                   <Badge variant="accent" className="w-fit text-[10px]">{cat.count}</Badge>
-                  <Typography variant="h3" className="text-xl font-bold text-foreground group-hover:text-accent mt-3 transition-colors">
+                  <Typography variant="h3" className="text-xl font-bold text-primary group-hover:text-accent dark:text-foreground mt-3 transition-colors">
                     رقم {cat.name}
                   </Typography>
                   <Typography variant="body-sm" className="text-muted-foreground text-[11px] leading-relaxed mt-1 font-light">
@@ -433,11 +433,11 @@ export default function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
           {/* Large artistic illustration column */}
-          <div className="lg:col-span-5 relative h-[380px] md:h-[450px] rounded-3xl bg-gradient-to-br from-primary/15 via-background to-background dark:from-[#0E1412] dark:via-[#111A16]/90 dark:to-[#0E1412] flex items-center justify-center border border-border/40 overflow-hidden">
-            <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-accent/10 rounded-full blur-[90px]" />
+          <div className="lg:col-span-5 relative h-[380px] md:h-[450px] rounded-3xl bg-gradient-to-br from-[#2F5D50]/15 via-background to-background dark:from-[#0E1412] dark:via-[#111A16]/90 dark:to-[#0E1412] flex items-center justify-center border border-border/40 overflow-hidden">
+            <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#C8A75D]/10 rounded-full blur-[90px]" />
             <div className="z-10 text-center flex flex-col items-center gap-3">
               <div className="w-20 h-20 rounded-full bg-white/45 dark:bg-black/30 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-lg">
-                <span className="text-foreground font-serif text-3xl font-extrabold">م</span>
+                <span className="text-primary dark:text-accent font-serif text-3xl font-extrabold">م</span>
               </div>
               <span className="text-xs text-accent font-semibold tracking-wider">مزارع نمونه گیلان</span>
               <Typography variant="serif-subtitle" className="text-sm font-light text-muted-foreground max-w-xs px-4">
@@ -468,7 +468,7 @@ export default function HomePage() {
 
             <div className="flex items-center gap-4 mt-4 justify-start">
               <div className="flex flex-col text-right">
-                <span className="text-sm font-bold text-foreground">حاج حسین هاشمی</span>
+                <span className="text-sm font-bold text-primary dark:text-accent">حاج حسین هاشمی</span>
                 <span className="text-[11px] text-muted-foreground">سرپرست تعاونی مزارع نمونه آستانه اشرفیه</span>
               </div>
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
@@ -481,7 +481,7 @@ export default function HomePage() {
       </section>
 
       {/* SECTION 6: Customer Testimonials */}
-      <section className="bg-primary/5 dark:bg-background py-24 w-full border-t border-b border-border/20 text-center">
+      <section className="bg-primary/5 dark:bg-[#070b09] py-24 w-full border-t border-b border-border/20 text-center">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex flex-col gap-2 text-center mb-16">
             <Badge variant="accent" className="w-fit mx-auto gap-1">
@@ -585,7 +585,7 @@ export default function HomePage() {
       </section>
 
       {/* SECTION 9: Final CTA */}
-      <section className="bg-gradient-to-tr from-primary/15 to-transparent dark:from-[#0E1412] dark:to-transparent py-24 w-full border-t border-border/20 text-center">
+      <section className="bg-gradient-to-tr from-[#2F5D50]/15 to-transparent dark:from-[#0E1412] dark:to-transparent py-24 w-full border-t border-border/20 text-center">
         <div className="max-w-4xl mx-auto px-4 flex flex-col items-center gap-6">
           <Typography variant="serif-title" className="text-3xl md:text-5xl font-extrabold leading-tight">
             طعمی به یاد ماندنی، شایسته سفره‌های مجلل شما
