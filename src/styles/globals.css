@@ -64,7 +64,7 @@
 
 /* Dark Theme Variables */
 .dark {
-  --background: #0E1412; /* Deep Charcoal Green Base */
+  --background: #0E1412;
   --foreground: #F1EFEA;
 
   --primary: #2F5D50; /* سبز عمیق بماند */
@@ -75,7 +75,6 @@
 
   --card: #141D19; /* Rich dark-green tile background */
   --card-foreground: #F1EFEA;
-
   --muted: #1E2A24;
   --muted-foreground: #A2B3AC; /* کمی روشن‌تر برای خوانایی */
 
