@@ -9,7 +9,6 @@ import {
   MapPin,
   Mail,
   Truck,
-  CreditCard,
   CheckCircle,
   AlertCircle,
   ArrowRight,
@@ -20,6 +19,7 @@ import {
 import { useCatalogStore } from "../../product-catalog/store";
 import { Button } from "@/components/ui/Button";
 import { Typography } from "@/components/ui/Typography";
+import { createOrderId, saveOrder } from "@/features/orders/store";
 
 // Premium Iranian Provinces list
 const PROVINCES = [
@@ -70,7 +70,7 @@ export const CheckoutWizard: React.FC = () => {
   const [postalCode, setPostalCode] = useState("");
 
   // Delivery Method Selection
-  const [deliveryMethod, setDeliveryMethod] = useState("standard"); // standard, tipax, vip
+  const [deliveryMethod, setDeliveryMethod] = useState<"standard" | "tipax" | "vip">("standard");
 
   // Loading indicator for order submit
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -157,14 +157,28 @@ export const CheckoutWizard: React.FC = () => {
   };
 
   const handleSubmitOrder = () => {
+    if (cart.length === 0) return;
     setIsSubmitting(true);
-    // Simulate premium payment submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      const generatedOrderNum = "SHALI-" + Math.floor(100000 + Math.random() * 900000);
-      setOrderId(generatedOrderNum);
-      setStep(4);
-    }, 2000);
+    const generatedOrderNum = createOrderId();
+    saveOrder({
+      orderId: generatedOrderNum,
+      mobile: phone,
+      customerName: fullName,
+      items: cart,
+      subtotal,
+      shippingCost,
+      total: grandTotal,
+      province,
+      city,
+      address,
+      postalCode,
+      deliveryMethod,
+      status: "registered",
+      createdAt: new Date().toISOString(),
+    });
+    setOrderId(generatedOrderNum);
+    setIsSubmitting(false);
+    setStep(4);
   };
 
   const handleCloseAndReset = () => {
@@ -597,7 +611,7 @@ export const CheckoutWizard: React.FC = () => {
                         {/* Trust badge */}
                         <div className="flex items-center gap-2 text-[10px] text-muted-foreground bg-background/50 dark:bg-black/20 p-2.5 rounded-lg border border-border/5 mt-4">
                           <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
-                          پرداخت امن با پروتکل معتبر بانکی شتاب
+                          سفارش پس از ثبت، برای هماهنگی پرداخت و ارسال بررسی می‌شود.
                         </div>
                       </div>
                     </div>
@@ -651,14 +665,13 @@ export const CheckoutWizard: React.FC = () => {
                       </div>
                       <div className="flex justify-between items-center pt-2 text-sm font-bold text-primary dark:text-accent">
                         <span>{toPersianNum(grandTotal)} تومان</span>
-                        <span>مبلغ پرداخت شده:</span>
+                        <span>مبلغ سفارش:</span>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2 text-[10px] text-muted-foreground justify-center">
                       <Calendar className="w-4 h-4 text-accent" />
-                      یک پیامک تایید با اطلاعات بارنامه به محض تحویل به باربری به شماره{" "}
-                      <strong>{toPersianNum(phone)}</strong> ارسال خواهد شد.
+                      برای پیگیری همین سفارش از کد بالا و شماره <strong>{toPersianNum(phone)}</strong> استفاده کنید.
                     </div>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
@@ -700,12 +713,12 @@ export const CheckoutWizard: React.FC = () => {
                       {isSubmitting ? (
                         <>
                           <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                          در حال ارسال به درگاه بانکی...
+                           در حال ثبت سفارش...
                         </>
                       ) : (
                         <>
-                          <CreditCard className="w-4 h-4" />
-                          پرداخت نهایی و ثبت سفارش
+                          <CheckCircle className="w-4 h-4" />
+                          ثبت نهایی سفارش
                         </>
                       )}
                     </Button>

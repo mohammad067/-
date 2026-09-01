@@ -28,8 +28,7 @@ import {
   Heart
 } from "lucide-react";
 import Link from "next/link";
-import { useCartStore } from "@/features/cart/store";
-import { useWishlistStore } from "@/features/wishlist/store";
+import { useCatalogStore } from "@/features/product-catalog/store";
 
 // Testimonials Mock Database
 const TESTIMONIALS = [
@@ -102,13 +101,15 @@ function BookOpen({ className }: { className?: string }) {
 
 export default function HomePage() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterMessage, setNewsletterMessage] = useState("");
 
   // Structured Data (JSON-LD) for SEO
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Store",
     "name": "طلای شالیزار - فروشگاه برنج لوکس ایرانی",
-    "image": "https://rice-shop.ir/images/og-main.jpg",
+    "image": "https://talaye-shalizar.vercel.app/icon.png",
     "description": "تجربه خرید مستقیم مرغوب‌ترین برنج‌های هاشمی، صدری، دم‌سیاه و طارم معطر گیلان و مازندران.",
     "telephone": "01333445566",
     "address": {
@@ -121,46 +122,38 @@ export default function HomePage() {
     "priceRange": "$$$"
   };
 
-  const wishlistItems = useWishlistStore((state) => state.items);
-  const toggleWishlistItem = useWishlistStore((state) => state.toggleItem);
-  const addItem = useCartStore((state) => state.addItem);
+  const wishlistItems = useCatalogStore((state) => state.wishlist);
+  const toggleWishlistItem = useCatalogStore((state) => state.toggleWishlist);
+  const addItem = useCatalogStore((state) => state.addToCart);
 
   const toggleWishlist = (id: string) => {
-    const exists = wishlistItems.includes(id);
     toggleWishlistItem(id);
-
-    // Toast notification for user action feed
-    const toast = document.createElement("div");
-    toast.className = "fixed bottom-8 left-8 z-50 glass-premium px-6 py-4 rounded-3xl border border-accent/25 shadow-2xl text-xs font-bold text-foreground animate-scale-up direction-rtl";
-    toast.innerHTML = exists
-      ? "محصول از لیست علاقه‌مندی‌ها حذف گردید."
-      : "محصول به لیست علاقه‌مندی‌های شما اضافه شد! ❤️";
-    document.body.appendChild(toast);
-    setTimeout(() => {
-      toast.classList.add("opacity-0", "translate-y-2");
-      toast.style.transition = "all 0.5s ease";
-      setTimeout(() => toast.remove(), 500);
-    }, 3000);
   };
 
   const handleAddToCart = (prod: Product) => {
+    const finalPrice = prod.discountPercent
+      ? prod.price * (1 - prod.discountPercent / 100)
+      : prod.price;
     addItem({
       id: prod.id,
       name: prod.name,
-      price: prod.price,
+      price: finalPrice,
       weight: prod.weight,
       imageChar: prod.imageChar
     });
 
-    const toast = document.createElement("div");
-    toast.className = "fixed bottom-8 left-8 z-50 glass-premium px-6 py-4 rounded-3xl border border-accent/25 shadow-2xl text-xs font-bold text-foreground animate-scale-up direction-rtl";
-    toast.innerHTML = `کیسه برنج ${prod.name} به سبد خرید شما اضافه گردید! 🛒`;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-      toast.classList.add("opacity-0", "translate-y-2");
-      toast.style.transition = "all 0.5s ease";
-      setTimeout(() => toast.remove(), 500);
-    }, 3000);
+  };
+
+  const handleNewsletterSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!/^\S+@\S+\.\S+$/.test(newsletterEmail)) {
+      setNewsletterMessage("لطفاً یک ایمیل معتبر وارد کنید.");
+      return;
+    }
+    const emails = JSON.parse(localStorage.getItem("shalizar-newsletter") || "[]") as string[];
+    localStorage.setItem("shalizar-newsletter", JSON.stringify(Array.from(new Set([...emails, newsletterEmail]))));
+    setNewsletterEmail("");
+    setNewsletterMessage("ایمیل شما با موفقیت ثبت شد.");
   };
 
   return (
@@ -538,15 +531,19 @@ export default function HomePage() {
             زمان برداشت برنج‌های نوبرانه، کدهای تخفیف اختصاصی فصلی و جشنواره‌های برداشت مزارع را مستقیماً در ایمیل خود دریافت کنید.
           </Typography>
 
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md mt-4">
+          <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md mt-4">
             <Input
+              type="email"
+              value={newsletterEmail}
+              onChange={(event) => setNewsletterEmail(event.target.value)}
               placeholder="نشانی ایمیل شما (مثال: email@domain.com)"
               className="px-6 py-3.5 rounded-full text-xs text-center border-border/60 w-full"
             />
             <Button variant="accent" className="w-full sm:w-auto px-8 py-3.5 text-xs font-bold whitespace-nowrap">
               عضویت طلایی
             </Button>
-          </div>
+          </form>
+          {newsletterMessage && <p className="text-xs text-muted-foreground" role="status">{newsletterMessage}</p>}
         </Glass>
       </section>
 
@@ -563,9 +560,9 @@ export default function HomePage() {
             </Typography>
           </div>
           <div>
-            <Button variant="outline" className="border-border text-foreground hover:border-accent text-xs">
+            <a href="https://www.instagram.com/Shalizar_Gold/" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-full border border-border px-5 py-2.5 text-xs text-foreground hover:border-accent transition-colors">
               پیوستن به اینستاگرام ما
-            </Button>
+            </a>
           </div>
         </div>
 

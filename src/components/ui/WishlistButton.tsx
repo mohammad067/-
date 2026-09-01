@@ -3,23 +3,25 @@
 import React from "react";
 import { Heart } from "lucide-react";
 import { clsx } from "clsx";
+import { useRouter } from "next/navigation";
+import { useCatalogStore } from "@/features/product-catalog/store";
 
 interface WishlistButtonProps {
   onClick?: () => void;
   initialFavorited?: boolean;
 }
 
-import { useWishlistStore } from "@/features/wishlist/store";
-
 export const WishlistButton: React.FC<WishlistButtonProps> = ({ onClick }) => {
-  const items = useWishlistStore((state) => state.items);
+  const router = useRouter();
+  const items = useCatalogStore((state) => state.wishlist);
   const totalCount = items.length;
 
   return (
     <button
-      onClick={onClick}
+      onClick={onClick ?? (() => router.push("/products?wishlist=1"))}
       className="relative p-2.5 rounded-full hover:bg-muted/20 text-foreground/80 hover:text-red-500 transition-all duration-300 cursor-pointer flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-accent"
       title="علاقه‌مندی‌ها"
+      aria-label={`علاقه‌مندی‌ها؛ ${totalCount.toLocaleString("fa-IR")} کالا`}
     >
       <Heart
         className={clsx(

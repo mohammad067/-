@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { Typography } from "@/components/ui/Typography";
 import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/common/Container";
@@ -12,26 +13,21 @@ import { ProductFilters } from "./ProductFilters";
 import { ProductSort } from "./ProductSort";
 import { ProductSearch } from "./ProductSearch";
 import { ProductPagination } from "./ProductPagination";
-import { ProductGridSkeleton } from "./ProductSkeleton";
 import { MOCK_PRODUCTS } from "../data/products";
 import { Flame } from "lucide-react";
+import { useCatalogStore } from "../store";
 
 export const CatalogPageContent: React.FC = () => {
-  const [selectedVariety, setSelectedVariety] = useState("");
+  const searchParams = useSearchParams();
+  const [selectedVariety, setSelectedVariety] = useState(searchParams.get("variety") || "");
   const [selectedProvince, setSelectedProvince] = useState("");
   const [maxPrice, setMaxPrice] = useState(2000000);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("default");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Simulate loading delay for premium feeling
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, [selectedVariety, selectedProvince, maxPrice, searchQuery, sortBy, currentPage]);
+  const [showWishlist, setShowWishlist] = useState(searchParams.get("wishlist") === "1");
+  const focusSearch = searchParams.get("focus") === "search";
+  const wishlist = useCatalogStore((state) => state.wishlist);
 
   const onResetFilters = () => {
     setSelectedVariety("");
@@ -40,11 +36,16 @@ export const CatalogPageContent: React.FC = () => {
     setSearchQuery("");
     setSortBy("default");
     setCurrentPage(1);
+    setShowWishlist(false);
   };
 
   // Filter and Sort calculations
   const filteredProducts = useMemo(() => {
     let result = [...MOCK_PRODUCTS];
+
+    if (showWishlist) {
+      result = result.filter((p) => wishlist.includes(p.id));
+    }
 
     // Filter by variety
     if (selectedVariety) {
@@ -91,7 +92,7 @@ export const CatalogPageContent: React.FC = () => {
     }
 
     return result;
-  }, [selectedVariety, selectedProvince, maxPrice, searchQuery, sortBy]);
+  }, [selectedVariety, selectedProvince, maxPrice, searchQuery, sortBy, showWishlist, wishlist]);
 
   // Pagination calculations
   const itemsPerPage = 6;
@@ -125,16 +126,14 @@ export const CatalogPageContent: React.FC = () => {
           <ProductSort sortBy={sortBy} setSortBy={(v) => { setSortBy(v); setCurrentPage(1); }} />
 
           {/* Search Box */}
-          <ProductSearch searchQuery={searchQuery} setSearchQuery={(v) => { setSearchQuery(v); setCurrentPage(1); }} />
+          <ProductSearch autoFocus={focusSearch} searchQuery={searchQuery} setSearchQuery={(v) => { setSearchQuery(v); setCurrentPage(1); }} />
         </div>
 
         {/* Catalog Content Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main Catalog Listing Block */}
           <div className="lg:col-span-3 flex flex-col justify-between min-h-[500px]">
-            {isLoading ? (
-              <ProductGridSkeleton />
-            ) : paginatedProducts.length > 0 ? (
+            {paginatedProducts.length > 0 ? (
               <div className="flex flex-col justify-between h-full">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {paginatedProducts.map((product) => (

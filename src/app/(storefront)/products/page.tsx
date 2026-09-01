@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { CatalogPageContent } from "@/features/product-catalog/components/CatalogPageContent";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Metadata } from "next";
@@ -11,7 +11,9 @@ export const metadata: Metadata = {
 export default function ProductsPage() {
   return (
     <MainLayout>
-      <CatalogPageContent />
+      <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center">در حال بارگذاری محصولات…</div>}>
+        <CatalogPageContent />
+      </Suspense>
     </MainLayout>
   );
 }

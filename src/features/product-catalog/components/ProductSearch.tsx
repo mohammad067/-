@@ -1,17 +1,26 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Search } from "lucide-react";
 
 interface ProductSearchProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  autoFocus?: boolean;
 }
 
-export const ProductSearch: React.FC<ProductSearchProps> = ({ searchQuery, setSearchQuery }) => {
+export const ProductSearch: React.FC<ProductSearchProps> = ({ searchQuery, setSearchQuery, autoFocus = false }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (autoFocus) inputRef.current?.focus();
+  }, [autoFocus]);
+
   return (
     <div className="relative w-full max-w-md">
       <input
+        ref={inputRef}
+        id="product-search"
         type="text"
         placeholder="جستجوی نام رقم برنج یا شهر..."
         value={searchQuery}

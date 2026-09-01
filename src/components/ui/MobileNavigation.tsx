@@ -4,7 +4,6 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "./Logo";
 import { X, PhoneCall } from "lucide-react";
-import { Button } from "./Button";
 import Link from "next/link";
 
 interface MobileNavigationProps {
@@ -18,6 +17,8 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onCl
     { href: "/#products-showcase", label: "محصولات ممتاز" },
     { href: "/bulk-order", label: "خرید عمده" },
     { href: "/order-tracking", label: "پیگیری سفارش" },
+    { href: "/products?focus=search", label: "جستجوی محصولات" },
+    { href: "/products?wishlist=1", label: "علاقه‌مندی‌های من" },
     { href: "/blog", label: " مقالات "},
   ];
 
@@ -76,9 +77,9 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onCl
                 <span className="text-sm font-light">پشتیبانی: 09199724318</span>
                 <PhoneCall className="w-4 h-4 text-accent" />
               </div>
-              <Button variant="primary" className="w-full bg-primary text-white" onClick={onClose}>
-                ورود / ثبت‌ نام
-              </Button>
+              <Link href="/contact" onClick={onClose} className="w-full rounded-full bg-primary text-white px-5 py-3 text-center text-sm font-semibold">
+                تماس و پشتیبانی
+              </Link>
             </div>
           </motion.div>
         </>

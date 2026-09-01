@@ -3,19 +3,20 @@ import "../styles/globals.css";
 import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://talaye-shalizar.vercel.app"),
   title: "فروشگاه برنج لوکس ایرانی | اصالت و کیفیت برتر",
   description: "تجربه خرید مستقیم و آنلاین مرغوب‌ترین ارقام برنج اصیل ایرانی (هاشمی، صدری، دم‌سیاه) با بسته‌بندی نفیس و ارسال اختصاصی.",
   alternates: {
-    canonical: "https://rice-shop.ir",
+    canonical: "https://talaye-shalizar.vercel.app",
   },
   openGraph: {
     title: "فروشگاه برنج لوکس ایرانی | طلای شالیزار",
     description: "تجربه خرید مستقیم و آنلاین مرغوب‌ترین ارقام برنج اصیل ایرانی با بسته‌بندی نفیس و ارسال اختصاصی.",
-    url: "https://rice-shop.ir",
+    url: "https://talaye-shalizar.vercel.app",
     siteName: "طلای شالیزار",
     images: [
       {
-        url: "/talaye-shalizar.png",
+        url: "/icon.png",
         width: 800,
         height: 800,
         alt: "لوگوی طلای شالیزار",
