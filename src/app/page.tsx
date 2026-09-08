@@ -7,8 +7,9 @@ import { Typography } from "@/components/ui/Typography";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { ProductCard } from "@/features/product-catalog/components/ProductCard";
 import { MOCK_PRODUCTS } from "@/features/product-catalog/data/products";
-import { Award, ShieldCheck, Sparkles, Zap, MapPin, Instagram } from "lucide-react";
+import { Award, ShieldCheck, Sparkles, Zap, Instagram } from "lucide-react";
 
 const WHY = [
   { icon: Award, title: "فقط برنج شمال", desc: "هاشمی، طارم، صدری و دم‌سیاه از گیلان و مازندران. مخلوط نداریم." },
@@ -38,24 +39,9 @@ export default function HomePage() {
 
       <section className="max-w-7xl mx-auto px-4 py-16">
         <Typography variant="serif-title" className="text-3xl font-bold text-right mb-8">ارقام برنج گیلان و مازندران</Typography>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {MOCK_PRODUCTS.map((prod) => (
-            <Link key={prod.id} href={`/products/${prod.slug}`}>
-              <Card className="h-full text-right overflow-hidden bg-white border border-[#E5E2DA] hover:shadow-md">
-                <div className="h-40 bg-[#EFE8DC]">
-                  <img src={prod.imageUrl} alt={prod.name} className="w-full h-full object-cover" />
-                </div>
-                <div className="p-4">
-                  <span className="text-xs text-muted-foreground flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    {prod.province}، {prod.region}
-                  </span>
-                  <h3 className="mt-2 font-bold text-primary">{prod.name}</h3>
-                  <p className="text-xs text-muted-foreground mt-1">{prod.summary}</p>
-                  <p className="text-sm font-bold mt-3 text-primary">{prod.price.toLocaleString("fa-IR")} تومان</p>
-                </div>
-              </Card>
-            </Link>
+            <ProductCard key={prod.id} product={prod} />
           ))}
         </div>
       </section>

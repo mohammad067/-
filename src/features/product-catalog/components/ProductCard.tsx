@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Star, MapPin, Heart, ShoppingCart, Check } from "lucide-react";
+import { Star, MapPin, Heart, Eye } from "lucide-react";
 import { Card, CardHeader, CardBody, CardFooter } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -13,8 +13,6 @@ import { useCatalogStore } from "../store";
 export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const { wishlist, toggleWishlist, addToCart } = useCatalogStore();
   const [mounted, setMounted] = useState(false);
-  const [added, setAdded] = useState(false);
-
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 0);
     return () => clearTimeout(t);
@@ -25,56 +23,71 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     : product.price;
 
   return (
-    <Card className="flex flex-col h-full text-right overflow-hidden bg-white border border-[#E5E2DA] rounded-2xl">
-      <Link href={`/products/${product.slug}`} className="relative block h-52 bg-[#EFE8DC] overflow-hidden">
-        <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
+    <Card className="flex flex-col h-full text-right overflow-hidden bg-white border border-[#E5E2DA] rounded-3xl">
+      <div className="relative h-56 bg-[#EFE8DC]">
+        <Link href={`/products/${product.slug}`} className="block h-full">
+          <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
+        </Link>
+        <Badge variant={product.inStock ? "success" : "warning"} className="absolute top-4 left-4 text-[10px]">
+          {product.inStock ? "موجود" : "ناموجود"}
+        </Badge>
         <button
-          onClick={(e) => {
-            e.preventDefault();
-            toggleWishlist(product.id);
-          }}
-          className="absolute top-3 right-3 p-2 rounded-full bg-white/90"
+          onClick={() => toggleWishlist(product.id)}
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/90 shadow-sm"
           aria-label="علاقه‌مندی"
         >
-          <Heart className={`w-4 h-4 ${mounted && wishlist.includes(product.id) ? "fill-red-500 text-red-500" : ""}`} />
+          <Heart className={`w-4 h-4 ${mounted && wishlist.includes(product.id) ? "fill-red-500 text-red-500" : "text-foreground/70"}`} />
         </button>
-        {product.discountPercent ? (
-          <Badge variant="accent" className="absolute top-3 left-3 text-[10px]">
-            {product.discountPercent.toLocaleString("fa-IR")}%
-          </Badge>
-        ) : null}
-      </Link>
-      <CardHeader className="p-4 pb-1">
+        <div className="absolute bottom-3 right-4 flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/90 text-[11px] font-semibold">
+          <span>{product.rating.toLocaleString("fa-IR")}</span>
+          <Star className="w-3 h-3 text-[#C8A75D] fill-[#C8A75D]" />
+        </div>
+      </div>
+
+      <CardHeader className="p-5 pb-2">
         <span className="text-[11px] text-muted-foreground flex items-center gap-1">
           <MapPin className="w-3 h-3" />
           {product.province}، {product.region}
         </span>
         <Link href={`/products/${product.slug}`}>
-          <Typography variant="h3" className="text-base font-bold text-primary mt-1 line-clamp-1">
+          <Typography variant="h3" className="text-lg font-bold text-[#1E2522] mt-1 line-clamp-1">
             {product.name}
           </Typography>
         </Link>
       </CardHeader>
-      <CardBody className="px-4 py-1 flex-grow">
-        <p className="text-xs text-muted-foreground line-clamp-2">{product.summary}</p>
-        <p className="text-[11px] text-muted-foreground mt-2">کیسه {product.weight}</p>
+      <CardBody className="px-5 py-1 flex-grow">
+        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">{product.summary}</p>
       </CardBody>
-      <CardFooter className="p-4 pt-2 flex items-center justify-between gap-2 border-t border-[#E5E2DA]">
-        <span className="text-sm font-bold text-primary">{finalPrice.toLocaleString("fa-IR")} تومان</span>
-        <Button
-          variant="primary"
-          size="sm"
-          disabled={!product.inStock}
-          onClick={() => {
-            addToCart({ id: product.id, name: product.name, price: finalPrice, weight: product.weight, imageChar: product.imageChar });
-            setAdded(true);
-            setTimeout(() => setAdded(false), 1500);
-          }}
-          className="text-xs"
-        >
-          {added ? <Check className="w-3.5 h-3.5" /> : <ShoppingCart className="w-3.5 h-3.5" />}
-          {product.inStock ? (added ? "اضافه شد" : "سبد") : "ناموجود"}
-        </Button>
+      <CardFooter className="p-5 pt-3 flex flex-col gap-3 border-t border-[#E5E2DA]">
+        <div className="flex justify-between items-center w-full">
+          <span className="text-[10px] text-muted-foreground">بسته‌بندی {product.weight}</span>
+          <span className="text-sm font-bold text-[#C8A75D]">{finalPrice.toLocaleString("fa-IR")} تومان</span>
+        </div>
+        <div className="grid grid-cols-2 gap-2 w-full">
+          <Link href={`/products/${product.slug}`}>
+            <Button variant="outline" size="sm" className="w-full text-[11px] gap-1">
+              <Eye className="w-3 h-3" />
+              پیش‌نمایش
+            </Button>
+          </Link>
+          <Button
+            variant="accent"
+            size="sm"
+            disabled={!product.inStock}
+            className="w-full text-[11px]"
+            onClick={() =>
+              addToCart({
+                id: product.id,
+                name: product.name,
+                price: finalPrice,
+                weight: product.weight,
+                imageChar: product.imageChar,
+              })
+            }
+          >
+            {product.inStock ? "خرید نقدی" : "ناموجود"}
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );
