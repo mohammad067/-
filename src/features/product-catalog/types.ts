@@ -13,6 +13,7 @@ export interface Product {
   rating: number;
   reviewsCount: number;
   imageChar: string;
+  imageUrl: string;
   summary: string;
   description: string;
   aromaScore: number;
