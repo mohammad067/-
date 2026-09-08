@@ -30,19 +30,14 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         <Badge variant={product.inStock ? "success" : "warning"} className="absolute top-3 left-3 text-[10px]">
           {product.inStock ? "موجود" : "ناموجود"}
         </Badge>
-        <button
-          onClick={() => toggleWishlist(product.id)}
-          className="absolute top-3 right-3 p-1.5 rounded-full bg-white/90"
-          aria-label="علاقه‌مندی"
-        >
+        <button onClick={() => toggleWishlist(product.id)} className="absolute top-3 right-3 p-1.5 rounded-full bg-white/90" aria-label="علاقه‌مندی">
           <Heart className={`w-4 h-4 ${mounted && wishlist.includes(product.id) ? "fill-red-500 text-red-500" : "text-foreground/70"}`} />
         </button>
         <div className="absolute bottom-2 right-3 flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/90 text-[10px] font-semibold">
           {product.rating.toLocaleString("fa-IR")}
-          <Star className="w-3 h-3 text-[#C8A75D] fill-[#C8A75D]" />
+          <Star className="w-3 h-3 text-primary fill-primary" />
         </div>
       </div>
-
       <div className="px-4 py-3 space-y-2">
         <p className="text-[11px] text-muted-foreground flex items-center gap-1">
           <MapPin className="w-3 h-3" />
@@ -53,22 +48,14 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         </Link>
         <div className="flex items-center justify-between gap-2">
           <span className="text-[11px] text-muted-foreground">{product.weight}</span>
-          <span className="text-sm font-bold text-[#C8A75D]">{finalPrice.toLocaleString("fa-IR")} تومان</span>
+          <span className="text-sm font-bold text-primary">{finalPrice.toLocaleString("fa-IR")} تومان</span>
         </div>
         <Button
-          variant="accent"
+          variant="primary"
           size="sm"
           disabled={!product.inStock}
           className="w-full text-[11px] h-8"
-          onClick={() =>
-            addToCart({
-              id: product.id,
-              name: product.name,
-              price: finalPrice,
-              weight: product.weight,
-              imageChar: product.imageChar,
-            })
-          }
+          onClick={() => addToCart({ id: product.id, name: product.name, price: finalPrice, weight: product.weight, imageChar: product.imageChar })}
         >
           {product.inStock ? "خرید نقدی" : "ناموجود"}
         </Button>
