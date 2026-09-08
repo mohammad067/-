@@ -2,20 +2,20 @@ export interface Product {
   id: string;
   slug: string;
   name: string;
-  variety: "هاشمی" | "صدری" | "دم‌سیاه" | "طارم" | "قهوه‌ای";
-  province: "گیلان" | "مازندران" | "گلستان";
+  variety: "هاشمی" | "صدری" | "دم‌سیاه" | "طارم" | "فجر" | "شیرودی";
+  province: "گیلان" | "مازندران";
   harvestYear: string;
-  weight: string; // e.g. "۱۰ کیلوگرم"
-  price: number; // e.g. 1450000 (stored in Tomans)
-  discountPercent?: number; // e.g. 10 for 10%
+  weight: string;
+  price: number;
+  discountPercent?: number;
   inStock: boolean;
   stockCount: number;
   rating: number;
   reviewsCount: number;
-  imageChar: string; // The central calligraphic letter for glass art
+  imageChar: string;
   summary: string;
   description: string;
-  aromaScore: number; // 1-5 rating for scent
-  lengthScore: number; // 1-5 rating for elongation
-  region: string; // e.g., "آستانه اشرفیه"
+  aromaScore: number;
+  lengthScore: number;
+  region: string;
 }

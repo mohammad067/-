@@ -4,14 +4,14 @@ import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://talaye-shalizar.vercel.app"),
-  title: "فروشگاه برنج لوکس ایرانی | اصالت و کیفیت برتر",
-  description: "تجربه خرید مستقیم و آنلاین مرغوب‌ترین ارقام برنج اصیل ایرانی (هاشمی، صدری، دم‌سیاه) با بسته‌بندی نفیس و ارسال اختصاصی.",
+  title: "طلای شالیزار | برنج شمال گیلان و مازندران",
+  description: "خرید برنج شمال از شالیزار گیلان و مازندران؛ هاشمی، طارم، صدری و دم‌سیاه با مبدأ مشخص.",
   alternates: {
     canonical: "https://talaye-shalizar.vercel.app",
   },
   openGraph: {
-    title: "فروشگاه برنج لوکس ایرانی | طلای شالیزار",
-    description: "تجربه خرید مستقیم و آنلاین مرغوب‌ترین ارقام برنج اصیل ایرانی با بسته‌بندی نفیس و ارسال اختصاصی.",
+    title: "طلای شالیزار | برنج شمال",
+    description: "برنج گیلان و مازندران، مستقیم از شالیزار.",
     url: "https://talaye-shalizar.vercel.app",
     siteName: "طلای شالیزار",
     images: [
