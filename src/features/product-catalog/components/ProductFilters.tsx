@@ -13,6 +13,8 @@ interface ProductFiltersProps {
   setSelectedProvince: (province: string) => void;
   maxPrice: number;
   setMaxPrice: (price: number) => void;
+  inStockOnly: boolean;
+  setInStockOnly: (value: boolean) => void;
   onReset: () => void;
 }
 
@@ -26,33 +28,31 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
   setSelectedProvince,
   maxPrice,
   setMaxPrice,
+  inStockOnly,
+  setInStockOnly,
   onReset,
 }) => {
   return (
-    <Card variant="glass-premium" className="p-6 md:p-8 flex flex-col gap-8 text-right h-fit sticky top-28">
-      <div className="flex items-center justify-between border-b border-border/30 pb-4">
-        <button
-          onClick={onReset}
-          className="text-xs text-[#C8A75D] hover:text-[#B79650] flex items-center gap-1.5 transition-colors cursor-pointer"
-          title="ریست فیلترها"
-        >
+    <Card className="p-6 flex flex-col gap-7 text-right h-fit sticky top-28 bg-white border border-[#E5E2DA]">
+      <div className="flex items-center justify-between border-b border-[#E5E2DA] pb-4">
+        <button onClick={onReset} className="text-xs text-primary flex items-center gap-1.5" type="button">
           <RotateCcw className="w-3.5 h-3.5" />
-          پاک کردن فیلترها
+          پاک کردن
         </button>
         <div className="flex items-center gap-2">
-          <Filter className="w-5 h-5 text-accent" />
-          <Typography variant="h3" className="text-lg font-bold">فیلتر رقم و استان</Typography>
+          <Filter className="w-5 h-5 text-primary" />
+          <Typography variant="h3" className="text-lg font-bold">فیلتر</Typography>
         </div>
       </div>
 
       <div className="flex flex-col gap-3">
-        <Typography variant="h4" className="text-sm font-semibold">ارقام برنج شمال</Typography>
+        <Typography variant="h4" className="text-sm font-semibold">رقم</Typography>
         <div className="flex flex-wrap gap-2">
           {VARIETIES.map((v) => (
             <Badge
               key={v}
-              variant={selectedVariety === v || (v === "همه" && selectedVariety === "") ? "accent" : "outline"}
-              className="cursor-pointer px-3.5 py-1.5 text-xs transition-all duration-300 hover:scale-105"
+              variant={selectedVariety === v || (v === "همه" && selectedVariety === "") ? "primary" : "outline"}
+              className="cursor-pointer px-3 py-1.5 text-xs"
               onClick={() => setSelectedVariety(v === "همه" ? "" : v)}
             >
               {v}
@@ -62,13 +62,13 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
       </div>
 
       <div className="flex flex-col gap-3">
-        <Typography variant="h4" className="text-sm font-semibold">استان برداشت</Typography>
+        <Typography variant="h4" className="text-sm font-semibold">استان</Typography>
         <div className="flex flex-wrap gap-2">
           {PROVINCES.map((p) => (
             <Badge
               key={p}
-              variant={selectedProvince === p || (p === "همه" && selectedProvince === "") ? "accent" : "outline"}
-              className="cursor-pointer px-3.5 py-1.5 text-xs transition-all duration-300 hover:scale-105"
+              variant={selectedProvince === p || (p === "همه" && selectedProvince === "") ? "primary" : "outline"}
+              className="cursor-pointer px-3 py-1.5 text-xs"
               onClick={() => setSelectedProvince(p === "همه" ? "" : p)}
             >
               {p}
@@ -77,12 +77,15 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
         </div>
       </div>
 
+      <label className="flex items-center justify-between text-sm cursor-pointer">
+        <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#2F5D50]" />
+        فقط موجود
+      </label>
+
       <div className="flex flex-col gap-3">
         <div className="flex justify-between items-center">
-          <span className="text-xs text-muted-foreground">
-            تا {(maxPrice).toLocaleString("fa-IR")} تومان
-          </span>
-          <Typography variant="h4" className="text-sm font-semibold">حداکثر بودجه (۱۰ کیلو)</Typography>
+          <span className="text-xs text-muted-foreground">تا {maxPrice.toLocaleString("fa-IR")} تومان</span>
+          <Typography variant="h4" className="text-sm font-semibold">سقف قیمت</Typography>
         </div>
         <input
           type="range"
@@ -91,7 +94,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
           step={50000}
           value={maxPrice}
           onChange={(e) => setMaxPrice(Number(e.target.value))}
-          className="w-full h-1 bg-border rounded-lg appearance-none cursor-pointer accent-[#C8A75D]"
+          className="w-full h-1 bg-border rounded-lg appearance-none cursor-pointer accent-[#2F5D50]"
         />
       </div>
     </Card>
