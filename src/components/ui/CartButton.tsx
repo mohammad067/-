@@ -6,48 +6,32 @@ import { useCatalogStore } from "../../features/product-catalog/store";
 import { CartDrawer } from "../../features/cart/components/CartDrawer";
 import { CheckoutWizard } from "../../features/checkout/components/CheckoutWizard";
 
-interface CartButtonProps {
-  itemCount?: number;
-}
-
-export const CartButton: React.FC<CartButtonProps> = ({ itemCount }) => {
+export const CartButton: React.FC = () => {
   const { cart, setIsCartOpen } = useCatalogStore();
   const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(t);
   }, []);
-
-  // Compute live cart items count from Zustand, fallback to prop on server-side
-  const liveCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const itemsCount = mounted ? liveCount : (itemCount ?? 0);
+  const itemsCount = mounted ? cart.reduce((sum, item) => sum + item.quantity, 0) : 0;
 
   return (
     <>
       <button
         onClick={() => setIsCartOpen(true)}
-        className="relative p-2.5 rounded-full hover:bg-muted/20 text-foreground/80 hover:text-accent transition-all duration-300 cursor-pointer flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-accent"
-        title="سبد خرید شما"
-        aria-label={`سبد خرید شما؛ ${itemsCount.toLocaleString("fa-IR")} کالا`}
+        className="relative p-2.5 rounded-full hover:bg-white text-primary"
+        aria-label="سبد خرید"
       >
-        <ShoppingBag className="w-5 h-5 stroke-1.5" />
+        <ShoppingBag className="w-5 h-5" />
         {itemsCount > 0 && (
-          <span className="absolute top-1.5 right-1.5 bg-accent text-[8px] font-bold text-black h-4 w-4 rounded-full flex items-center justify-center ring-2 ring-background animate-fade-in animate-pulse">
+          <span className="absolute top-1 right-1 bg-primary text-[10px] font-bold text-white h-4 min-w-4 px-1 rounded-full flex items-center justify-center">
             {itemsCount.toLocaleString("fa-IR")}
           </span>
         )}
       </button>
-
-      {/* Global Cart Slide Drawer portal */}
       <CartDrawer />
-
-      {/* Global Checkout Wizard portal */}
       <CheckoutWizard />
     </>
-
   );
 };
 
