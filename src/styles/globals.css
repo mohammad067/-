@@ -30,23 +30,7 @@
   --card: #FFFFFF;
   --card-foreground: #1E2522;
   --muted: #EADFD3;
-  --muted-foreground: #5C6B63;
-  --border: #E5E2DA;
-  --input: #E5E2DA;
-  --ring: #2F5D50;
-}
-
-.dark {
-  --background: #F8F6F2;
-  --foreground: #1E2522;
-  --primary: #2F5D50;
-  --primary-foreground: #F8F6F2;
-  --accent: #3D6B5C;
-  --accent-foreground: #F8F6F2;
-  --card: #FFFFFF;
-  --card-foreground: #1E2522;
-  --muted: #EADFD3;
-  --muted-foreground: #5C6B63;
+  --muted-foreground: #4A5A53;
   --border: #E5E2DA;
   --input: #E5E2DA;
   --ring: #2F5D50;
@@ -60,13 +44,39 @@ html, body {
   line-height: 1.7;
 }
 
+.skip-link {
+  position: absolute;
+  right: 1rem;
+  top: -40px;
+  z-index: 100;
+  background: #2F5D50;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+:focus-visible {
+  outline: 2px solid #2F5D50;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 .glass, .glass-premium {
   background: #FFFFFF;
   border: 1px solid #E5E2DA;
 }
 
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: var(--ring);
-  box-shadow: 0 0 0 2px rgba(47, 93, 80, 0.2);
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #2F5D50;
+  border-color: #2F5D50;
 }
