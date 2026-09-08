@@ -55,29 +55,32 @@ export const CatalogPageContent: React.FC = () => {
     router.replace("/products", { scroll: false });
   };
 
+  const unitPrice = (p: (typeof MOCK_PRODUCTS)[number]) =>
+    p.discountPercent ? p.price * (1 - p.discountPercent / 100) : p.price;
+
   const filteredProducts = useMemo(() => {
     let result = [...MOCK_PRODUCTS];
     if (showWishlist) result = result.filter((p) => wishlist.includes(p.id));
     if (selectedVariety) result = result.filter((p) => p.variety === selectedVariety);
     if (selectedProvince) result = result.filter((p) => p.province === selectedProvince);
     if (inStockOnly) result = result.filter((p) => p.inStock);
-    result = result.filter((p) => {
-      const finalPrice = p.discountPercent ? p.price * (1 - p.discountPercent / 100) : p.price;
-      return finalPrice <= maxPrice;
-    });
+    result = result.filter((p) => unitPrice(p) <= maxPrice);
     if (searchQuery.trim()) {
       const q = searchQuery.trim();
       result = result.filter(
-        (p) => p.name.includes(q) || p.province.includes(q) || p.region.includes(q) || p.variety.includes(q)
+        (p) =>
+          p.name.includes(q) ||
+          p.province.includes(q) ||
+          p.region.includes(q) ||
+          p.variety.includes(q) ||
+          p.summary.includes(q) ||
+          p.description.includes(q)
       );
     }
-    if (sortBy === "price-asc") {
-      result.sort((a, b) => (a.discountPercent ? a.price * (1 - a.discountPercent / 100) : a.price) - (b.discountPercent ? b.price * (1 - b.discountPercent / 100) : b.price));
-    } else if (sortBy === "price-desc") {
-      result.sort((a, b) => (b.discountPercent ? b.price * (1 - b.discountPercent / 100) : b.price) - (a.discountPercent ? a.price * (1 - a.discountPercent / 100) : a.price));
-    } else if (sortBy === "rating-desc") {
-      result.sort((a, b) => b.rating - a.rating);
-    }
+    if (sortBy === "price-asc") result.sort((a, b) => unitPrice(a) - unitPrice(b));
+    else if (sortBy === "price-desc") result.sort((a, b) => unitPrice(b) - unitPrice(a));
+    else if (sortBy === "rating-desc") result.sort((a, b) => b.rating - a.rating);
+    else if (sortBy === "name") result.sort((a, b) => a.name.localeCompare(b.name, "fa"));
     return result;
   }, [selectedVariety, selectedProvince, maxPrice, searchQuery, sortBy, showWishlist, wishlist, inStockOnly]);
 
@@ -92,19 +95,10 @@ export const CatalogPageContent: React.FC = () => {
           </Typography>
           <p className="text-xs text-muted-foreground">{filteredProducts.length.toLocaleString("fa-IR")} محصول</p>
         </div>
-
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-white p-4 rounded-2xl border border-[#E5E2DA]">
           <ProductSort sortBy={sortBy} setSortBy={setSortBy} />
-          <ProductSearch
-            autoFocus={focusSearch}
-            searchQuery={searchQuery}
-            setSearchQuery={(v) => {
-              setSearchQuery(v);
-              syncUrl(selectedVariety, selectedProvince, v);
-            }}
-          />
+          <ProductSearch autoFocus={focusSearch} searchQuery={searchQuery} setSearchQuery={(v) => { setSearchQuery(v); syncUrl(selectedVariety, selectedProvince, v); }} />
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3 min-h-[400px]">
             {filteredProducts.length > 0 ? (
@@ -114,25 +108,15 @@ export const CatalogPageContent: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <EmptyState
-                title="رقمی پیدا نشد"
-                description="فیلتر را عوض کنید یا پاک کنید."
-                action={<Button variant="primary" onClick={onResetFilters}>پاک کردن فیلتر</Button>}
-              />
+              <EmptyState title="رقمی پیدا نشد" description="فیلتر را عوض کنید یا پاک کنید." action={<Button variant="primary" onClick={onResetFilters}>پاک کردن فیلتر</Button>} />
             )}
           </div>
           <div className="order-first lg:order-last">
             <ProductFilters
               selectedVariety={selectedVariety}
-              setSelectedVariety={(v) => {
-                setSelectedVariety(v);
-                syncUrl(v, selectedProvince, searchQuery);
-              }}
+              setSelectedVariety={(v) => { setSelectedVariety(v); syncUrl(v, selectedProvince, searchQuery); }}
               selectedProvince={selectedProvince}
-              setSelectedProvince={(v) => {
-                setSelectedProvince(v);
-                syncUrl(selectedVariety, v, searchQuery);
-              }}
+              setSelectedProvince={(v) => { setSelectedProvince(v); syncUrl(selectedVariety, v, searchQuery); }}
               maxPrice={maxPrice}
               setMaxPrice={setMaxPrice}
               inStockOnly={inStockOnly}
