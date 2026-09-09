@@ -26,14 +26,22 @@ const TRUST = [
   { icon: Headphones, title: "پیگیری سفارش", desc: "قبل از پرداخت آنلاین با شما هماهنگ می‌شویم" },
 ];
 
+function SectionHead({ title, href, linkLabel }: { title: string; href?: string; linkLabel?: string }) {
+  return (
+    <div className="flex items-end justify-between gap-4 mb-6" dir="rtl">
+      <Typography variant="serif-title" className="text-2xl md:text-3xl font-bold text-right">{title}</Typography>
+      {href && linkLabel ? (
+        <Link href={href} className="text-sm text-primary shrink-0">{linkLabel}</Link>
+      ) : null}
+    </div>
+  );
+}
+
 function Rail({ title, href, products }: { title: string; href: string; products: typeof MOCK_PRODUCTS }) {
   if (products.length === 0) return null;
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12">
-      <div className="flex items-end justify-between mb-6 gap-4">
-        <Link href={href} className="text-sm text-primary shrink-0">مشاهده همه ←</Link>
-        <Typography variant="serif-title" className="text-2xl md:text-3xl font-bold text-right">{title}</Typography>
-      </div>
+    <section className="max-w-7xl mx-auto px-4 py-12" dir="rtl">
+      <SectionHead title={title} href={href} linkLabel="مشاهده همه" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.slice(0, 4).map((p) => (
           <ProductCard key={p.id} product={p} />
@@ -67,18 +75,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="categories" className="max-w-7xl mx-auto px-4 py-12">
-        <div className="flex items-end justify-between mb-6">
-          <Link href="/products" className="text-sm text-primary">همه محصولات ←</Link>
-          <Typography variant="serif-title" className="text-2xl md:text-3xl font-bold">دسته‌بندی ارقام</Typography>
-        </div>
+      <section id="categories" className="max-w-7xl mx-auto px-4 py-12" dir="rtl">
+        <SectionHead title="دسته‌بندی ارقام" href="/products" linkLabel="همه محصولات" />
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {CATEGORIES.map((c) => (
             <Link key={c.name} href={c.href} className="group rounded-2xl overflow-hidden border border-[#E5E2DA] bg-white text-right">
               <div className="h-28 overflow-hidden">
                 <img src={c.img} alt={c.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
               </div>
-              <div className="p-3">
+              <div className="p-3 text-right">
                 <p className="font-bold text-sm">{c.name}</p>
                 <p className="text-[11px] text-muted-foreground">{c.hint}</p>
               </div>
@@ -87,11 +92,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#F3EEE4] py-8">
+      <section className="bg-[#F3EEE4] py-8" dir="rtl">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
           {TRUST.map((item) => (
             <div key={item.title} className="bg-white rounded-2xl p-4 text-right border border-[#E5E2DA]">
-              <item.icon className="w-5 h-5 text-primary mb-2" />
+              <item.icon className="w-5 h-5 text-primary mb-2 mr-0 ml-auto" />
               <p className="font-bold text-sm">{item.title}</p>
               <p className="text-[11px] text-muted-foreground">{item.desc}</p>
             </div>
@@ -104,27 +109,24 @@ export default function HomePage() {
       <Rail title="برنج گیلان" href="/products?province=گیلان" products={gilan} />
       <Rail title="برنج مازندران" href="/products?province=مازندران" products={mazandaran} />
 
-      <section id="story" className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        <div className="h-72 rounded-3xl overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80" alt="شالیزار گیلان" className="w-full h-full object-cover" />
-        </div>
-        <div className="text-right space-y-4">
-          <p className="text-xs text-muted-foreground flex items-center gap-1 justify-end"><MapPin className="w-3 h-3" /> آستانه اشرفیه</p>
+      <section id="story" className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center" dir="rtl">
+        <div className="text-right space-y-4 order-1">
+          <p className="text-xs text-muted-foreground flex items-center gap-1 justify-start"><MapPin className="w-3 h-3" /> آستانه اشرفیه</p>
           <Typography variant="serif-title" className="text-3xl font-bold">از شالیزار تا کیسه</Typography>
           <p className="text-muted-foreground text-sm leading-relaxed">برنج را از گیلان و مازندران می‌آوریم. واسطه کم است تا سال برداشت و رقم روشن بماند.</p>
         </div>
+        <div className="h-72 rounded-3xl overflow-hidden order-2">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80" alt="شالیزار گیلان" className="w-full h-full object-cover" />
+        </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 py-12">
-        <div className="flex items-end justify-between mb-6">
-          <a href="https://www.instagram.com/Shalizar_Gold/" className="text-sm flex items-center gap-2 text-primary"><Instagram className="w-4 h-4" /> @Shalizar_Gold</a>
-          <Typography variant="serif-title" className="text-2xl font-bold">شالیزار را ببینید</Typography>
-        </div>
+      <section className="max-w-7xl mx-auto px-4 py-12" dir="rtl">
+        <SectionHead title="شالیزار را ببینید" href="https://www.instagram.com/Shalizar_Gold/" linkLabel="@Shalizar_Gold" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {CATEGORIES.slice(0, 4).map((c) => (
             <a key={c.name} href="https://www.instagram.com/Shalizar_Gold/" className="relative h-52 rounded-2xl overflow-hidden">
               <img src={c.img} alt={c.name} className="w-full h-full object-cover" />
-              <span className="absolute bottom-0 inset-x-0 bg-[#F8F6F2]/92 text-[11px] px-3 py-2">{c.name} • {c.hint}</span>
+              <span className="absolute bottom-0 inset-x-0 bg-[#F8F6F2]/92 text-[11px] px-3 py-2 text-right">{c.name} • {c.hint}</span>
             </a>
           ))}
         </div>
