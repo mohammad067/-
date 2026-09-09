@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Star, MapPin, Heart } from "lucide-react";
 import { Card } from "@/components/ui/Card";
@@ -8,83 +8,55 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Product } from "../types";
 import { useCatalogStore } from "../store";
-import { MOCK_PRODUCTS } from "../data/products";
 
 export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const { wishlist, toggleWishlist, addToCart } = useCatalogStore();
   const [mounted, setMounted] = useState(false);
-  const [activeId, setActiveId] = useState(product.id);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 0);
     return () => clearTimeout(t);
   }, []);
 
-  useEffect(() => {
-    setActiveId(product.id);
-  }, [product.id]);
-
-  const weights = useMemo(() => {
-    const list = MOCK_PRODUCTS.filter((p) => p.variety === product.variety && p.region === product.region);
-    return list.length > 1 ? list : [product];
-  }, [product]);
-
-  const active = weights.find((p) => p.id === activeId) || product;
-  const finalPrice = active.discountPercent
-    ? active.price * (1 - active.discountPercent / 100)
-    : active.price;
+  const finalPrice = product.discountPercent
+    ? product.price * (1 - product.discountPercent / 100)
+    : product.price;
 
   return (
-    <Card className="flex flex-col text-right overflow-hidden bg-white border border-[#E5E2DA] rounded-3xl">
-      <div className="relative h-56 bg-[#EFE8DC]">
-        <Link href={`/products/${active.slug}`} className="block h-full">
-          <img src={active.imageUrl} alt={active.name} className="w-full h-full object-cover" />
+    <Card className="flex flex-col text-right overflow-hidden bg-white border border-[#E5E2DA] rounded-3xl min-w-0 w-full">
+      <div className="relative h-36 md:h-56 bg-[#EFE8DC]">
+        <Link href={`/products/${product.slug}`} className="block h-full">
+          <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
         </Link>
-        <Badge variant={active.inStock ? "success" : "warning"} className="absolute top-3 left-3 text-[10px]">
-          {active.inStock ? "موجود" : "ناموجود"}
+        <Badge variant={product.inStock ? "success" : "warning"} className="absolute top-2 left-2 text-[10px]">
+          {product.inStock ? "موجود" : "ناموجود"}
         </Badge>
-        <button type="button" onClick={() => toggleWishlist(active.id)} className="absolute top-3 right-3 p-1.5 rounded-full bg-white/90" aria-label="علاقه‌مندی">
-          <Heart className={`w-4 h-4 ${mounted && wishlist.includes(active.id) ? "fill-red-500 text-red-500" : "text-foreground/70"}`} />
+        <button type="button" onClick={() => toggleWishlist(product.id)} className="absolute top-2 right-2 p-1.5 rounded-full bg-white/90" aria-label="علاقه‌مندی">
+          <Heart className={`w-4 h-4 ${mounted && wishlist.includes(product.id) ? "fill-red-500 text-red-500" : "text-foreground/70"}`} />
         </button>
-        <div className="absolute bottom-2 right-3 flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/90 text-[10px] font-semibold">
-          {active.rating.toLocaleString("fa-IR")}
+        <div className="absolute bottom-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/90 text-[10px] font-semibold">
+          {product.rating.toLocaleString("fa-IR")}
           <Star className="w-3 h-3 text-primary fill-primary" />
         </div>
       </div>
-      <div className="px-4 py-3 space-y-2">
-        <p className="text-[11px] text-muted-foreground flex items-center gap-1">
-          <MapPin className="w-3 h-3" />
-          {active.province}، {active.region}
+      <div className="px-2.5 md:px-4 py-2.5 space-y-1.5">
+        <p className="text-[10px] md:text-[11px] text-muted-foreground flex items-center gap-1">
+          <MapPin className="w-3 h-3 shrink-0" />
+          <span className="line-clamp-1">{product.province}، {product.region}</span>
         </p>
-        <Link href={`/products/${active.slug}`} className="block font-bold text-[#1E2522] text-[15px] leading-snug line-clamp-1">
-          {active.name}
+        <Link href={`/products/${product.slug}`} className="block font-bold text-[#1E2522] text-xs md:text-[15px] leading-snug line-clamp-2">
+          {product.name}
         </Link>
-        {weights.length > 1 && (
-          <div className="flex gap-1 justify-end">
-            {weights.map((w) => (
-              <button
-                key={w.id}
-                type="button"
-                onClick={() => setActiveId(w.id)}
-                className={`text-[10px] rounded-full border px-2 py-1 ${w.id === active.id ? "bg-primary text-white border-primary" : "bg-white border-[#E5E2DA]"}`}
-              >
-                {w.weight}
-              </button>
-            ))}
-          </div>
-        )}
-        {weights.length === 1 && <span className="text-[11px] text-muted-foreground">{active.weight}</span>}
-        <div className="flex items-center justify-between gap-2">
-          <span className="text-sm font-bold text-primary">{finalPrice.toLocaleString("fa-IR")} تومان</span>
-        </div>
+        <p className="text-[11px] text-muted-foreground">{product.weight}</p>
+        <p className="text-xs md:text-sm font-bold text-primary">{finalPrice.toLocaleString("fa-IR")} تومان</p>
         <Button
           variant="primary"
           size="sm"
-          disabled={!active.inStock}
+          disabled={!product.inStock}
           className="w-full text-[11px] h-8"
-          onClick={() => addToCart({ id: active.id, name: active.name, price: finalPrice, weight: active.weight, imageChar: active.imageChar })}
+          onClick={() => addToCart({ id: product.id, name: product.name, price: finalPrice, weight: product.weight, imageChar: product.imageChar })}
         >
-          {active.inStock ? "خرید نقدی" : "ناموجود"}
+          {product.inStock ? "خرید نقدی" : "ناموجود"}
         </Button>
       </div>
     </Card>
