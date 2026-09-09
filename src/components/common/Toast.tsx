@@ -9,7 +9,7 @@ export const Toast: React.FC = () => {
 
   useEffect(() => {
     if (!toast) return;
-    const t = setTimeout(clearToast, 2500);
+    const t = setTimeout(clearToast, 2800);
     return () => clearTimeout(t);
   }, [toast, clearToast]);
 
@@ -18,7 +18,8 @@ export const Toast: React.FC = () => {
   return (
     <div
       role="status"
-      className="fixed bottom-4 right-4 z-[80] max-w-[min(90vw,20rem)] rounded-2xl bg-[#1E2522] text-white text-sm px-4 py-3 shadow-lg"
+      aria-live="polite"
+      className="fixed bottom-6 left-1/2 z-[90] -translate-x-1/2 rounded-full bg-[#1E2522] text-white text-sm px-5 py-3 shadow-lg"
     >
       {toast}
     </div>
