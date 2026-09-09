@@ -50,6 +50,11 @@ html, body {
   color: var(--foreground);
   background-color: var(--background);
   line-height: 1.65;
+  text-align: right;
+}
+
+input, select, textarea {
+  text-align: right;
 }
 
 :focus-visible {
