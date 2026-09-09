@@ -11,17 +11,17 @@ export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
     const Component = as || getDefaultElement(variant);
 
     const baseClasses = clsx(
-      "transition-colors duration-300",
+      "font-[Vazirmatn,system-ui,sans-serif]",
       {
-        "text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary leading-tight": variant === "h1",
-        "text-2xl md:text-3xl lg:text-4xl font-bold text-primary leading-snug": variant === "h2",
-        "text-xl md:text-2xl font-semibold text-primary": variant === "h3",
-        "text-lg md:text-xl font-medium text-foreground": variant === "h4",
-        "text-base md:text-lg text-foreground/80 leading-relaxed font-light": variant === "body",
-        "text-sm md:text-base text-foreground/70 leading-relaxed font-light": variant === "body-sm",
-        "text-xs text-muted-foreground tracking-wide": variant === "caption",
-        "font-serif text-3xl md:text-4xl lg:text-5xl text-primary font-medium tracking-wide": variant === "serif-title",
-        "font-serif text-lg md:text-xl text-accent font-light italic": variant === "serif-subtitle",
+        "text-2xl md:text-4xl font-bold tracking-tight text-primary leading-snug": variant === "h1",
+        "text-xl md:text-2xl font-bold text-primary leading-snug": variant === "h2",
+        "text-lg md:text-xl font-semibold text-primary": variant === "h3",
+        "text-base md:text-lg font-medium text-foreground": variant === "h4",
+        "text-sm md:text-[15px] text-foreground/80 leading-relaxed": variant === "body",
+        "text-xs md:text-sm text-foreground/70 leading-relaxed": variant === "body-sm",
+        "text-xs text-muted-foreground": variant === "caption",
+        "text-xl md:text-3xl text-primary font-bold leading-snug": variant === "serif-title",
+        "text-sm md:text-base text-accent": variant === "serif-subtitle",
       },
       className
     );

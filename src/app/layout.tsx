@@ -14,12 +14,16 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <head>
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link
           href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased min-h-screen bg-[#F8F6F2] text-[#1E2522]">{children}<Analytics /></body>
+      <body className="antialiased min-h-screen bg-[#F8F6F2] text-[#1E2522] text-[15px] font-[Vazirmatn,system-ui,sans-serif]">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
