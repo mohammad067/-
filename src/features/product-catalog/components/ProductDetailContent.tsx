@@ -19,7 +19,7 @@ const EXTRA_SHOTS = [
 const FAQS = [
   { q: "این برنج مخلوط است؟", a: "خیر. هر کیسه یک رقم است با منطقه مشخص در گیلان یا مازندران." },
   { q: "سال برداشت کدام است؟", a: "برداشت ۱۴۰۴ روی کیسه نوشته شده." },
-  { q: "چطور بپزم؟", a: "کرایه بر اساس وزن کل سبد و استان گیرنده حساب می‌شود." },
+  { q: "ارسال چطور است؟", a: "کرایه بر اساس وزن کل سبد و استان گیرنده حساب می‌شود." },
   { q: "اگر از پخت راضی نبودم چی؟", a: "پیگیری می‌کنیم. ادعای آزمایشگاه یا ارگانیک نداریم." },
 ];
 
@@ -29,15 +29,23 @@ export const ProductDetailContent: React.FC<{ product: Product }> = ({ product }
   const [qty, setQty] = useState(1);
   const [shot, setShot] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [activeId, setActiveId] = useState(product.id);
 
   const weights = useMemo(
     () => MOCK_PRODUCTS.filter((p) => p.variety === product.variety && p.region === product.region),
     [product]
   );
-  const active = weights.find((p) => p.id === product.id) || product;
+  const active = weights.find((p) => p.id === activeId) || product;
   const gallery = [active.imageUrl, ...EXTRA_SHOTS.filter((url) => url !== active.imageUrl)];
   const price = active.discountPercent ? active.price * (1 - active.discountPercent / 100) : active.price;
-  const related = MOCK_PRODUCTS.filter((p) => p.id !== active.id && p.province === active.province).slice(0, 4);
+  const related = MOCK_PRODUCTS.filter((p) => p.id !== product.id && p.variety !== product.variety && p.province === product.province).slice(0, 4);
+
+  const selectWeight = (id: string) => {
+    setActiveId(id);
+    setAdded(false);
+    setQty(1);
+    setShot(0);
+  };
 
   return (
     <div className="max-w-7xl mx-auto w-full px-4 md:px-8 py-8 text-right">
@@ -46,9 +54,9 @@ export const ProductDetailContent: React.FC<{ product: Product }> = ({ product }
         <span>/</span>
         <Link href="/products" className="hover:text-primary">فروشگاه</Link>
         <span>/</span>
-        <Link href={`/products?variety=${encodeURIComponent(active.variety)}`} className="hover:text-primary">{active.variety}</Link>
+        <Link href={`/products?variety=${encodeURIComponent(product.variety)}`} className="hover:text-primary">{product.variety}</Link>
         <span>/</span>
-        <span className="text-foreground">{active.name}</span>
+        <span className="text-foreground">{product.name}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
@@ -83,15 +91,18 @@ export const ProductDetailContent: React.FC<{ product: Product }> = ({ product }
 
           <div>
             <p className="text-xs font-semibold mb-2">وزن / بسته‌بندی</p>
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-2 flex-wrap" role="listbox" aria-label="انتخاب وزن">
               {(weights.length > 1 ? weights : [active]).map((w) => (
-                <Link
+                <button
                   key={w.id}
-                  href={`/products/${w.slug}`}
+                  type="button"
+                  role="option"
+                  aria-selected={w.id === active.id}
+                  onClick={() => selectWeight(w.id)}
                   className={`text-sm rounded-full border px-4 py-2 ${w.id === active.id ? "bg-primary text-white border-primary" : "bg-white border-[#E5E2DA]"}`}
                 >
                   {w.weight}
-                </Link>
+                </button>
               ))}
             </div>
           </div>
@@ -134,8 +145,8 @@ export const ProductDetailContent: React.FC<{ product: Product }> = ({ product }
 
       <section className="mt-14 space-y-4 text-sm leading-8 text-[#3A4540]">
         <h2 className="text-xl font-bold text-foreground">توضیحات محصول</h2>
-        <p>{active.description} {active.summary} این کیسه برای سفره روزانه و پخت مهمانی مناسب است.</p>
-        <p>رقم {active.variety} از {active.region} در {active.province} برداشت {active.harvestYear} است. مخلوط شهری نیست.</p>
+        <p>{active.description} {active.summary}</p>
+        <p>رقم {active.variety} از {active.region} ، برداشت {active.harvestYear}.</p>
       </section>
 
       <section className="mt-10">
@@ -161,12 +172,7 @@ export const ProductDetailContent: React.FC<{ product: Product }> = ({ product }
         <h2 className="text-xl font-bold mb-4">پرسش‌های متداول</h2>
         <div className="space-y-2">
           {FAQS.map((item, i) => (
-            <button
-              key={item.q}
-              type="button"
-              onClick={() => setOpenFaq(openFaq === i ? null : i)}
-              className="w-full text-right bg-white border border-[#E5E2DA] rounded-2xl px-4 py-3"
-            >
+            <button key={item.q} type="button" onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full text-right bg-white border border-[#E5E2DA] rounded-2xl px-4 py-3">
               <p className="font-semibold text-sm">{item.q}</p>
               {openFaq === i && <p className="text-sm text-muted-foreground mt-2 leading-7">{item.a}</p>}
             </button>
