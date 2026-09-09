@@ -25,12 +25,8 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   }, [product.id]);
 
   const weights = useMemo(() => {
-    const siblings = MOCK_PRODUCTS.filter(
-      (p) => p.variety === product.variety && p.region === product.region && p.name.replace(/۰-۹۵ کیلویی/g, "").slice(0, 12) === product.name.slice(0, 12)
-    );
     const list = MOCK_PRODUCTS.filter((p) => p.variety === product.variety && p.region === product.region);
-    const unique = list.length > 1 ? list : [product];
-    return unique;
+    return list.length > 1 ? list : [product];
   }, [product]);
 
   const active = weights.find((p) => p.id === activeId) || product;
@@ -47,7 +43,7 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         <Badge variant={active.inStock ? "success" : "warning"} className="absolute top-3 left-3 text-[10px]">
           {active.inStock ? "موجود" : "ناموجود"}
         </Badge>
-        <button onClick={() => toggleWishlist(active.id)} className="absolute top-3 right-3 p-1.5 rounded-full bg-white/90" aria-label="علاقه‌مندی">
+        <button type="button" onClick={() => toggleWishlist(active.id)} className="absolute top-3 right-3 p-1.5 rounded-full bg-white/90" aria-label="علاقه‌مندی">
           <Heart className={`w-4 h-4 ${mounted && wishlist.includes(active.id) ? "fill-red-500 text-red-500" : "text-foreground/70"}`} />
         </button>
         <div className="absolute bottom-2 right-3 flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/90 text-[10px] font-semibold">
@@ -77,9 +73,7 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             ))}
           </div>
         )}
-        {weights.length === 1 && (
-          <span className="text-[11px] text-muted-foreground">{active.weight}</span>
-        )}
+        {weights.length === 1 && <span className="text-[11px] text-muted-foreground">{active.weight}</span>}
         <div className="flex items-center justify-between gap-2">
           <span className="text-sm font-bold text-primary">{finalPrice.toLocaleString("fa-IR")} تومان</span>
         </div>
