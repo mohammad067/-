@@ -6,9 +6,9 @@ import { Toast } from "../common/Toast";
 
 export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground overflow-x-hidden">
+    <div dir="rtl" className="min-h-screen flex flex-col bg-background text-foreground overflow-x-hidden text-right">
       <Navbar />
-      <main id="content" className="flex-grow flex flex-col w-full">
+      <main id="content" className="flex-grow flex flex-col w-full text-right">
         <PageWrapper>{children}</PageWrapper>
       </main>
       <Footer />
