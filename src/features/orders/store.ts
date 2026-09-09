@@ -12,7 +12,7 @@ export interface StoredOrder {
   city: string;
   address: string;
   postalCode: string;
-  deliveryMethod: "standard" | "tipax" | "vip";
+  deliveryMethod: "standard" | "tipax" | "vip" | "weight";
   status: "registered";
   createdAt: string;
 }
