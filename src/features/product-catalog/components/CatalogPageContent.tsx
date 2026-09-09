@@ -85,24 +85,21 @@ export const CatalogPageContent: React.FC = () => {
   }, [selectedVariety, selectedProvince, maxPrice, searchQuery, sortBy, showWishlist, wishlist, inStockOnly]);
 
   return (
-    <Section className="py-12 md:py-16">
+    <Section className="py-8 md:py-16">
       <Container>
-        <div className="flex flex-col gap-2 mb-10 text-right">
+        <div className="flex flex-col gap-2 mb-8 text-right">
           <Badge variant="primary" className="w-fit self-end">فروشگاه برنج شمال</Badge>
-          <Typography variant="serif-title" className="text-3xl md:text-5xl font-bold mt-2">برنج شمال؛ گیلان و مازندران</Typography>
-          <Typography variant="body" className="max-w-2xl text-muted-foreground mt-2">
-            هاشمی، طارم، صدری، دم‌سیاه، فجر و شیرودی. قهوه‌ای همان رقم هاشمی است.
-          </Typography>
+          <Typography variant="serif-title" className="text-2xl md:text-5xl font-bold mt-2">برنج شمال؛ گیلان و مازندران</Typography>
           <p className="text-xs text-muted-foreground">{filteredProducts.length.toLocaleString("fa-IR")} محصول</p>
         </div>
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-white p-4 rounded-2xl border border-[#E5E2DA]">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 bg-white p-3 md:p-4 rounded-2xl border border-[#E5E2DA]">
           <ProductSort sortBy={sortBy} setSortBy={setSortBy} />
           <ProductSearch autoFocus={focusSearch} searchQuery={searchQuery} setSearchQuery={(v) => { setSearchQuery(v); syncUrl(selectedVariety, selectedProvince, v); }} />
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3 min-h-[400px]">
             {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
                 {filteredProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
