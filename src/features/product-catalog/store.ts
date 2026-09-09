@@ -14,13 +14,15 @@ export interface CartItem {
 
 interface ProductCatalogState {
   cart: CartItem[];
-  wishlist: string[]; // List of product IDs
+  wishlist: string[];
+  toast: string | null;
   isCartOpen: boolean;
   isCheckoutOpen: boolean;
   addToCart: (product: { id: string; name: string; price: number; weight?: string; imageChar?: string }) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   toggleWishlist: (productId: string) => void;
+  clearToast: () => void;
   clearCart: () => void;
   setIsCartOpen: (open: boolean) => void;
   setIsCheckoutOpen: (open: boolean) => void;
@@ -31,6 +33,7 @@ export const useCatalogStore = create<ProductCatalogState>()(
     (set) => ({
       cart: [],
       wishlist: [],
+      toast: null,
       isCartOpen: false,
       isCheckoutOpen: false,
       addToCart: (product) =>
@@ -41,7 +44,7 @@ export const useCatalogStore = create<ProductCatalogState>()(
               cart: state.cart.map((item) =>
                 item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
               ),
-              isCartOpen: true, // Automatically slide drawer open on add-to-cart for a seamless visual flow!
+              isCartOpen: true,
             };
           }
           return {
@@ -68,14 +71,16 @@ export const useCatalogStore = create<ProductCatalogState>()(
             wishlist: isWishlisted
               ? state.wishlist.filter((id) => id !== productId)
               : [...state.wishlist, productId],
+            toast: isWishlisted ? "از علاقه‌مندی حذف شد" : "به علاقه‌مندی اضافه شد",
           };
         }),
+      clearToast: () => set({ toast: null }),
       clearCart: () => set({ cart: [] }),
       setIsCartOpen: (open) => set({ isCartOpen: open }),
       setIsCheckoutOpen: (open) => set({ isCheckoutOpen: open }),
     }),
     {
-      name: "talaye-shalizar-cart-store", // Persian premium storage namespace
+      name: "talaye-shalizar-cart-store",
       partialize: (state) => ({
         cart: state.cart,
         wishlist: state.wishlist,
