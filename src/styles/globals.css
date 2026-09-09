@@ -37,14 +37,8 @@
   --ring: #2F5D50;
 }
 
-html {
-  font-size: 15px;
-}
-
-html, body, button, input, select, textarea {
-  font-family: "Vazirmatn", system-ui, sans-serif;
-}
-
+html { font-size: 15px; }
+html, body, button, input, select, textarea { font-family: "Vazirmatn", system-ui, sans-serif; }
 html, body {
   min-height: 100vh;
   color: var(--foreground);
@@ -52,30 +46,18 @@ html, body {
   line-height: 1.65;
   text-align: right;
 }
-
-input, select, textarea {
-  text-align: right;
-}
-
-:focus-visible {
-  outline: 2px solid #2F5D50;
-  outline-offset: 3px;
-}
-
+input, select, textarea { text-align: right; }
+:focus-visible { outline: 2px solid #2F5D50; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+.glass, .glass-premium { background: #FFFFFF; border: 1px solid #E5E2DA; }
 
-.glass, .glass-premium {
-  background: #FFFFFF;
-  border: 1px solid #E5E2DA;
+@keyframes roadmap {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
-
-input:focus-visible, select:focus-visible, textarea:focus-visible {
-  outline: 2px solid #2F5D50;
-  border-color: #2F5D50;
+@keyframes roadmapStep {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
