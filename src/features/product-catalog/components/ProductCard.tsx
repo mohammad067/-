@@ -20,9 +20,9 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     : product.price;
 
   return (
-    <article className="min-w-0 w-full text-right">
+    <article className="min-w-0 w-full text-right bg-white border border-[#E5E2DA] rounded-2xl overflow-hidden">
       <Link href={`/products/${product.slug}`} className="block">
-        <div className="relative aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#EFE8DC]">
+        <div className="relative aspect-square bg-[#EFE8DC]">
           <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
           {product.discountPercent ? (
             <span className="absolute top-2 right-2 text-[10px] bg-[#C45C26] text-white rounded-md px-1.5 py-0.5">
@@ -41,7 +41,7 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             <Heart className={`w-4 h-4 ${mounted && wishlist.includes(product.id) ? "fill-red-500 text-red-500" : "text-[#1E2522]"}`} />
           </button>
         </div>
-        <div className="pt-2.5 space-y-1">
+        <div className="p-3 space-y-1">
           <h3 className="font-bold text-[13px] md:text-sm leading-6 line-clamp-2 min-h-[3rem]">{product.name}</h3>
           <p className="text-[11px] text-muted-foreground line-clamp-1">{product.summary}</p>
           <p className="text-sm md:text-base font-bold text-[#1E2522] pt-1">
