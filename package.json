@@ -5,6 +5,9 @@
   "workspaces": [
     "apps/web"
   ],
+  "dependencies": {
+    "next": "16.2.11"
+  },
   "scripts": {
     "dev": "npm run dev --workspace=talaye-shalizar-web",
     "build": "npm run build --workspace=talaye-shalizar-web",
