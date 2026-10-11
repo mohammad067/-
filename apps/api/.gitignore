@@ -9,6 +9,8 @@
 /.cursor/
 /.agents/
 /.claude/
+/AGENTS.md
+/CLAUDE.md
 /.idea
 /.nova
 /.phpunit.cache
