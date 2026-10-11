@@ -25,6 +25,9 @@
     "zod": "3.24.1",
     "zustand": "5.0.1"
   },
+  "optionalDependencies": {
+    "lightningcss-linux-x64-gnu": "1.32.0"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "4.3.3",
