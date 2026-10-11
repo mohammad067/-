@@ -6,15 +6,14 @@
         ▲
         │   E2E (Playwright)          — few, critical user journeys
         │  Integration (RTL + MSW)    — feature-level flows
-        │ Unit (Vitest)               — services, stores, utils, hooks
+        │ Unit (PHPUnit/Vitest)       — actions, stores, utils, hooks
         ▼
 ```
 
 ## 2. Unit Tests (Vitest)
 
-- **Domain services** (`src/server/services`): pure business logic tested
-  with no framework dependencies — pricing, inventory checks, order state
-  transitions.
+- **Laravel actions** (`apps/api/app/Actions`): domain behavior tested against
+  the test database, including inventory transactions and cart lifecycle.
 - **Zustand stores**: instantiate store, dispatch actions, assert resulting
   state, without rendering React.
 - **Utilities** (`src/lib`): pure functions (formatters, validators).
@@ -46,7 +45,7 @@
 
 ## 5. Test Data
 
-- A seed script (`src/server/seed`) generates deterministic fixture data
+- Laravel seeders under `apps/api/database/seeders` generate deterministic fixture data
   (products, a test admin, a test customer) for local development, CI, and
   E2E runs.
 - MSW handlers for integration tests live alongside each feature
@@ -55,7 +54,8 @@
 
 ## 6. CI Gates
 
-- Every pull request runs: type-check, lint, unit tests, integration tests.
+- Every pull request runs the Next.js build/lint checks plus Laravel Pint,
+  PHPUnit, and Composer validation.
 - E2E suite runs on merge to `main` and before production deploys (see
   `13-deployment.md`).
 - A PR cannot merge with failing tests or a coverage regression below the

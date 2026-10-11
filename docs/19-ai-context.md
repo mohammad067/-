@@ -7,13 +7,20 @@ This document serves as the high-context, single source of truth for Artificial 
 ## 1. Project Identity & Status
 - **Project Name**: Rice Shop — Premium Iranian Rice Store (طلای شالیزار)
 - **Current Phase**: Phase 6 (Home Storefront Experience) Completed
-- **Current Status**: Built the complete immersive, premium Persian storefront landing page at `/` with floating luxury Hero, Featured Rice Grid (8 varieties with full hover effects and interactive Quick View modals), Why Choose Us showcase, Category grid, Editorial narrative, Customer testimonials, Newsletter subscription, Instagram social integration, and final conversion CTA. Relocated the design-system sandbox to `/design-system` for modularity. Fully verified with perfect static production builds and zero linting warnings.
-- **Next Phase**: Phase 7 (Shopping Cart & Order Orchestrations)
+- **Current Status**: The storefront and Laravel API use the `apps/web` and
+  `apps/api` monorepo layout. Secure guest-cart synchronization, abandoned-cart
+  tracking, the complete Laravel-backed catalog, customer accounts, address
+  book, password recovery, SMS verification, order history, and authenticated
+  checkout are connected end to end. Laravel remains authoritative for price,
+  stock, inventory reservation, and orders.
+- **Next Phase**: Select and integrate a payment gateway, then add the Filament
+  operations panel.
 
 ---
 
 ## 2. Tech Stack Definition
-- **Framework**: Next.js 15 (App Router with Server Components as default)
+- **Storefront**: Next.js 16.2.11 with React 19
+- **Backend**: Laravel 13 on PHP 8.4 with Eloquent and PHPUnit
 - **Runtime**: React 19
 - **Languages**: TypeScript (Strict mode enabled)
 - **Styling**: Tailwind CSS v4 (Using CSS variables inside `globals.css`)
@@ -28,10 +35,12 @@ This document serves as the high-context, single source of truth for Artificial 
 
 ## 3. High-Level Architecture
 The project is built on **Feature-Based Architecture**:
-- `src/app/`: Handles physical URL paths, layout nesting, and Server/Client Page boundaries.
-- `src/features/`: Contains functional modules (e.g., `cart`, `product-catalog`). Each feature houses its localized `components/`, `hooks/`, `store.ts`, and types.
+- `apps/web/src/app/`: Handles physical URL paths, layout nesting, and Server/Client Page boundaries.
+- `apps/web/src/features/`: Contains storefront feature modules.
 - `src/shared/`: Shareable, cross-feature blocks (`components/`, `services/`, `hooks/`, `lib/`, `types/`, `styles/`, `config/`).
-- `src/server/`: Dedicated backend service layer, data access repositories, validation schemas, and database connectors. Fully decoupled from client code.
+- `apps/web/src/server/`: Next.js BFF-only code; it does not own commerce rules.
+- `apps/api/`: Laravel owns products, prices, inventory, carts, orders,
+  payments, scheduled jobs, and the future Filament panel.
 
 ---
 
@@ -52,16 +61,23 @@ The project is built on **Feature-Based Architecture**:
 - [x] Created layout primitives: `Container.tsx`, `Section.tsx`, `MaxWidth.tsx`, `PageWrapper.tsx`, and `MainLayout.tsx`.
 - [x] Structured App Router layout segments: `loading.tsx` (Loading Layout), `error.tsx` (Error Layout), and `not-found.tsx` (Not Found Layout).
 - [x] Added fully operational E2E coverage for storefront pages, floating Navbar navigation, and state visualizers via Playwright tests (`tests/storefront.spec.ts`) (Phase 5).
-- [x] Designed mock product database mapping 8 premium Iranian rice products (Phase 5 - Catalog).
+- [x] Seeded 8 premium Iranian rice products in Laravel and connected all
+  catalog views to the API (Phase 5 - Catalog).
 - [x] Implemented ProductCard, ProductGrid, ProductFilters, ProductSort, ProductSearch, ProductPagination, and ProductSkeleton elements (Phase 5 - Catalog).
 - [x] Built the responsive, SEO-optimized Catalog Page `/products` and single Product Detail Page `/products/[slug]`.
 - [x] Developed the luxury Persian Homepage storefront at `/` hosting comprehensive structural sections (Phase 6 - Storefront).
 - [x] Built the premium, interactive `QuickViewModal.tsx` for dynamic product detail previews directly on the homepage (Phase 6 - Storefront).
 - [x] Separated design system demonstration into a clean sandbox route at `/design-system` (Phase 6 - Storefront).
+- [x] Connected storefront cart writes to Laravel through HTTP-only BFF cookies.
+- [x] Required real Laravel registration/login before idempotent order creation and inventory reservation.
+- [x] Added standalone login/registration, logout, profile, address management,
+  order history, password recovery, and configurable Kavenegar OTP delivery.
 
 ### Current Work
-- [x] Static validation and build verifications (0 lint warnings, perfect compilations).
-- [ ] Awaiting developer review and instructions for the next phase.
+- [x] Next.js production build and application-source TypeScript validation.
+- [x] Laravel formatter and full PHPUnit suite.
+- [x] Existing React lint errors in ThemeToggle and catalog URL-state synchronization were cleaned up.
+- [ ] Payment provider selection and integration.
 
 ---
 

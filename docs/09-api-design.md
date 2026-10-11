@@ -1,88 +1,57 @@
-# API Design (Route Handlers)
+# API Design
 
-## 1. Conventions
+## Ownership
 
-- REST-style resource endpoints under `src/app/api/**/route.ts`.
-- JSON request/response bodies; `Content-Type: application/json`.
-- All request bodies and query params validated with `zod` schemas shared
-  from `src/server/validation/`.
-- Responses follow a consistent envelope:
+The versioned JSON API lives in `apps/api` and Laravel owns validation,
+authorization, pricing, stock, order, and payment decisions. Next.js BFF
+handlers may forward requests and manage secure cookies, but must not duplicate
+those rules.
 
-```ts
-// Success
-{ "data": T }
+Successful resources use Laravel's `{ "data": ... }` envelope. Domain errors
+use a stable code and HTTP status. Monetary fields are integer rials and public
+identifiers are ULIDs, except product lookup which uses its SEO slug.
 
-// Error
-{ "error": { "code": string, "message": string, "details"?: unknown } }
-```
+## Implemented v1 endpoints
 
-## 2. Resource Endpoints (v1)
-
-| Method | Path | Description | Auth |
+| Method | Path | Purpose | Access |
 |---|---|---|---|
-| GET | `/api/products` | List products (filters, pagination via query params) | Public |
-| GET | `/api/products/:slug` | Get single product | Public |
-| GET | `/api/cart` | Get current cart (session/user-scoped) | Public (guest) / Customer |
-| POST | `/api/cart/items` | Add item to cart | Public (guest) / Customer |
-| PATCH | `/api/cart/items/:id` | Update item quantity | Public (guest) / Customer |
-| DELETE | `/api/cart/items/:id` | Remove item | Public (guest) / Customer |
-| POST | `/api/orders` | Place an order (checkout) | Customer |
-| GET | `/api/orders` | List current user's orders | Customer |
-| GET | `/api/orders/:id` | Get order detail | Customer (own order) / Admin |
-| PATCH | `/api/admin/inventory/:id` | Update stock levels | Admin |
-| PATCH | `/api/admin/orders/:id` | Update order status | Admin |
+| GET | `/api/v1/products` | Filtered cursor-paginated catalog | Public |
+| GET | `/api/v1/products/{slug}` | Published product detail | Public |
+| POST | `/api/v1/carts` | Create guest cart and one-time token | Public |
+| GET | `/api/v1/carts/{cartId}` | Read or recover a guest cart | Cart token |
+| PUT | `/api/v1/carts/{cartId}/items/{variantId}` | Set item quantity | Cart token |
+| DELETE | `/api/v1/carts/{cartId}/items/{variantId}` | Remove item | Cart token |
+| POST | `/api/v1/auth/register` | Create a customer account | Public, throttled |
+| POST | `/api/v1/auth/login` | Create an API session | Public, throttled |
+| POST | `/api/v1/auth/password/request` | Send a password-reset OTP without account enumeration | Public, throttled |
+| POST | `/api/v1/auth/password/confirm` | Consume OTP and replace password | Public, throttled |
+| GET | `/api/v1/auth/me` | Read the current customer | Bearer token |
+| POST | `/api/v1/auth/logout` | Revoke the current API session | Bearer token |
+| GET/PATCH | `/api/v1/account/profile` | Read or update customer profile | Bearer token |
+| GET/POST | `/api/v1/account/addresses` | List or create saved addresses | Bearer token |
+| PATCH/DELETE | `/api/v1/account/addresses/{address}` | Update or delete an owned address | Bearer token |
+| GET | `/api/v1/account/orders` | Paginated customer order history | Bearer token |
+| POST | `/api/v1/account/phone-verification/request` | Send phone-verification OTP | Bearer token, throttled |
+| POST | `/api/v1/account/phone-verification/confirm` | Consume phone-verification OTP | Bearer token, throttled |
+| POST | `/api/v1/orders` | Place an idempotent customer order | Bearer + cart token + idempotency key |
+| GET | `/api/v1/orders/{orderId}` | Read a customer-owned order | Bearer token |
 
-## 3. Pagination
+The guest cart token is sent in `X-Cart-Token`. Next.js must keep it in a
+secure HTTP-only cookie rather than local storage. An abandoned, unexpired cart
+is restored when its valid token is presented.
 
-Cursor-based pagination for list endpoints:
+Visitors may keep a guest cart, but order placement requires a registered and
+authenticated customer. It requires `X-Idempotency-Key`, takes the cart ID plus
+recipient/address data, recalculates all prices in Laravel, reserves inventory,
+and links the order to `users.id` in the same transaction. The BFF stores the
+plain API token only in an HTTP-only cookie; Laravel stores only its SHA-256
+hash.
 
-```
-GET /api/products?cursor=<opaque_cursor>&limit=20
-```
+## Planned endpoints
 
-Response includes `nextCursor: string | null`.
+Payment initiation/verification, webhooks, refunds, and expanded order tracking
+will be added under the same `/api/v1` namespace after the payment provider and
+authorization requirements are finalized.
 
-## 4. Error Codes
-
-| Code | HTTP Status | Meaning |
-|---|---|---|
-| `VALIDATION_ERROR` | 400 | Request failed schema validation |
-| `UNAUTHENTICATED` | 401 | Missing/invalid session |
-| `FORBIDDEN` | 403 | Authenticated but lacks permission |
-| `NOT_FOUND` | 404 | Resource does not exist |
-| `CONFLICT` | 409 | e.g. insufficient stock at checkout |
-| `INTERNAL_ERROR` | 500 | Unexpected server error |
-
-## 5. Route Handler Pattern
-
-Route handlers stay thin, delegating to domain services:
-
-```ts
-// src/app/api/cart/items/route.ts
-export async function POST(req: Request) {
-  const body = await req.json()
-  const parsed = addCartItemSchema.safeParse(body)
-  if (!parsed.success) {
-    return NextResponse.json(
-      { error: { code: 'VALIDATION_ERROR', message: 'Invalid payload', details: parsed.error.flatten() } },
-      { status: 400 }
-    )
-  }
-
-  const session = await getSession(req)
-  const result = await cartService.addItem(session, parsed.data)
-
-  return NextResponse.json({ data: result })
-}
-```
-
-## 6. Idempotency
-
-- `POST /api/orders` accepts an `Idempotency-Key` header so retried checkout
-  requests (e.g. due to network flakiness) do not create duplicate orders.
-
-## 7. Versioning
-
-- v1 is unversioned in the URL (`/api/...`). If breaking changes are needed
-  in the future, endpoints will be namespaced (`/api/v2/...`) rather than
-  breaking existing consumers.
+Payment redirects are not proof of payment; Laravel accepts success only after
+server-to-server gateway verification.

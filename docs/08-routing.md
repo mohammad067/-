@@ -8,7 +8,8 @@ public URL:
 - `(storefront)` — public: home, product listing, product detail, cart,
   checkout.
 - `(account)` — requires authenticated customer session: orders, profile.
-- `(admin)` — requires `admin` role: inventory management, order management.
+- Administration is served by Filament from Laravel rather than a Next.js
+  route group.
 
 ## 2. URL Map (v1)
 
@@ -21,11 +22,11 @@ public URL:
 | `/checkout` | storefront | Checkout flow |
 | `/account/orders` | account | Order history |
 | `/account/profile` | account | Profile management |
-| `/admin/inventory` | admin | Inventory management |
-| `/admin/orders` | admin | Order management |
-| `/api/products` | — | Product API |
-| `/api/cart` | — | Cart API |
-| `/api/orders` | — | Orders API |
+| `/api/cart` | BFF | Sync local UI cart with secure Laravel guest cart |
+| `/api/auth` | BFF | Register, log in, log out, and resolve the current account |
+| `/api/orders` | BFF | Place and track authenticated Laravel orders |
+
+Laravel endpoints are versioned under `/api/v1/*`; see `09-api-design.md`.
 
 ## 3. Layouts
 
@@ -37,11 +38,11 @@ public URL:
 
 ## 4. Access Control at the Route Level
 
-- `(account)` and `(admin)` layouts perform a server-side session check
+- `(account)` layouts perform a server-side session check
   (redirecting to `/login` or a 403 page) before rendering children — access
   control is enforced at the layout/server level, not just hidden in the UI.
 - Middleware (`middleware.ts`) provides a first line of defense for route
-  matching (e.g. redirect unauthenticated users hitting `/admin/*` before
+  matching (e.g. redirect unauthenticated users hitting `/account/*` before
   the layout even renders).
 
 ## 5. Data Loading per Route

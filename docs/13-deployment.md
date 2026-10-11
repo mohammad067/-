@@ -2,19 +2,17 @@
 
 ## 1. Hosting
 
-- Target platform: Vercel (native Next.js support, preview deployments per
-  PR, edge network). Alternative (self-hosted Node/Docker) documented as a
-  fallback if platform requirements change — to be confirmed before
-  implementation.
+- `apps/web` can deploy to Vercel. `apps/api` requires a PHP 8.4 runtime,
+  relational database, queue worker, persistent scheduler, and shared cache.
+  The Laravel hosting target remains a deployment decision.
 
 ## 2. CI Pipeline (per Pull Request)
 
-1. Install dependencies (cached).
-2. Type-check (`tsc --noEmit`).
-3. Lint (`eslint`).
-4. Unit + integration tests (`vitest`).
-5. Build (`next build`) to catch build-time errors early.
-6. Deploy PR preview environment.
+1. Install Node and Composer dependencies with caches.
+2. Build and lint `apps/web`.
+3. Run Pint, PHPUnit, and Composer validation in `apps/api`.
+4. Build deployable artifacts for both applications.
+5. Deploy PR preview environments.
 
 ## 3. CD Pipeline (merge to `main`)
 
@@ -32,9 +30,8 @@
 
 ## 5. Database Migrations
 
-- Migrations run as an explicit CI/CD step before the new application
-  version receives traffic, using the chosen ORM's migration tooling (final
-  ORM choice pending — see `02-tech-stack.md`).
+- Laravel migrations run through `php artisan migrate --force` as an explicit
+  deployment step before the new API version receives traffic.
 - Migrations must be backward-compatible with the previous app version for
   the duration of a rolling deploy (expand/contract pattern for breaking
   schema changes).
