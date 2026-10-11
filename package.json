@@ -1,0 +1,14 @@
+{
+  "name": "talaye-shalizar",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=talaye-shalizar-web",
+    "build": "npm run build --workspace=talaye-shalizar-web",
+    "lint": "npm run lint --workspace=talaye-shalizar-web",
+    "typecheck": "npm run typecheck --workspace=talaye-shalizar-web"
+  }
+}

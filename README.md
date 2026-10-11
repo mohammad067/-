@@ -18,10 +18,14 @@ Laravel through its BFF routes.
 Storefront:
 
 ```bash
-cd apps/web
-copy .env.example .env.local
+copy apps\web\.env.example apps\web\.env.local
+npm ci
 npm run dev
 ```
+
+The root npm workspace owns the storefront lockfile and scripts. Run npm
+commands from the repository root so local installs and Vercel use the same
+dependency graph.
 
 API:
 

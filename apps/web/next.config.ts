@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const laravelUrl = new URL(
-  process.env.LARAVEL_API_URL ?? "http://127.0.0.1:8000/api/v1",
+  process.env.LARAVEL_API_URL?.trim() || "http://127.0.0.1:8000/api/v1",
 );
 const laravelRunsLocally = ["127.0.0.1", "localhost", "::1"].includes(
   laravelUrl.hostname,
