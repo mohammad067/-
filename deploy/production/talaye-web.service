@@ -1,0 +1,21 @@
+[Unit]
+Description=Talaye Shalizar Next.js storefront
+After=network.target php8.4-fpm.service mariadb.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/talaye-shalizar
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=HOSTNAME=127.0.0.1
+EnvironmentFile=/var/www/talaye-shalizar/apps/web/.env.production
+ExecStart=/usr/bin/node apps/web/.next/standalone/apps/web/server.js
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -2,9 +2,14 @@
 
 ## 1. Hosting
 
-- `apps/web` can deploy to Vercel. `apps/api` requires a PHP 8.4 runtime,
-  relational database, queue worker, persistent scheduler, and shared cache.
-  The Laravel hosting target remains a deployment decision.
+- Production uses one Ubuntu VPS behind Nginx. Nginx proxies the Next.js
+  storefront, serves the Laravel API and Filament through PHP 8.4 FPM, and
+  exposes public product media on a dedicated CDN hostname.
+- MariaDB/MySQL is the production relational database. PostgreSQL is not part
+  of this deployment. The queue worker and scheduler run as persistent server
+  services.
+- The concrete server setup and environment contract live in
+  `deploy/production/README.md`.
 
 ## 2. CI Pipeline (per Pull Request)
 
@@ -42,7 +47,7 @@
   (provider TBD).
 - Error tracking (e.g. Sentry) captures unhandled exceptions client- and
   server-side, tagged with release version.
-- Uptime/health check endpoint (`/api/health`) used by the hosting platform
+- Uptime/health check endpoint (`/up`) used by the hosting platform
   and external monitoring.
 
 ## 7. Release Cadence

@@ -66,5 +66,5 @@
 | `playwright` | End-to-end testing |
 | `eslint` + `prettier` | Linting and formatting |
 
-Laravel/Eloquent is the selected persistence layer. SQLite is used locally;
-the production relational database is chosen during deployment planning.
+Laravel/Eloquent is the selected persistence layer. SQLite is used locally and
+in automated tests; production uses MariaDB/MySQL. PostgreSQL is not required.

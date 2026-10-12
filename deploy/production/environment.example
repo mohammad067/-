@@ -1,0 +1,30 @@
+# Public host names (without https://)
+STOREFRONT_DOMAIN=example.com
+API_DOMAIN=api.example.com
+CDN_DOMAIN=cdn.example.com
+
+# Laravel production environment
+APP_NAME="Talaye Shalizar API"
+APP_ENV=production
+APP_KEY=
+APP_DEBUG=false
+APP_URL=https://api.example.com
+CORS_ALLOWED_ORIGINS=https://example.com,https://www.example.com
+PUBLIC_DISK_URL=https://cdn.example.com
+
+# MariaDB/MySQL only; PostgreSQL is not used.
+DB_CONNECTION=mariadb
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=talaye_shalizar
+DB_USERNAME=talaye_app
+DB_PASSWORD=CHANGE_TO_A_LONG_RANDOM_PASSWORD
+
+SESSION_DRIVER=database
+CACHE_STORE=database
+QUEUE_CONNECTION=database
+FILESYSTEM_DISK=public
+
+# Storefront server-side connection to Laravel and public image host.
+LARAVEL_API_URL=https://api.example.com/api/v1
+STOREFRONT_ASSET_URL=https://cdn.example.com

@@ -1,0 +1,17 @@
+[Unit]
+Description=Talaye Shalizar Laravel queue worker
+After=network.target mariadb.service php8.4-fpm.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/talaye-shalizar/apps/api
+ExecStart=/usr/bin/php artisan queue:work --sleep=3 --tries=3 --timeout=120 --max-time=3600
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
