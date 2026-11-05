@@ -35,7 +35,7 @@ class ProductsTable
                     ->label('شهر')
                     ->searchable(),
                 TextColumn::make('rice_variety')
-                    ->label('رقم')
+                    ->label('نوع برنج')
                     ->searchable(),
                 TextColumn::make('harvest_year')
                     ->label('برداشت')

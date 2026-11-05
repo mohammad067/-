@@ -20,7 +20,13 @@ class ShipmentResource extends Resource
 {
     protected static ?string $model = Shipment::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTruck;
+
+    protected static string|\UnitEnum|null $navigationGroup = 'عملیات';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $recordTitleAttribute = 'tracking_code';
 
     protected static ?string $modelLabel = 'ارسال';
 

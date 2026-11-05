@@ -22,7 +22,13 @@ class ProductVariantResource extends Resource
 {
     protected static ?string $model = ProductVariant::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCube;
+
+    protected static string|\UnitEnum|null $navigationGroup = 'کاتالوگ';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'sku';
 
     protected static ?string $modelLabel = 'واریانت';
 

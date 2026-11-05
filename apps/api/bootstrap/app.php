@@ -17,6 +17,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // The application can be served behind HTTPS reverse proxies (for
+        // example a tunnel in development or Nginx in production). Trust the
+        // forwarded protocol/host so Filament and Livewire generate HTTPS
+        // asset and update URLs instead of browser-blocked HTTP URLs.
+        $middleware->trustProxies(at: '*');
+
         $middleware->alias(['auth.api' => AuthenticateApiToken::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

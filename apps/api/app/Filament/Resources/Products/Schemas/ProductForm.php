@@ -38,9 +38,9 @@ class ProductForm
                     ->label('توضیحات')
                     ->rows(6)
                     ->columnSpanFull(),
-                TextInput::make('origin_province')->label('استان مبدأ'),
-                TextInput::make('origin_city')->label('شهر مبدأ'),
-                TextInput::make('rice_variety')->label('رقم برنج'),
+                TextInput::make('origin_province')->label('استان محل کشت'),
+                TextInput::make('origin_city')->label('شهر محل کشت'),
+                TextInput::make('rice_variety')->label('نوع برنج'),
                 TextInput::make('harvest_year')
                     ->label('سال برداشت')
                     ->numeric(),

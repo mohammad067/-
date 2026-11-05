@@ -20,13 +20,33 @@ class CartResource extends Resource
 {
     protected static ?string $model = Cart::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClock;
+
+    protected static string|\UnitEnum|null $navigationGroup = 'عملیات';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'public_id';
 
     protected static ?string $modelLabel = 'سبد رهاشده';
 
     protected static ?string $pluralModelLabel = 'سبدهای رهاشده';
 
     protected static ?string $navigationLabel = 'سبدهای رهاشده';
+
+    public static function getNavigationBadge(): ?string
+    {
+        $count = static::getModel()::query()
+            ->where('status', CartStatus::Abandoned)
+            ->count();
+
+        return $count > 0 ? (string) $count : null;
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'danger';
+    }
 
     public static function form(Schema $schema): Schema
     {

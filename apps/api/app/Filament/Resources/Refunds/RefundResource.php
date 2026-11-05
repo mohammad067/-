@@ -18,7 +18,13 @@ class RefundResource extends Resource
 {
     protected static ?string $model = Refund::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedReceiptRefund;
+
+    protected static string|\UnitEnum|null $navigationGroup = 'فروش';
+
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $recordTitleAttribute = 'public_id';
 
     protected static ?string $modelLabel = 'بازپرداخت';
 
