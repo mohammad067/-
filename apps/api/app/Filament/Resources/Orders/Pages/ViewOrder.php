@@ -25,7 +25,7 @@ class ViewOrder extends ViewRecord
                 ->schema([
                     Select::make('status')
                         ->label('وضعیت جدید')
-                        ->options(fn (Order $record): array => collect(TransitionOrderStatus::allowedTargets($record->status))
+                        ->options(fn (Order $record): array => collect(TransitionOrderStatus::allowedTargetsFor($record))
                             ->mapWithKeys(fn (OrderStatus $status): array => [$status->value => $status->getLabel()])
                             ->all())
                         ->required(),
@@ -46,7 +46,7 @@ class ViewOrder extends ViewRecord
                     $this->refreshFormData(['status', 'cancelled_at', 'completed_at']);
                     Notification::make()->title('وضعیت سفارش تغییر کرد.')->success()->send();
                 })
-                ->visible(fn (Order $record): bool => TransitionOrderStatus::allowedTargets($record->status) !== []),
+                ->visible(fn (Order $record): bool => TransitionOrderStatus::allowedTargetsFor($record) !== []),
         ];
     }
 }

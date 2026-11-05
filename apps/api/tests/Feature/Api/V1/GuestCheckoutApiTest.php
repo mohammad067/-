@@ -109,6 +109,22 @@ class GuestCheckoutApiTest extends TestCase
         $this->assertSame(2, $inventoryItem->fresh()->reserved);
     }
 
+    public function test_same_cart_cannot_create_a_second_order_with_a_different_idempotency_key(): void
+    {
+        [$cart, $cartToken, , $inventoryItem] = $this->createCartWithItem();
+
+        $this->postGuestOrder($cart, $cartToken, 'checkout-request-0000000000000101')
+            ->assertCreated();
+        $this->postGuestOrder($cart, $cartToken, 'checkout-request-0000000000000102')
+            ->assertConflict()
+            ->assertJsonPath('error.code', 'CART_UNAVAILABLE');
+
+        $this->assertDatabaseCount(Order::class, 1);
+        $this->assertDatabaseCount(InventoryReservation::class, 1);
+        $this->assertDatabaseCount(InventoryMovement::class, 1);
+        $this->assertSame(2, $inventoryItem->fresh()->reserved);
+    }
+
     public function test_wrong_cart_token_returns_404_and_creates_nothing(): void
     {
         [$cart] = $this->createCartWithItem();

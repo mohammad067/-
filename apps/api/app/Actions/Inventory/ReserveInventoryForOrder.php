@@ -19,7 +19,8 @@ class ReserveInventoryForOrder
     public function handle(Order $order): Collection
     {
         return DB::transaction(function () use ($order): Collection {
-            $orderItems = $order->items()
+            $lockedOrder = Order::query()->lockForUpdate()->findOrFail($order->id);
+            $orderItems = $lockedOrder->items()
                 ->whereNotNull('product_variant_id')
                 ->with('variant')
                 ->orderBy('product_variant_id')
@@ -41,33 +42,36 @@ class ReserveInventoryForOrder
                     continue;
                 }
 
+                $affectedRows = InventoryItem::query()
+                    ->whereBelongsTo($variant, 'variant')
+                    ->whereRaw('(on_hand - reserved) >= ?', [$orderItem->quantity])
+                    ->update([
+                        'reserved' => DB::raw('reserved + '.(int) $orderItem->quantity),
+                        'updated_at' => now(),
+                    ]);
+
                 $inventoryItem = InventoryItem::query()
                     ->whereBelongsTo($variant, 'variant')
                     ->lockForUpdate()
                     ->first();
 
-                $availableQuantity = $inventoryItem?->availableQuantity() ?? 0;
-
-                if ($inventoryItem === null || $availableQuantity < $orderItem->quantity) {
+                if ($affectedRows !== 1 || $inventoryItem === null) {
                     throw new InsufficientStock(
                         $variant->public_id,
                         $orderItem->quantity,
-                        $availableQuantity,
+                        $inventoryItem?->availableQuantity() ?? 0,
                     );
                 }
-
-                $inventoryItem->reserved += $orderItem->quantity;
-                $inventoryItem->save();
 
                 $idempotencyKey = hash('sha256', "reserve:{$order->public_id}:{$variant->public_id}");
 
                 InventoryReservation::query()->create([
-                    'order_id' => $order->id,
+                    'order_id' => $lockedOrder->id,
                     'product_variant_id' => $variant->id,
                     'quantity' => $orderItem->quantity,
                     'status' => InventoryReservationStatus::Active,
                     'idempotency_key' => $idempotencyKey,
-                    'expires_at' => $order->expires_at ?? now()->addMinutes(20),
+                    'expires_at' => $lockedOrder->expires_at ?? now()->addMinutes(20),
                 ]);
 
                 InventoryMovement::query()->create([
@@ -79,11 +83,11 @@ class ReserveInventoryForOrder
                     'balance_reserved' => $inventoryItem->reserved,
                     'idempotency_key' => $idempotencyKey,
                     'reference_type' => 'order',
-                    'reference_id' => $order->public_id,
+                    'reference_id' => $lockedOrder->public_id,
                 ]);
             }
 
-            return $order->inventoryReservations()->get();
+            return $lockedOrder->inventoryReservations()->get();
         }, attempts: 3);
     }
 }

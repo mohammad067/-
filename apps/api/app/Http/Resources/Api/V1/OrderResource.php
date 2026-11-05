@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Api\V1;
 
-use App\Enums\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -41,8 +40,7 @@ class OrderResource extends JsonResource
             ),
             'items' => OrderItemResource::collection($this->whenLoaded('items')),
             'customerNote' => $this->customer_note,
-            'canPay' => $this->status === OrderStatus::PendingPayment
-                && ($this->expires_at === null || $this->expires_at->isFuture()),
+            'canPay' => $this->resource->canBePaid(),
             'placedAt' => $this->placed_at?->toIso8601String(),
             'expiresAt' => $this->expires_at?->toIso8601String(),
         ];

@@ -11,6 +11,7 @@ return [
 
     'checkout' => [
         'payment_window_minutes' => (int) env('ORDER_PAYMENT_WINDOW_MINUTES', 20),
+        'expiration_chunk_size' => (int) env('ORDER_EXPIRATION_CHUNK_SIZE', 100),
         'shipping_methods' => [
             'standard' => [
                 'name' => 'ارسال استاندارد',

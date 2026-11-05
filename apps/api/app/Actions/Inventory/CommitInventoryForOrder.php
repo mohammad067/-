@@ -15,7 +15,8 @@ class CommitInventoryForOrder
     public function handle(Order $order): void
     {
         DB::transaction(function () use ($order): void {
-            $reservations = $order->inventoryReservations()
+            $lockedOrder = Order::query()->lockForUpdate()->findOrFail($order->id);
+            $reservations = $lockedOrder->inventoryReservations()
                 ->where('status', InventoryReservationStatus::Active->value)
                 ->with('variant')
                 ->orderBy('product_variant_id')
@@ -51,7 +52,7 @@ class CommitInventoryForOrder
                     'balance_reserved' => $inventoryItem->reserved,
                     'idempotency_key' => hash('sha256', "commit:{$reservation->idempotency_key}"),
                     'reference_type' => 'order',
-                    'reference_id' => $order->public_id,
+                    'reference_id' => $lockedOrder->public_id,
                 ]);
 
                 $reservation->update([

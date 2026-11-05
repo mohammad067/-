@@ -21,7 +21,8 @@ class ReleaseInventoryForOrder
         }
 
         DB::transaction(function () use ($order, $finalStatus): void {
-            $reservations = $order->inventoryReservations()
+            $lockedOrder = Order::query()->lockForUpdate()->findOrFail($order->id);
+            $reservations = $lockedOrder->inventoryReservations()
                 ->where('status', InventoryReservationStatus::Active->value)
                 ->orderBy('product_variant_id')
                 ->lockForUpdate()
@@ -49,7 +50,7 @@ class ReleaseInventoryForOrder
                     'balance_reserved' => $inventoryItem->reserved,
                     'idempotency_key' => hash('sha256', "release:{$reservation->idempotency_key}"),
                     'reference_type' => 'order',
-                    'reference_id' => $order->public_id,
+                    'reference_id' => $lockedOrder->public_id,
                     'metadata' => ['final_status' => $finalStatus->value],
                 ]);
 

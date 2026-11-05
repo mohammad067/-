@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Models\Concerns\HasPublicId;
+use Carbon\CarbonInterface;
 use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -63,6 +64,32 @@ class Order extends Model
     public function loadGuestDetails(): self
     {
         return $this->load(['items', 'addresses', 'payments']);
+    }
+
+    public function hasUnsettledPayment(): bool
+    {
+        return in_array($this->payment_status, [
+            PaymentStatus::Pending,
+            PaymentStatus::Failed,
+            PaymentStatus::Cancelled,
+        ], true);
+    }
+
+    public function paymentWindowHasExpired(?CarbonInterface $at = null): bool
+    {
+        $at ??= now();
+
+        return $this->status === OrderStatus::PendingPayment
+            && $this->hasUnsettledPayment()
+            && $this->expires_at !== null
+            && $this->expires_at->lte($at);
+    }
+
+    public function canBePaid(): bool
+    {
+        return $this->status === OrderStatus::PendingPayment
+            && in_array($this->payment_status, [PaymentStatus::Pending, PaymentStatus::Failed], true)
+            && ($this->expires_at === null || $this->expires_at->isFuture());
     }
 
     protected function casts(): array

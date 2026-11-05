@@ -99,4 +99,45 @@ class ReserveInventoryForOrderTest extends TestCase
         $this->assertDatabaseCount(InventoryReservation::class, 0);
         $this->assertDatabaseCount(InventoryMovement::class, 0);
     }
+
+    public function test_competing_orders_cannot_reserve_more_than_available_stock(): void
+    {
+        $variant = ProductVariant::factory()->create();
+        $inventoryItem = InventoryItem::query()->create([
+            'product_variant_id' => $variant->id,
+            'on_hand' => 5,
+            'reserved' => 0,
+        ]);
+        $firstOrder = $this->createOrderForVariant($variant, 3);
+        $secondOrder = $this->createOrderForVariant($variant, 3);
+
+        app(ReserveInventoryForOrder::class)->handle($firstOrder);
+
+        try {
+            app(ReserveInventoryForOrder::class)->handle($secondOrder);
+            $this->fail('The competing order must not over-reserve inventory.');
+        } catch (InsufficientStock $exception) {
+            $this->assertSame(2, $exception->availableQuantity);
+        }
+
+        $this->assertSame(5, $inventoryItem->fresh()->on_hand);
+        $this->assertSame(3, $inventoryItem->fresh()->reserved);
+        $this->assertDatabaseCount(InventoryReservation::class, 1);
+        $this->assertDatabaseCount(InventoryMovement::class, 1);
+    }
+
+    private function createOrderForVariant(ProductVariant $variant, int $quantity): Order
+    {
+        $order = Order::factory()->create();
+        OrderItem::factory()->create([
+            'order_id' => $order->id,
+            'product_id' => $variant->product_id,
+            'product_variant_id' => $variant->id,
+            'quantity' => $quantity,
+            'unit_price_rials' => 15_000_000,
+            'line_total_rials' => 15_000_000 * $quantity,
+        ]);
+
+        return $order;
+    }
 }

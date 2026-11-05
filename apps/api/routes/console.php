@@ -12,3 +12,8 @@ Schedule::command('carts:mark-abandoned')
     ->everyFifteenMinutes()
     ->withoutOverlapping(10)
     ->onOneServer();
+
+Schedule::command('orders:expire-unpaid')
+    ->everyMinute()
+    ->withoutOverlapping(10)
+    ->onOneServer();

@@ -60,7 +60,7 @@ class OrdersTable
                     ->schema([
                         Select::make('status')
                             ->label('وضعیت جدید')
-                            ->options(fn (Order $record): array => collect(TransitionOrderStatus::allowedTargets($record->status))
+                            ->options(fn (Order $record): array => collect(TransitionOrderStatus::allowedTargetsFor($record))
                                 ->mapWithKeys(fn (OrderStatus $status): array => [$status->value => $status->getLabel()])
                                 ->all())
                             ->required(),
@@ -80,7 +80,7 @@ class OrdersTable
                         );
                         Notification::make()->title('وضعیت سفارش تغییر کرد.')->success()->send();
                     })
-                    ->visible(fn (Order $record): bool => TransitionOrderStatus::allowedTargets($record->status) !== []),
+                    ->visible(fn (Order $record): bool => TransitionOrderStatus::allowedTargetsFor($record) !== []),
             ])
             ->defaultSort('placed_at', 'desc');
     }
