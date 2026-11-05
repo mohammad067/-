@@ -20,10 +20,10 @@ const CATEGORIES = [
 ];
 
 const TRUST = [
-  { icon: Award, title: "مبدأ مشخص", desc: "رقم و سال برداشت روی کیسه" },
-  { icon: ShieldCheck, title: "ضمانت پخت", desc: "اگر عطر رضایت نداد پیگیری می‌کنیم" },
-  { icon: Truck, title: "ارسال بر اساس وزن", desc: "کرایه با کیلو و استان حساب می‌شود" },
-  { icon: Headphones, title: "پیگیری سفارش", desc: "قبل از پرداخت آنلاین با شما هماهنگ می‌شویم" },
+  { icon: Award, title: "اطلاعات روشن محصول", desc: "نوع برنج، محل کشت و سال برداشت" },
+  { icon: ShieldCheck, title: "پیگیری کیفیت", desc: "اگر از کیفیت پخت راضی نبودید، پاسخ‌گو هستیم" },
+  { icon: Truck, title: "هزینه ارسال مشخص", desc: "بر اساس وزن سفارش و شهر مقصد" },
+  { icon: Headphones, title: "پشتیبانی سفارش", desc: "از ثبت سفارش تا زمان تحویل کنار شما هستیم" },
 ];
 
 function SectionHead({ title, href, linkLabel }: { title: string; href?: string; linkLabel?: string }) {
@@ -40,7 +40,7 @@ function SectionHead({ title, href, linkLabel }: { title: string; href?: string;
 function Rail({ title, href, products }: { title: string; href: string; products: Product[] }) {
   if (products.length === 0) return null;
   return (
-    <section className="max-w-7xl mx-auto px-4 py-8 md:py-12" dir="rtl">
+    <section className="w-full max-w-7xl mx-auto px-4 py-8 md:py-12" dir="rtl">
       <SectionHead title={title} href={href} linkLabel="مشاهده همه" />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
         {products.slice(0, 4).map((p) => (
@@ -66,18 +66,18 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-black/40" />
         </div>
         <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-5">
-          <Badge variant="primary" className="px-4 py-2 bg-white/90 text-primary">برداشت گیلان و مازندران — ۱۴۰۴</Badge>
-          <Typography variant="h1" className="text-4xl md:text-6xl font-bold text-white leading-tight">عطر شالیزار</Typography>
-          <p className="text-slate-100 text-base md:text-lg max-w-xl">برنج شمال با رقم و مبدأ مشخص. از آستانه اشرفیه و فریدونکنار تا سفره.</p>
+          <Badge variant="primary" className="px-4 py-2 bg-white/90 text-primary">منتخب گیلان و مازندران</Badge>
+          <Typography variant="h1" className="text-4xl md:text-6xl font-bold text-white leading-tight">برنج اصیل شمال</Typography>
+          <p className="text-slate-100 text-base md:text-lg max-w-xl">هاشمی، طارم، صدری و دم‌سیاه؛ با محل کشت و سال برداشت مشخص.</p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <Link href="/products"><Button variant="primary" size="lg">فروشگاه</Button></Link>
-            <a href="#categories"><Button variant="outline" size="lg" className="border-white/50 text-white hover:bg-white/10">دسته‌بندی ارقام</Button></a>
+            <Link href="/products"><Button variant="primary" size="lg">مشاهده محصولات</Button></Link>
+            <a href="#categories"><Button variant="outline" size="lg" className="border-white/50 text-white hover:bg-white/10">خرید بر اساس نوع</Button></a>
           </div>
         </div>
       </section>
 
-      <section id="categories" className="max-w-7xl mx-auto px-4 py-12" dir="rtl">
-        <SectionHead title="دسته‌بندی ارقام" href="/products" linkLabel="همه محصولات" />
+      <section id="categories" className="w-full max-w-7xl mx-auto px-4 py-12" dir="rtl">
+        <SectionHead title="خرید بر اساس نوع برنج" href="/products" linkLabel="همه محصولات" />
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
           {CATEGORIES.map((c) => (
             <Link key={c.name} href={c.href} className="group rounded-2xl overflow-hidden border border-[#E5E2DA] bg-white text-right">
@@ -110,11 +110,11 @@ export default async function HomePage() {
       <Rail title="برنج گیلان" href="/products?province=گیلان" products={gilan} />
       <Rail title="برنج مازندران" href="/products?province=مازندران" products={mazandaran} />
 
-      <section id="story" className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center" dir="rtl">
+      <section id="story" className="w-full max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center" dir="rtl">
         <div className="text-right space-y-4 order-1">
           <p className="text-xs text-muted-foreground flex items-center gap-1 justify-start"><MapPin className="w-3 h-3" /> آستانه اشرفیه</p>
-          <Typography variant="serif-title" className="text-3xl font-bold">از شالیزار تا کیسه</Typography>
-          <p className="text-muted-foreground text-sm leading-relaxed">برنج را از گیلان و مازندران می‌آوریم. واسطه کم است تا سال برداشت و رقم روشن بماند.</p>
+          <Typography variant="serif-title" className="text-3xl font-bold">از شمال تا سفره شما</Typography>
+          <p className="text-muted-foreground text-sm leading-relaxed">هر محصول با نام نوع برنج، محل کشت و سال برداشت معرفی می‌شود تا با اطلاعات روشن‌تری انتخاب کنید.</p>
         </div>
         <div className="relative h-72 overflow-hidden rounded-3xl order-2">
           <Image src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80" alt="شالیزار گیلان" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />

@@ -4,22 +4,28 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LogIn, LogOut, UserRound } from "lucide-react";
+import { useCatalogStore } from "@/features/product-catalog/store";
 
 export function AccountButton() {
   const pathname = usePathname();
   const router = useRouter();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  const clearWishlist = useCatalogStore((state) => state.clearWishlist);
 
   useEffect(() => {
     const controller = new AbortController();
     void fetch("/api/auth", { cache: "no-store", signal: controller.signal })
-      .then((response) => setAuthenticated(response.ok))
+      .then((response) => {
+        setAuthenticated(response.ok);
+        if (response.status === 401) clearWishlist();
+      })
       .catch(() => setAuthenticated(false));
     return () => controller.abort();
-  }, [pathname]);
+  }, [clearWishlist, pathname]);
 
   const logout = async () => {
     await fetch("/api/auth", { method: "DELETE" });
+    clearWishlist();
     setAuthenticated(false);
     router.push("/login");
     router.refresh();

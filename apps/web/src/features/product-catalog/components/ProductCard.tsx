@@ -6,9 +6,11 @@ import Image from "next/image";
 import { Heart } from "lucide-react";
 import { Product } from "../types";
 import { useCatalogStore } from "../store";
+import { useAuthGuard } from "@/features/auth/useAuthGuard";
 
 export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const { wishlist, toggleWishlist } = useCatalogStore();
+  const requireAuth = useAuthGuard();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -32,8 +34,9 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           ) : null}
           <button
             type="button"
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
+              if (!await requireAuth(`/products/${product.slug}`)) return;
               toggleWishlist(product.id);
             }}
             className="absolute top-2 left-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center"

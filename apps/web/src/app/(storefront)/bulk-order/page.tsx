@@ -40,7 +40,7 @@ export default function BulkOrderPage() {
             درخواست خرید عمده
           </Typography>
           <p className="text-sm text-muted-foreground leading-7 max-w-2xl mr-0 ml-auto">
-            برای رستوران، هتل و پخش. رقم و سال برداشت روی کیسه مشخص است. پیش‌فاکتور بعد از تماس ارسال می‌شود.
+            برای رستوران‌ها، هتل‌ها، فروشگاه‌ها و شرکت‌های پخش. نوع برنج، محل کشت، وزن و شرایط ارسال پیش از خرید مشخص می‌شود.
           </p>
         </div>
 
@@ -73,9 +73,9 @@ export default function BulkOrderPage() {
             <Card className="p-6 space-y-4 text-right bg-white">
               <h3 className="font-bold">مزایا</h3>
               {[
-                { icon: ShieldCheck, t: "رقم مشخص", d: "مخلوط شهری نیست." },
-                { icon: ShoppingBag, t: "بار عمده", d: "هماهنگ با وزن و مقصد." },
-                { icon: PhoneCall, t: "تماس قبل از ارسال", d: "پیش‌فاکتور می‌فرستیم." },
+                { icon: ShieldCheck, t: "اطلاعات مشخص", d: "نوع برنج و محل کشت روشن است." },
+                { icon: ShoppingBag, t: "سفارش متناسب", d: "وزن سفارش و مقصد را هماهنگ می‌کنیم." },
+                { icon: PhoneCall, t: "پیش‌فاکتور قبل از خرید", d: "جزئیات سفارش را پیش از نهایی‌شدن می‌فرستیم." },
               ].map((item) => (
                 <div key={item.t} className="flex items-start gap-3">
                   <item.icon className="w-4 h-4 text-primary mt-0.5 shrink-0" />

@@ -13,7 +13,6 @@ import { ProductFilters } from "./ProductFilters";
 import { ProductSort } from "./ProductSort";
 import { ProductSearch } from "./ProductSearch";
 import type { Product } from "../types";
-import { useCatalogStore } from "../store";
 
 export const CatalogPageContent: React.FC<{ products: Product[] }> = ({ products }) => {
   const router = useRouter();
@@ -24,9 +23,7 @@ export const CatalogPageContent: React.FC<{ products: Product[] }> = ({ products
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const [sortBy, setSortBy] = useState("default");
   const [inStockOnly, setInStockOnly] = useState(false);
-  const [showWishlist, setShowWishlist] = useState(searchParams.get("wishlist") === "1");
   const focusSearch = searchParams.get("focus") === "search";
-  const wishlist = useCatalogStore((state) => state.wishlist);
 
   const syncUrl = (variety: string, province: string, q: string) => {
     const params = new URLSearchParams();
@@ -44,7 +41,6 @@ export const CatalogPageContent: React.FC<{ products: Product[] }> = ({ products
     setSearchQuery("");
     setSortBy("default");
     setInStockOnly(false);
-    setShowWishlist(false);
     router.replace("/products", { scroll: false });
   };
 
@@ -53,7 +49,6 @@ export const CatalogPageContent: React.FC<{ products: Product[] }> = ({ products
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
-    if (showWishlist) result = result.filter((p) => wishlist.includes(p.id));
     if (selectedVariety) result = result.filter((p) => p.variety === selectedVariety);
     if (selectedProvince) result = result.filter((p) => p.province === selectedProvince);
     if (inStockOnly) result = result.filter((p) => p.inStock);
@@ -75,14 +70,14 @@ export const CatalogPageContent: React.FC<{ products: Product[] }> = ({ products
     else if (sortBy === "rating-desc") result.sort((a, b) => b.rating - a.rating);
     else if (sortBy === "name") result.sort((a, b) => a.name.localeCompare(b.name, "fa"));
     return result;
-  }, [products, selectedVariety, selectedProvince, maxPrice, searchQuery, sortBy, showWishlist, wishlist, inStockOnly]);
+  }, [products, selectedVariety, selectedProvince, maxPrice, searchQuery, sortBy, inStockOnly]);
 
   return (
     <Section className="py-8 md:py-16">
       <Container>
         <div className="flex flex-col gap-2 mb-8 text-right">
-          <Badge variant="primary" className="w-fit self-end">فروشگاه برنج شمال</Badge>
-          <Typography variant="serif-title" className="text-2xl md:text-5xl font-bold mt-2">برنج شمال؛ گیلان و مازندران</Typography>
+          <Badge variant="primary" className="w-fit self-end">فروشگاه طلای شالیزار</Badge>
+          <Typography variant="serif-title" className="text-2xl md:text-5xl font-bold mt-2">خرید برنج گیلان و مازندران</Typography>
           <p className="text-xs text-muted-foreground">{filteredProducts.length.toLocaleString("fa-IR")} محصول</p>
         </div>
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 bg-white p-3 md:p-4 rounded-2xl border border-[#E5E2DA]">
@@ -98,7 +93,7 @@ export const CatalogPageContent: React.FC<{ products: Product[] }> = ({ products
                 ))}
               </div>
             ) : (
-              <EmptyState title="رقمی پیدا نشد" description="فیلتر را عوض کنید یا پاک کنید." action={<Button variant="primary" onClick={onResetFilters}>پاک کردن فیلتر</Button>} />
+              <EmptyState title="محصولی پیدا نشد" description="فیلترها را تغییر دهید یا پاک کنید." action={<Button variant="primary" onClick={onResetFilters}>پاک کردن فیلترها</Button>} />
             )}
           </div>
           <div className="order-first lg:order-last">

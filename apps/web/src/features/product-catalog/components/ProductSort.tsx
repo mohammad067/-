@@ -21,7 +21,7 @@ export const ProductSort: React.FC<ProductSortProps> = ({ sortBy, setSortBy }) =
         <option value="price-asc">ارزان‌تر</option>
         <option value="price-desc">گران‌تر</option>
         <option value="rating-desc">بالاترین امتیاز</option>
-        <option value="name">نام رقم</option>
+        <option value="name">نام محصول</option>
       </select>
       <ArrowUpDown className="w-3.5 h-3.5 text-muted-foreground ml-2" />
     </div>

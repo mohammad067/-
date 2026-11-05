@@ -65,7 +65,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
         </div>
       </div>
       <fieldset className="flex flex-col gap-3 border-0 p-0">
-        <legend className="text-sm font-semibold mb-1">رقم</legend>
+        <legend className="text-sm font-semibold mb-1">نوع برنج</legend>
         <div className="flex flex-wrap gap-2">
           {VARIETIES.map((v) => (
             <Chip key={v} label={v} active={selectedVariety === v || (v === "همه" && selectedVariety === "")} onSelect={() => setSelectedVariety(v === "همه" ? "" : v)} />

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { toEnDigits } from "@/lib/shipping";
 
-export function AuthForm({ initialMode }: { initialMode: "login" | "register" }) {
+export function AuthForm({ initialMode, returnTo = "/account/profile" }: { initialMode: "login" | "register"; returnTo?: string }) {
   const router = useRouter();
   const [mode, setMode] = useState<"login" | "register" | "reset">(initialMode);
   const [resetStep, setResetStep] = useState<"request" | "confirm">("request");
@@ -62,7 +62,7 @@ export function AuthForm({ initialMode }: { initialMode: "login" | "register" })
         return;
       }
 
-      router.push("/account/profile");
+      router.push(returnTo);
       router.refresh();
     } catch {
       setError("ارتباط با سرور برقرار نشد.");
@@ -91,11 +91,17 @@ export function AuthForm({ initialMode }: { initialMode: "login" | "register" })
         )}
         {error && <p className="text-sm text-red-600" role="alert">{error}</p>}
         {message && <p className="text-sm text-green-700">{message}</p>}
+        {mode === "register" && (
+          <p className="text-xs leading-6 text-muted-foreground">
+            با ساخت حساب، <Link className="font-semibold text-primary hover:underline" href="/terms">قوانین استفاده</Link> و{" "}
+            <Link className="font-semibold text-primary hover:underline" href="/privacy">حریم خصوصی</Link> را می‌پذیرید.
+          </p>
+        )}
         <Button type="submit" className="w-full" disabled={loading}>{loading ? "در حال بررسی…" : "ادامه"}</Button>
       </form>
       <div className="mt-5 flex flex-wrap gap-3 text-xs text-primary">
-        {mode !== "login" && <Link href="/login">ورود</Link>}
-        {mode !== "register" && <Link href="/register">ثبت‌نام</Link>}
+        {mode !== "login" && <Link href={`/login?next=${encodeURIComponent(returnTo)}`}>ورود</Link>}
+        {mode !== "register" && <Link href={`/register?next=${encodeURIComponent(returnTo)}`}>ثبت‌نام</Link>}
         {mode !== "reset" && <button type="button" onClick={() => setMode("reset")}>فراموشی رمز عبور</button>}
       </div>
     </div>

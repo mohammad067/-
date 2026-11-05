@@ -295,6 +295,12 @@ export const CheckoutWizard: React.FC = () => {
                 </div>
               )}
               {error && <p className="text-xs text-red-600" role="alert">{error}</p>}
+              {authMode === "register" && (
+                <p className="text-[11px] leading-5 text-muted-foreground">
+                  با ساخت حساب، <Link className="font-semibold text-primary hover:underline" href="/terms" onClick={close}>قوانین استفاده</Link> و{" "}
+                  <Link className="font-semibold text-primary hover:underline" href="/privacy" onClick={close}>حریم خصوصی</Link> را می‌پذیرید.
+                </p>
+              )}
               <Button variant="primary" className="w-full" type="submit" disabled={sending}>
                 {sending ? "در حال بررسی…" : authMode === "login" ? "ورود و ادامه" : "ثبت‌نام و ادامه"}
               </Button>
@@ -364,6 +370,11 @@ export const CheckoutWizard: React.FC = () => {
                 <p className="text-[11px] text-muted-foreground">قیمت و موجودی هنگام ثبت، دوباره در سرور بررسی می‌شود.</p>
               </div>
               {error && <p className="text-xs text-red-600" role="alert">{error}</p>}
+              <p className="text-[11px] leading-5 text-muted-foreground">
+                با ثبت سفارش، <Link className="font-semibold text-primary hover:underline" href="/terms" onClick={close}>قوانین خرید</Link>،{" "}
+                <Link className="font-semibold text-primary hover:underline" href="/shipping" onClick={close}>شرایط ارسال</Link> و{" "}
+                <Link className="font-semibold text-primary hover:underline" href="/returns" onClick={close}>شرایط مرجوعی</Link> را می‌پذیرید.
+              </p>
               <Button variant="primary" className="w-full" type="submit" disabled={sending || cart.length === 0}>
                 {sending ? "در حال ثبت سفارش…" : "ثبت نهایی سفارش"}
               </Button>

@@ -23,14 +23,14 @@ const PREMIUM_PRODUCTS = [
     rating: 4.9,
     price: "۱,۴۵۰,۰۰۰ تومان",
     unit: "بسته‌بندی ۱۰ کیلوگرم",
-    tag: "پرفروش‌ترین ارگانیک",
+    tag: "پرفروش",
     badgeVariant: "success" as const,
     imageChar: "هاشمی",
     desc: "برنجی بی‌نظیر با قد کشیدگی فوق‌العاده و عطر طبیعی بسیار ماندگار پس از پخت، تایید شده مزارع نمونه آستانه.",
   },
   {
     id: "prod-2",
-    name: "برنج دم‌سیاه سلطنتی صدری",
+    name: "برنج دم‌سیاه صدری",
     region: "گیلان، صومعه‌سرا",
     rating: 5.0,
     price: "۱,۸۹۰,۰۰۰ تومان",
@@ -83,7 +83,7 @@ export default function DesignSystemPage() {
               انتخاب خاص سفره‌های مجلل
             </Badge>
             <Typography variant="serif-title" className="text-3xl md:text-4xl lg:text-5xl font-bold mt-2">
-              سبد محصولات سلطنتی طلای شالیزار
+              سبد محصولات طلای شالیزار
             </Typography>
             <Typography variant="body" className="max-w-xl text-muted-foreground mt-2">
               هر دانه برنج داستانی از مهارت دست کشاورزان گیلان و مازندران است. برنج‌های ما پیش از بسته‌بندی ۳ مرحله کنترل کیفیت دقیق را طی می‌کنند.
@@ -156,7 +156,7 @@ export default function DesignSystemPage() {
             سیستم دیزاین و توکن‌های بصری برند (Luxury Design System)
           </Typography>
           <Typography variant="body-sm" className="text-muted-foreground max-w-2xl mt-1">
-            این بخش نمایشی زنده از توکن‌های طراحی است که با رعایت اصول لوکس‌گرایی، فاصله‌گذاری دقیق، سایه‌های ملایم و استانداردهای دسترسی‌پذیری عالی خلق شده‌اند.
+            این صفحه اجزای رابط کاربری، فاصله‌گذاری، رنگ‌ها و حالت‌های مختلف نمایش را برای بررسی طراحی نشان می‌دهد.
           </Typography>
         </div>
 
@@ -166,7 +166,7 @@ export default function DesignSystemPage() {
             <Card variant="default" className="p-8 flex flex-col gap-6">
               <div className="flex items-center gap-3 border-b border-border/30 pb-4">
                 <Palette className="w-5 h-5 text-accent" />
-                <Typography variant="h3" className="font-bold">پالت رنگی لوکس و مینیمال</Typography>
+                <Typography variant="h3" className="font-bold">پالت رنگی اصلی</Typography>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center text-xs">
@@ -215,12 +215,12 @@ export default function DesignSystemPage() {
 
               <div className="flex flex-col gap-4">
                 <Input
-                  label="شماره همراه جهت عضویت لوکس و اطلاع از تخفیف‌ها"
+                  label="شماره همراه برای اطلاع از تخفیف‌ها"
                   placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹"
                   value={inputDemoValue}
                   onChange={handleInputDemoChange}
                   error={inputError}
-                  helperText="ما هرگز شماره شما را اسپم نمی‌کنیم. فقط پیشنهادات بسیار محدود ممتاز ارسال می‌شود."
+                  helperText="شماره شما فقط برای اطلاع‌رسانی مربوط به سفارش‌ها و پیشنهادهای فروشگاه استفاده می‌شود."
                 />
                 <div className="flex gap-2 justify-end mt-2">
                   <Button
@@ -245,10 +245,10 @@ export default function DesignSystemPage() {
 
             {/* Badges and Layout tokens */}
             <Card variant="default" className="p-8 flex flex-col gap-6">
-              <Typography variant="h3" className="font-bold border-b border-border/30 pb-4">نشان‌ها و مدال‌های ارگانیک (Badges)</Typography>
+              <Typography variant="h3" className="font-bold border-b border-border/30 pb-4">برچسب‌های وضعیت (Badges)</Typography>
               <div className="flex flex-wrap gap-3">
-                <Badge variant="primary">کشت محلی ارگانیک</Badge>
-                <Badge variant="accent">سلطنتی صدری</Badge>
+                <Badge variant="primary">کشت محلی</Badge>
+                <Badge variant="accent">برنج صدری</Badge>
                 <Badge variant="success">موجود در انبار رشت</Badge>
                 <Badge variant="warning">موجودی محدود پاییز</Badge>
                 <Badge variant="outline">بدون ترکیب و تراریخته</Badge>
@@ -281,7 +281,7 @@ export default function DesignSystemPage() {
               size="sm"
               onClick={() => setActiveStateDemo("none")}
             >
-              نمایش محتوای محصولات ممتاز
+              نمایش محصولات
             </Button>
             <Button
               variant={activeStateDemo === "loading" ? "accent" : "outline"}
@@ -335,7 +335,7 @@ export default function DesignSystemPage() {
 
             {activeStateDemo === "empty" && (
               <EmptyState
-                title="هیچ رقمی یافت نشد"
+                title="محصولی یافت نشد"
                 description="هیچ برنجی با پارامترهای فیلتر شبیه‌سازی انتخاب شده همخوانی ندارد. لطفاً دکمه تغییر حالت شبیه‌ساز را کلیک کنید."
                 action={
                   <Button variant="accent" size="sm" onClick={() => setActiveStateDemo("none")}>
@@ -348,7 +348,7 @@ export default function DesignSystemPage() {
             {activeStateDemo === "error" && (
               <ErrorState
                 title="عدم پاسخ‌دهی سرور کشت مرکزی"
-                description="سرور کنترل دما و رطوبت شالیزار مرکزی موقتاً در دسترس نیست. این خطا شبیه‌سازی شده است تا مقاومت لایه فرانت‌اند را اثبات کند."
+                description="دریافت اطلاعات با مشکل روبه‌رو شد. این پیام برای نمایش حالت خطای رابط کاربری استفاده می‌شود."
                 onRetry={() => setActiveStateDemo("none")}
               />
             )}

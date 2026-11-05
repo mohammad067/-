@@ -50,7 +50,7 @@ export const Hero: React.FC = () => {
         >
           <Badge variant="accent" className="gap-2 px-4 py-2 bg-accent/15 text-[#C8A75D] border border-accent/40 text-sm shadow-[0_0_15px_rgba(200,167,93,0.15)]">
             <Sparkles className="w-4 h-4 text-accent fill-accent" />
-            برداشت جدید ارگانیک ۱۴۰۳
+            منتخب گیلان و مازندران
           </Badge>
         </motion.div>
 
@@ -67,8 +67,8 @@ export const Hero: React.FC = () => {
           >
 
 
-            عطر شالیزار، <br className="hidden sm:inline" />
-            <span className="text-foreground dark:text-white font-medium">در طعم بی تکرار اصالت</span>
+            برنج اصیل شمال، <br className="hidden sm:inline" />
+            <span className="text-foreground dark:text-white font-medium">با عطر و طعم آشنای ایرانی</span>
 
           </Typography>
 
@@ -76,7 +76,7 @@ export const Hero: React.FC = () => {
             variant="serif-subtitle"
             className="text-lg md:text-2xl text-slate-100 max-w-2xl mx-auto font-light leading-relaxed mt-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
           >
-            تجربه خرید مستقیم مرغوب‌ترین برنج گیلان و مازندران، دست‌چین شده از مزارع ارگانیک با عطر و طعم ماندگار نسل‌ها.
+            هاشمی، طارم، صدری و دم‌سیاه با اطلاعات روشن درباره محل کشت، سال برداشت و وزن بسته.
           </Typography>
         </motion.div>
 
@@ -88,10 +88,10 @@ export const Hero: React.FC = () => {
           className="flex flex-wrap gap-4 justify-center items-center mt-6"
         >
           <Button variant="accent" size="lg" className="shadow-lg hover:scale-105 active:scale-97 font-bold border border-accent/30 hover:shadow-[0_0_25px_rgba(200,167,93,0.45)]">
-            مشاهده ارقام ممتاز
+            مشاهده محصولات
           </Button>
           <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm">
-            داستان طلای شالیزار
+            درباره طلای شالیزار
           </Button>
         </motion.div>
 
@@ -104,28 +104,28 @@ export const Hero: React.FC = () => {
         >
           <Glass intensity="high" rounded="lg" className="p-6 flex flex-col gap-2">
             <Typography variant="h4" className="font-semibold text-primary dark:text-accent">
-              کیفیت ارگانیک اصیل
+              اطلاعات روشن
             </Typography>
             <Typography variant="body-sm" className="text-muted-foreground leading-relaxed">
-              تضمین ۱۰۰٪ خلوص بدون افزودنی یا برنج‌های ترکیبی، دست‌چین شده مستقیماً از شالیزارهای گیلان.
+              نوع برنج، محل کشت، سال برداشت و وزن هر بسته پیش از خرید مشخص است.
             </Typography>
           </Glass>
 
           <Glass intensity="high" rounded="lg" className="p-6 flex flex-col gap-2">
             <Typography variant="h4" className="font-semibold text-primary dark:text-accent">
-              بسته‌بندی خلاقانه نفیس
+              بسته‌بندی مناسب
             </Typography>
             <Typography variant="body-sm" className="text-muted-foreground leading-relaxed">
-              ارائه شده در کیسه‌های پارچه‌ای نفیس ضد رطوبت برای حفظ عطر ناب شالیزار تا زمان پخت.
+              بسته‌بندی متناسب با وزن محصول برای نگهداری و جابه‌جایی آسان‌تر.
             </Typography>
           </Glass>
 
           <Glass intensity="high" rounded="lg" className="p-6 flex flex-col gap-2">
             <Typography variant="h4" className="font-semibold text-primary dark:text-accent">
-              ارسال لوکس اختصاصی
+              ارسال و پیگیری سفارش
             </Typography>
             <Typography variant="body-sm" className="text-muted-foreground leading-relaxed">
-              تحویل فوری و بیمه شده در بسته‌بندی لوکس محافظت‌شده جهت کادو و مصارف خانگی برتر شما.
+              هزینه ارسال بر اساس وزن و مقصد محاسبه می‌شود و وضعیت سفارش قابل پیگیری است.
             </Typography>
           </Glass>
         </motion.div>
@@ -139,7 +139,7 @@ export const Hero: React.FC = () => {
             document.getElementById("products-showcase")?.scrollIntoView({ behavior: "smooth" });
           }}
         >
-          <span>مشاهده محصولات لوکس و فیلترها</span>
+          <span>مشاهده محصولات و فیلترها</span>
           <ArrowDown className="w-4 h-4 text-accent" />
         </motion.div>
       </div>

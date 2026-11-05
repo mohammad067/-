@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "./Logo";
 import { X, PhoneCall } from "lucide-react";
 import Link from "next/link";
+import { SITE_CONTACT } from "@/config/site";
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -14,12 +15,12 @@ interface MobileNavigationProps {
 export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) => {
   const navLinks = [
     { href: "/", label: "صفحه اصلی" },
-    { href: "/#products-showcase", label: "محصولات ممتاز" },
+    { href: "/#products-showcase", label: "محصولات" },
     { href: "/bulk-order", label: "خرید عمده" },
     { href: "/order-tracking", label: "پیگیری سفارش" },
     { href: "/account/profile", label: "حساب کاربری" },
     { href: "/products?focus=search", label: "جستجوی محصولات" },
-    { href: "/products?wishlist=1", label: "علاقه‌مندی‌های من" },
+    { href: "/wishlist", label: "علاقه‌مندی‌های من" },
     { href: "/blog", label: " مقالات "},
   ];
 
@@ -75,7 +76,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onCl
             {/* Bottom Actions */}
             <div className="flex flex-col gap-4 border-t border-border/20 pt-6">
               <div className="flex items-center gap-3 justify-end text-muted-foreground">
-                <span className="text-sm font-light">پشتیبانی: 09199724318</span>
+                <a href={SITE_CONTACT.phoneHref} dir="ltr" className="text-sm font-light">پشتیبانی: {SITE_CONTACT.phoneDisplay}</a>
                 <PhoneCall className="w-4 h-4 text-accent" />
               </div>
               <Link href="/contact" onClick={onClose} className="w-full rounded-full bg-primary text-white px-5 py-3 text-center text-sm font-semibold">

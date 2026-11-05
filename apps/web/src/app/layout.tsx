@@ -6,7 +6,7 @@ import { CartSync } from "@/features/cart/components/CartSync";
 export const metadata: Metadata = {
   metadataBase: new URL("https://talaye-shalizar.vercel.app"),
   title: "طلای شالیزار | برنج شمال گیلان و مازندران",
-  description: "خرید برنج شمال از شالیزار گیلان و مازندران؛ هاشمی، طارم، صدری و دم‌سیاه با مبدأ مشخص.",
+  description: "خرید برنج گیلان و مازندران؛ هاشمی، طارم، صدری و دم‌سیاه با محل کشت و سال برداشت مشخص.",
 };
 
 export default function RootLayout({

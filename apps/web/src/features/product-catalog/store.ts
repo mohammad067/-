@@ -35,6 +35,8 @@ interface ProductCatalogState {
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   toggleWishlist: (productId: string) => void;
+  clearWishlist: () => void;
+  showToast: (message: string) => void;
   clearToast: () => void;
   clearCart: () => void;
   setIsCartOpen: (open: boolean) => void;
@@ -89,6 +91,8 @@ export const useCatalogStore = create<ProductCatalogState>()(
             toast: isWishlisted ? "از علاقه‌مندی حذف شد" : "به علاقه‌مندی اضافه شد",
           };
         }),
+      clearWishlist: () => set({ wishlist: [] }),
+      showToast: (message) => set({ toast: message }),
       clearToast: () => set({ toast: null }),
       clearCart: () => set({ cart: [] }),
       setIsCartOpen: (open) => set({ isCartOpen: open }),

@@ -32,7 +32,7 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ className }) => 
   const navLinks = [
 
     { href: "/", label: "صفحه اصلی" },
-    { href: "/#products-showcase", label: "محصولات ممتاز" },
+    { href: "/#products-showcase", label: "محصولات" },
     { href: "/bulk-order", label: "خرید عمده" },
     { href: "/order-tracking", label: "پیگیری سفارش" },
     

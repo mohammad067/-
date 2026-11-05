@@ -16,13 +16,13 @@ export default function AboutPage() {
         <div className="flex flex-col gap-2 mb-12 text-right items-start md:items-end">
           <Badge variant="accent" className="w-fit gap-1.5 px-3 py-1 bg-accent/10 text-accent font-semibold">
             <Award className="w-4 h-4 text-accent" />
-            داستان یک نسل اصالت و کیفیت برتر
+            درباره مسیر کار ما
           </Badge>
           <Typography variant="serif-title" className="text-3xl md:text-5xl font-bold mt-2 leading-tight">
             درباره طلای شالیزار
           </Typography>
           <Typography variant="body" className="max-w-2xl text-muted-foreground mt-2 leading-relaxed">
-            ما در طلای شالیزار باور داریم که برنج ایرانی، فراتر از یک وعده غذایی، نمادی از عطر، طعم و مهمان‌نوازی خانواده‌های ایرانی است. تعهد ما عرضه مستقیم بهترین ارقام برنج شمال بدون واسطه است.
+            هدف طلای شالیزار عرضه برنج گیلان و مازندران با اطلاعات روشن و قابل‌فهم است؛ از نوع برنج و محل کشت تا سال برداشت و وزن بسته.
           </Typography>
         </div>
 
@@ -31,20 +31,20 @@ export default function AboutPage() {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-[#2F5D50]/10 to-accent/10 rounded-3xl blur-2xl" />
             <Glass intensity="high" rounded="lg" className="p-8 border border-border/40 relative z-10 flex flex-col gap-4">
-              <span className="text-accent text-xs font-bold tracking-widest uppercase">تاسیس و ریشه خانوادگی</span>
-              <Typography variant="h3" className="text-2xl font-bold text-primary dark:text-accent">میراثی از دل شالیزارهای آستانه اشرفیه</Typography>
+              <span className="text-accent text-xs font-bold tracking-widest uppercase">انتخاب و عرضه برنج شمال</span>
+              <Typography variant="h3" className="text-2xl font-bold text-primary dark:text-accent">از گیلان و مازندران تا سفره شما</Typography>
               <Typography variant="body-sm" className="text-muted-foreground leading-relaxed mt-2">
-                برند «طلای شالیزار» حاصل سال‌ها تجربه عملی و نسل به نسل در مزارع کشاورزی برنج گیلان است. شالیزارهای ما واقع در کناره‌های حاصلخیز سفیدرود، جایی که آمیزش آب شیرین کوهستان و خاک زرخیز جلگه، معطرترین و خوش‌پخت‌ترین خوشه‌های برنج دنیا را تولید می‌کند، آغاز شد.
+                تمرکز ما بر انتخاب برنج‌های شناخته‌شده شمال مانند هاشمی، طارم، صدری، دم‌سیاه، فجر و شیرودی است. مشخصات هر محصول پیش از خرید در همان صفحه نوشته می‌شود.
               </Typography>
               <Typography variant="body-sm" className="text-muted-foreground leading-relaxed">
-                امروز مفتخریم که با تلفیق سنت‌های بومی برداشت و مدرن‌ترین سامانه‌های سورتینگ و بوجاری چندمرحله‌ای، کیفیتی بی‌رقیب، خالص و ۱۰۰٪ یکدست را بدون هیچ‌گونه ناخالصی به مشتریان وفادارمان ارائه دهیم.
+                تلاش می‌کنیم توضیحات محصول ساده و دقیق باشد تا بتوانید بر اساس نوع برنج، محل کشت، وزن و بودجه خود انتخاب کنید.
               </Typography>
             </Glass>
           </div>
           <div className="flex flex-col gap-6 justify-center">
-            <Typography variant="h2" className="text-3xl font-bold leading-tight">ارزش‌های بنیادین ما</Typography>
+            <Typography variant="h2" className="text-3xl font-bold leading-tight">چیزی که برای ما مهم است</Typography>
             <Typography variant="body" className="text-muted-foreground leading-relaxed">
-              ما در تمامی مراحل کاشت، داشت، برداشت و فرآوری، اصول اخلاقی و کیفی سخت‌گیرانه‌ای را دنبال می‌کنیم تا برنجی شایسته نام طلایی شالیزار به سفره‌های گرم شما برسد.
+              اطلاعات درست، انتخاب آسان و پاسخ‌گویی پس از خرید، سه اصل اصلی ما در فروش برنج هستند.
             </Typography>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
@@ -53,8 +53,8 @@ export default function AboutPage() {
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="font-bold text-foreground text-sm block">۱۰۰٪ خالص و ارگانیک</span>
-                  <span className="text-xs text-muted-foreground mt-1 block">تضمین عدم اختلاط برنج‌های پرمحصول با ارقام لوکس محلی.</span>
+                  <span className="font-bold text-foreground text-sm block">مشخصات روشن</span>
+                  <span className="text-xs text-muted-foreground mt-1 block">نوع برنج، محل کشت، سال برداشت و وزن بسته مشخص است.</span>
                 </div>
               </Card>
 
@@ -63,8 +63,8 @@ export default function AboutPage() {
                   <Heart className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="font-bold text-foreground text-sm block">سلامتی مصرف‌کننده</span>
-                  <span className="text-xs text-muted-foreground mt-1 block">استفاده بهینه و حداقلی از سموم و کودهای شیمیایی جهت تولید سالم.</span>
+                  <span className="font-bold text-foreground text-sm block">توضیحات قابل‌فهم</span>
+                  <span className="text-xs text-muted-foreground mt-1 block">ویژگی هر محصول را بدون اصطلاحات پیچیده توضیح می‌دهیم.</span>
                 </div>
               </Card>
 
@@ -73,8 +73,8 @@ export default function AboutPage() {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="font-bold text-foreground text-sm block">عدالت در معامله</span>
-                  <span className="text-xs text-muted-foreground mt-1 block">حمایت از معیشت شالیکاران زحمتکش بومی گیلان و مازندران.</span>
+                  <span className="font-bold text-foreground text-sm block">قیمت شفاف</span>
+                  <span className="text-xs text-muted-foreground mt-1 block">وزن، قیمت و تخفیف هر بسته پیش از ثبت سفارش نمایش داده می‌شود.</span>
                 </div>
               </Card>
 
@@ -83,8 +83,8 @@ export default function AboutPage() {
                   <Users className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="font-bold text-foreground text-sm block">رضایت‌مندی بی قید و شرط</span>
-                  <span className="text-xs text-muted-foreground mt-1 block">امکان مرجوع کردن محصول در صورت عدم رضایت از عطر یا پخت.</span>
+                  <span className="font-bold text-foreground text-sm block">پاسخ‌گویی پس از خرید</span>
+                  <span className="text-xs text-muted-foreground mt-1 block">اگر درباره سفارش یا کیفیت پخت پرسشی داشتید، موضوع را پیگیری می‌کنیم.</span>
                 </div>
               </Card>
             </div>
@@ -94,19 +94,19 @@ export default function AboutPage() {
         {/* Brand visual showcase section */}
         <div className="w-full bg-primary/5 dark:bg-[#141D19]/40 border border-primary/10 rounded-3xl p-8 md:p-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center items-center">
           <div className="flex flex-col items-center">
-            <span className="text-4xl md:text-5xl font-extrabold text-accent">۱۵+</span>
-            <span className="text-sm font-semibold text-foreground mt-2">سال تجربه و تخصص بومی</span>
-            <span className="text-xs text-muted-foreground mt-1">تامین و بوجاری سنتی و صنعتی</span>
+            <span className="text-2xl md:text-3xl font-extrabold text-accent">گیلان و مازندران</span>
+            <span className="text-sm font-semibold text-foreground mt-2">محل کشت محصولات</span>
+            <span className="text-xs text-muted-foreground mt-1">نام شهر در مشخصات هر محصول درج شده است</span>
           </div>
           <div className="flex flex-col items-center border-y md:border-y-0 md:border-x border-border/30 py-6 md:py-0">
-            <span className="text-4xl md:text-5xl font-extrabold text-accent">۱۰۰٪</span>
-            <span className="text-sm font-semibold text-foreground mt-2">تضمین اصالت و پخت دانه</span>
-            <span className="text-xs text-muted-foreground mt-1">گارانتی طلایی مرجوعی کتبی</span>
+            <span className="text-2xl md:text-3xl font-extrabold text-accent">۶ نوع برنج</span>
+            <span className="text-sm font-semibold text-foreground mt-2">برای مصرف روزانه و مهمانی</span>
+            <span className="text-xs text-muted-foreground mt-1">از هاشمی و طارم تا فجر و شیرودی</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-4xl md:text-5xl font-extrabold text-accent">۱۰,۰۰۰+</span>
-            <span className="text-sm font-semibold text-foreground mt-2">مشتری وفادار و سفره روشن</span>
-            <span className="text-xs text-muted-foreground mt-1">در سراسر کلان‌شهرهای ایران</span>
+            <span className="text-2xl md:text-3xl font-extrabold text-accent">۵ و ۱۰ کیلوگرم</span>
+            <span className="text-sm font-semibold text-foreground mt-2">وزن‌های متناسب با مصرف</span>
+            <span className="text-xs text-muted-foreground mt-1">وزن‌های موجود در صفحه هر محصول دیده می‌شود</span>
           </div>
         </div>
       </div>

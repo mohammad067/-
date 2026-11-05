@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@/components/ui/Typography";
 
-export const LoadingState: React.FC<{ message?: string }> = ({ message = "در حال بارگذاری شالیزار هنر..." }) => {
+export const LoadingState: React.FC<{ message?: string }> = ({ message = "در حال بارگذاری..." }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[300px] p-8 text-center animate-fade-in">
       <div className="relative flex items-center justify-center mb-6">

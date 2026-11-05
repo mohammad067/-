@@ -16,7 +16,7 @@ export default function NotFound() {
           صفحه مورد نظر یافت نشد
         </Typography>
         <Typography variant="body-sm" className="text-muted-foreground mb-8 leading-relaxed">
-          متاسفانه آدرس مورد نظر شما در شالیزارهای طلای شمال یافت نشد. ممکن است صفحه تغییر کرده باشد یا آدرس را اشتباه تایپ کرده باشید.
+          این صفحه پیدا نشد؛ ممکن است نشانی آن تغییر کرده باشد یا آدرس را اشتباه وارد کرده باشید.
         </Typography>
         <div className="flex gap-4">
           <Link href="/">
@@ -26,7 +26,7 @@ export default function NotFound() {
           </Link>
           <a href="#products-showcase">
             <Button variant="outline">
-              مشاهده محصولات ممتاز
+              مشاهده محصولات
             </Button>
           </a>
         </div>

@@ -3,13 +3,16 @@ import { CatalogPageContent } from "@/features/product-catalog/components/Catalo
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Metadata } from "next";
 import { getProducts } from "@/lib/server/catalog";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "ارقام برنج لوکس ایرانی | فروشگاه طلای شالیزار",
-  description: "خرید بی‌واسطه مرغوب‌ترین برنج‌های هاشمی، صدری، دم‌سیاه و طارم معطر گیلان و مازندران با بسته‌بندی نفیس و ضمانت اصالت فیزیکی.",
+  title: "خرید برنج ایرانی | فروشگاه طلای شالیزار",
+  description: "خرید برنج هاشمی، صدری، دم‌سیاه و طارم گیلان و مازندران با اطلاعات مشخص درباره محل کشت، سال برداشت، وزن و قیمت.",
 };
 
-export default async function ProductsPage() {
+export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ wishlist?: string }> }) {
+  if ((await searchParams).wishlist === "1") redirect("/wishlist");
+
   const products = await getProducts();
 
   return (

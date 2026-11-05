@@ -11,7 +11,7 @@ interface ErrorStateProps {
 
 export const ErrorState: React.FC<ErrorStateProps> = ({
   title = "خطایی رخ داده است",
-  description = "در برقراری ارتباط با شالیزار مرکزی خطایی به وجود آمد. لطفاً اتصال اینترنت خود را چک کرده و دوباره تلاش کنید.",
+  description = "دریافت اطلاعات با مشکل روبه‌رو شد. اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.",
   onRetry,
 }) => {
   return (

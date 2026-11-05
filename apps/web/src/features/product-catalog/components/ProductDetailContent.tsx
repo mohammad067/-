@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Product } from "../types";
 import { useCatalogStore } from "../store";
 import { ProductCard } from "./ProductCard";
+import { useAuthGuard } from "@/features/auth/useAuthGuard";
 
 const EXTRA_SHOTS = [
   "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
@@ -17,14 +18,15 @@ const EXTRA_SHOTS = [
 ];
 
 const FAQS = [
-  { q: "این برنج مخلوط است؟", a: "خیر. هر کیسه یک رقم است با منطقه مشخص در گیلان یا مازندران." },
-  { q: "سال برداشت کدام است؟", a: "برداشت ۱۴۰۴ روی کیسه نوشته شده." },
-  { q: "ارسال چطور است؟", a: "کرایه بر اساس وزن کل سبد و استان گیرنده حساب می‌شود." },
-  { q: "اگر از پخت راضی نبودم چی؟", a: "پیگیری می‌کنیم. ادعای آزمایشگاه یا ارگانیک نداریم." },
+  { q: "این برنج مخلوط است؟", a: "خیر؛ نوع برنج و محل کشت هر محصول در بخش مشخصات نوشته شده است." },
+  { q: "سال برداشت را از کجا ببینم؟", a: "سال برداشت در مشخصات محصول و روی بسته‌بندی درج می‌شود." },
+  { q: "هزینه ارسال چگونه محاسبه می‌شود؟", a: "هزینه ارسال بر اساس وزن کل سفارش و شهر مقصد محاسبه می‌شود." },
+  { q: "اگر از کیفیت پخت راضی نبودم چه کنم؟", a: "با پشتیبانی تماس بگیرید تا سفارش و نتیجه پخت بررسی شود." },
 ];
 
 export const ProductDetailContent: React.FC<{ product: Product; products: Product[] }> = ({ product, products }) => {
   const { wishlist, toggleWishlist, addToCart } = useCatalogStore();
+  const requireAuth = useAuthGuard();
   const [added, setAdded] = useState(false);
   const [qty, setQty] = useState(1);
   const [shot, setShot] = useState(0);
@@ -85,7 +87,10 @@ export const ProductDetailContent: React.FC<{ product: Product; products: Produc
           </p>
           <Typography variant="serif-title" className="text-3xl md:text-4xl font-bold leading-tight">{active.name}</Typography>
           <p className="text-sm text-muted-foreground">{active.summary}</p>
-          <button type="button" onClick={() => toggleWishlist(active.id)} className="flex items-center gap-1.5 text-xs text-muted-foreground w-fit">
+          <button type="button" onClick={async () => {
+            if (!await requireAuth(`/products/${active.slug}`)) return;
+            toggleWishlist(active.id);
+          }} className="flex items-center gap-1.5 text-xs text-muted-foreground w-fit">
             <Heart className={`w-4 h-4 ${wishlist.includes(active.id) ? "text-red-500 fill-red-500" : ""}`} /> علاقه‌مندی
           </button>
 
@@ -146,19 +151,19 @@ export const ProductDetailContent: React.FC<{ product: Product; products: Produc
       <section className="mt-14 space-y-4 text-sm leading-8 text-[#3A4540]">
         <h2 className="text-xl font-bold text-foreground">توضیحات محصول</h2>
         <p>{active.description} {active.summary}</p>
-        <p>رقم {active.variety} از {active.region} ، برداشت {active.harvestYear}.</p>
+        <p>برنج {active.variety}، کشت {active.region} و برداشت سال {active.harvestYear}.</p>
       </section>
 
       <section className="mt-10">
         <h2 className="text-xl font-bold mb-4">جدول مشخصات محصول</h2>
         <div className="overflow-hidden rounded-2xl border border-[#E5E2DA] bg-white">
           {[
-            ["نوع محصول", `برنج ${active.variety}`],
-            ["منطقه", `${active.province}، ${active.region}`],
+            ["نوع برنج", active.variety],
+            ["محل کشت", `${active.province}، ${active.region}`],
             ["سال برداشت", active.harvestYear],
             ["وزن بسته", active.weight],
             ["وضعیت", active.inStock ? "موجود" : "ناموجود"],
-            ["عطر (نظر خریدار)", `${active.aromaScore.toLocaleString("fa-IR")} از ۵`],
+            ["امتیاز عطر", `${active.aromaScore.toLocaleString("fa-IR")} از ۵`],
           ].map(([k, v]) => (
             <div key={k} className="grid grid-cols-2 border-b border-[#E5E2DA] last:border-0 text-sm">
               <div className="p-3 bg-[#F8F6F2] font-semibold">{k}</div>

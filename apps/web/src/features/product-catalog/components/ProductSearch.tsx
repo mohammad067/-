@@ -21,7 +21,7 @@ export const ProductSearch: React.FC<ProductSearchProps> = ({ searchQuery, setSe
         ref={inputRef}
         id="product-search"
         type="text"
-        placeholder="جستجوی رقم، شهر یا قهوه‌ای..."
+        placeholder="نام برنج یا محل کشت را جست‌وجو کنید..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         className="w-full pl-5 pr-12 py-3 rounded-full border border-[#E5E2DA] bg-white text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-primary text-right"

@@ -74,7 +74,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ product, onClose
               </div>
               {discountPercent && (
                 <Badge variant="accent" className="absolute top-4 right-4 text-[10px] font-bold">
-                  تخفیف برداشت {discountPercent.toLocaleString("fa-IR")}٪
+                  {discountPercent.toLocaleString("fa-IR")}٪ تخفیف
                 </Badge>
               )}
             </div>
@@ -88,7 +88,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ product, onClose
                     استان {province}، {region}
                   </span>
                   <span>•</span>
-                  <span>رقم {variety}</span>
+                  <span>برنج {variety}</span>
                 </div>
                 <Typography variant="h3" className="text-xl md:text-2xl font-bold text-primary dark:text-foreground mt-1 line-clamp-1">
                   {name}
@@ -136,7 +136,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ product, onClose
                   className="px-6 py-2.5 text-xs font-bold gap-1.5"
                 >
                   <ShoppingBag className="w-4 h-4 stroke-1.5" />
-                  {inStock ? "خرید سریع" : "پیش‌فروش"}
+                  {inStock ? "افزودن به سبد" : "ناموجود"}
                 </Button>
               </div>
             </div>
