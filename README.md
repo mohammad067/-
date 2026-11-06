@@ -42,6 +42,18 @@ php artisan schedule:work
 Default local addresses are `http://localhost:3000` for the storefront and
 `http://localhost:8000` for the API.
 
+SQLite keeps the basic local setup lightweight. Before a release, run the same
+migrations and complete Laravel suite against the isolated MariaDB 11.8
+environment:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File infra/mariadb/Initialize-MariaDb.ps1
+powershell -ExecutionPolicy Bypass -File infra/mariadb/Test-MariaDb.ps1
+```
+
+The MariaDB test script also runs a two-process inventory reservation probe to
+verify that competing orders cannot oversell the same stock row.
+
 Visitors may build a guest cart, but registration or login is required before
 an order can be created. Next.js keeps the authentication token in an HTTP-only
 cookie while Laravel validates the account, calculates prices, reserves stock,

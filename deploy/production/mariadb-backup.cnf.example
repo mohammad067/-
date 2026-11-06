@@ -1,0 +1,6 @@
+[client]
+host=localhost
+port=3306
+user=talaye_backup
+password=CHANGE_TO_A_LONG_RANDOM_PASSWORD
+default-character-set=utf8mb4

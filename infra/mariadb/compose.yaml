@@ -1,0 +1,29 @@
+name: talaye-shalizar
+
+services:
+  mariadb:
+    image: mariadb:11.8.9
+    container_name: talaye-mariadb
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${MARIADB_PORT:-3307}:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD:?Set MARIADB_ROOT_PASSWORD in infra/mariadb/.env}"
+      MARIADB_DATABASE: "${MARIADB_DATABASE:-talaye_shalizar}"
+      TZ: UTC
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-time-zone=+00:00
+      - --skip-name-resolve
+    volumes:
+      - talaye_mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+
+volumes:
+  talaye_mariadb_data:

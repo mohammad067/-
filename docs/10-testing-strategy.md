@@ -56,6 +56,12 @@
 
 - Every pull request runs the Next.js build/lint checks plus Laravel Pint,
   PHPUnit, and Composer validation.
+- The fast Laravel suite uses isolated in-memory SQLite. The pre-release
+  database gate uses `apps/api/phpunit.mariadb.xml` and the disposable
+  `infra/mariadb` environment to run every migration and test against the same
+  MariaDB major version used in production.
+- `infra/mariadb/Test-MariaDb.ps1` refuses non-test schemas for PHPUnit and
+  runs a separate two-process inventory reservation probe after the suite.
 - E2E suite runs on merge to `main` and before production deploys (see
   `13-deployment.md`).
 - A PR cannot merge with failing tests or a coverage regression below the

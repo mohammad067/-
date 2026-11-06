@@ -1,0 +1,2 @@
+LARAVEL_API_URL=https://api.example.com/api/v1
+STOREFRONT_ASSET_URL=https://cdn.example.com

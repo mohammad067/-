@@ -1,0 +1,21 @@
+[Unit]
+Description=Talaye Shalizar database and media backup
+After=network-online.target mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+RuntimeDirectory=talaye-backup
+RuntimeDirectoryMode=0700
+ExecStart=/usr/local/sbin/talaye-backup
+ExecStopPost=/usr/local/sbin/talaye-backup-recover
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
