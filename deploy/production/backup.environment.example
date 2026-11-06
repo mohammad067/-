@@ -2,6 +2,7 @@ BACKUP_DIRECTORY=/var/backups/talaye-shalizar
 BACKUP_RETENTION_DAYS=14
 APP_DIRECTORY=/var/www/talaye-shalizar/apps/api
 APP_USER=www-data
+APP_GROUP=www-data
 QUEUE_SERVICE=talaye-queue.service
 PHP_FPM_SERVICE=php8.4-fpm.service
 

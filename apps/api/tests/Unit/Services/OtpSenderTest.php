@@ -38,4 +38,23 @@ class OtpSenderTest extends TestCase
 
         app(OtpSender::class)->send('09121234567', '123456', 'phone_verification');
     }
+
+    public function test_provider_errors_do_not_expose_the_api_key(): void
+    {
+        config()->set('services.sms.driver', 'kavenegar');
+        config()->set('services.sms.kavenegar.api_key', 'secret-api-key');
+        config()->set('services.sms.kavenegar.verification_template', 'verify');
+
+        Http::fake([
+            'api.kavenegar.com/*' => Http::response([], 500),
+        ]);
+
+        try {
+            app(OtpSender::class)->send('09121234567', '123456', 'phone_verification');
+            $this->fail('Expected the SMS provider request to fail.');
+        } catch (RuntimeException $exception) {
+            $this->assertStringNotContainsString('secret-api-key', $exception->getMessage());
+            $this->assertStringContainsString('HTTP status 500', $exception->getMessage());
+        }
+    }
 }

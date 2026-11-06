@@ -2,6 +2,8 @@
 
 namespace App\Services\Sms;
 
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use RuntimeException;
@@ -29,14 +31,24 @@ class OtpSender
             throw new RuntimeException('Kavenegar credentials are not configured.');
         }
 
-        Http::asForm()
-            ->timeout(10)
-            ->retry(2, 250)
-            ->post("https://api.kavenegar.com/v1/{$apiKey}/verify/lookup.json", [
-                'receptor' => $phone,
-                'token' => $code,
-                'template' => $template,
-            ])
-            ->throw();
+        try {
+            Http::asForm()
+                ->connectTimeout(5)
+                ->timeout(10)
+                ->retry(2, 250)
+                ->post("https://api.kavenegar.com/v1/{$apiKey}/verify/lookup.json", [
+                    'receptor' => $phone,
+                    'token' => $code,
+                    'template' => $template,
+                ])
+                ->throw();
+        } catch (ConnectionException) {
+            throw new RuntimeException('SMS provider connection failed.');
+        } catch (RequestException $exception) {
+            $status = $exception->response?->status();
+            $suffix = $status === null ? '' : " with HTTP status {$status}";
+
+            throw new RuntimeException("SMS provider rejected the request{$suffix}.");
+        }
     }
 }

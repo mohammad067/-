@@ -114,21 +114,48 @@ sudo systemctl reload nginx
 sudo certbot --nginx -d example.com -d www.example.com -d api.example.com -d cdn.example.com
 ```
 
-Copy both systemd unit files to `/etc/systemd/system/`, then run:
+Install the web, queue, and scheduler units. The tmpfiles rule creates the
+scheduler lock with the same ownership used by the backup service:
 
 ```bash
+sudo cp deploy/production/talaye-web.service \
+  deploy/production/talaye-queue.service \
+  deploy/production/talaye-scheduler.service \
+  deploy/production/talaye-scheduler.timer \
+  /etc/systemd/system/
+sudo cp deploy/production/talaye-tmpfiles.conf \
+  /etc/tmpfiles.d/talaye-shalizar.conf
+sudo systemd-tmpfiles --create /etc/tmpfiles.d/talaye-shalizar.conf
 sudo systemctl daemon-reload
-sudo systemctl enable --now talaye-web talaye-queue
+sudo systemctl enable --now talaye-web talaye-queue talaye-scheduler.timer
 ```
 
-Run Laravel's scheduler every minute:
+The queue worker continuously consumes `notifications`, `maintenance`, and
+`default` in priority order. The systemd timer invokes `schedule:run` every
+minute. Unpaid-order expiration runs every minute, abandoned carts every 15
+minutes, and queue backlog monitoring every minute. Do not install a second
+cron entry or run `schedule:work` on the same server.
 
-```cron
-* * * * * flock -n /run/lock/talaye-scheduler.lock -c 'runuser -u www-data -- /usr/bin/php /var/www/talaye-shalizar/apps/api/artisan schedule:run' >> /dev/null 2>&1
+Inspect queue and scheduler health with:
+
+```bash
+sudo systemctl --no-pager --full status talaye-queue talaye-scheduler.timer
+sudo systemctl list-timers talaye-scheduler.timer
+sudo journalctl -u talaye-queue -u talaye-scheduler.service --since today
+php apps/api/artisan schedule:list
+php apps/api/artisan queue:failed
 ```
 
-Install that entry with `sudo crontab -e`: root owns only the shared lock, while
-Laravel itself runs as the unprivileged `www-data` account.
+Jobs retry automatically with bounded backoff. After correcting the underlying
+problem, retry a specific permanently failed job with
+`php apps/api/artisan queue:retry <uuid>`; use `queue:retry all` only after
+checking that replaying every job is safe. Failed-job records are retained for
+30 days by the scheduler.
+
+Real OTP delivery also requires `SMS_DRIVER=kavenegar`, a valid
+`KAVENEGAR_API_KEY`, and the two approved template names in the server `.env`.
+Never commit the real API key. Until those values exist, use `SMS_DRIVER=log`
+only for local development; it does not send a message to the customer.
 
 ## Backups
 
@@ -175,7 +202,15 @@ curl -fsS https://api.example.com/up
 curl -fsS https://api.example.com/api/v1/products
 curl -I https://example.com
 sudo systemctl --no-pager --full status talaye-web talaye-queue php8.4-fpm mariadb nginx
+sudo systemctl --no-pager --full status talaye-scheduler.timer
 ```
 
 Verify both the database and media files during release checks. Database dumps
 alone do not contain uploaded product images.
+
+After every release, restart long-lived workers so they load the new code:
+
+```bash
+php apps/api/artisan queue:restart
+sudo systemctl restart talaye-queue
+```

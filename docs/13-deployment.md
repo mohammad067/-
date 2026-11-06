@@ -10,6 +10,9 @@
   services.
 - The concrete server setup and environment contract live in
   `deploy/production/README.md`.
+- systemd keeps the database queue worker alive and a systemd timer runs one
+  scheduler tick per minute. Scheduler tasks enqueue maintenance work instead
+  of performing long-running order/cart processing inside the timer process.
 
 ## 2. CI Pipeline (per Pull Request)
 
@@ -47,6 +50,9 @@
   (provider TBD).
 - Error tracking (e.g. Sentry) captures unhandled exceptions client- and
   server-side, tagged with release version.
+- Permanently failed queue jobs are stored in `failed_jobs`, logged without
+  OTP values or provider credentials, and retained for 30 days for controlled
+  replay.
 - Uptime/health check endpoint (`/up`) used by the hosting platform
   and external monitoring.
 

@@ -1,0 +1,20 @@
+[Unit]
+Description=Talaye Shalizar Laravel scheduler tick
+After=network-online.target mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/talaye-shalizar/apps/api
+ExecStart=/usr/bin/flock -n -E 0 /run/lock/talaye-scheduler.lock /usr/bin/php artisan schedule:run --no-interaction
+UMask=0027
+Nice=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=talaye-scheduler

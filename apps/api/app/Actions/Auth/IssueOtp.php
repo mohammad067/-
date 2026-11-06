@@ -2,17 +2,15 @@
 
 namespace App\Actions\Auth;
 
+use App\Jobs\SendOtpSmsJob;
 use App\Models\OtpChallenge;
 use App\Models\User;
-use App\Services\Sms\OtpSender;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Throwable;
 
 class IssueOtp
 {
-    public function __construct(private OtpSender $sender) {}
-
     public function handle(string $phone, string $purpose, ?User $user, ?string $ip): void
     {
         $code = (string) random_int(100000, 999999);
@@ -35,7 +33,7 @@ class IssueOtp
         });
 
         try {
-            $this->sender->send($phone, $code, $purpose);
+            SendOtpSmsJob::dispatch($challenge->id, $code);
         } catch (Throwable $exception) {
             $challenge->forceFill(['consumed_at' => now()])->save();
 

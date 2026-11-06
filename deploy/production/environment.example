@@ -20,4 +20,19 @@ DB_TIMEZONE=+00:00
 SESSION_DRIVER=database
 CACHE_STORE=database
 QUEUE_CONNECTION=database
+DB_QUEUE=default
+DB_QUEUE_RETRY_AFTER=180
+DB_QUEUE_AFTER_COMMIT=true
+QUEUE_FAILED_DRIVER=database-uuids
 FILESYSTEM_DISK=public
+
+LOG_CHANNEL=stack
+LOG_STACK=daily,stderr
+LOG_LEVEL=info
+LOG_DAILY_DAYS=14
+
+# Required for real OTP delivery. Keep secrets only in the server's .env file.
+SMS_DRIVER=kavenegar
+KAVENEGAR_API_KEY=
+KAVENEGAR_VERIFICATION_TEMPLATE=verify
+KAVENEGAR_PASSWORD_RESET_TEMPLATE=password-reset

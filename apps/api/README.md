@@ -17,8 +17,13 @@ php artisan key:generate
 php artisan migrate --seed
 php artisan admin:create
 php artisan serve
+php artisan queue:work --queue=notifications,maintenance,default --tries=5 --timeout=120
 php artisan schedule:work
 ```
+
+Run the queue worker and scheduler in separate terminals during local
+development. Production uses the systemd worker and one-minute timer in
+`deploy/production`; do not run both a timer and cron scheduler together.
 
 The API runs at `http://localhost:8000`. The Next.js development origin is
 allowed through `CORS_ALLOWED_ORIGINS`.
@@ -41,6 +46,8 @@ putting the password in shell history.
   only form stored in the database.
 - Scheduled abandoned-cart detection for inactive non-empty carts, with secure
   recovery through the original cart token.
+- Encrypted queued OTP delivery, queued order/cart maintenance, bounded retry
+  policies, failed-job persistence, and queue backlog monitoring.
 - Transactional and idempotent inventory reserve, commit, and release actions.
 - Payment gateway contract and typed request/result objects, independent of a
   specific Iranian gateway.

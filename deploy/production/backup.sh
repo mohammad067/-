@@ -18,12 +18,13 @@ source "${CONFIG_FILE}"
 : "${BACKUP_RETENTION_DAYS:?BACKUP_RETENTION_DAYS is required}"
 : "${APP_DIRECTORY:?APP_DIRECTORY is required}"
 : "${APP_USER:?APP_USER is required}"
+: "${APP_GROUP:?APP_GROUP is required}"
 : "${QUEUE_SERVICE:?QUEUE_SERVICE is required}"
 : "${PHP_FPM_SERVICE:?PHP_FPM_SERVICE is required}"
 : "${DB_DATABASE:?DB_DATABASE is required}"
 : "${DB_CREDENTIALS_FILE:?DB_CREDENTIALS_FILE is required}"
 
-for command in flock git gzip id mariadb mariadb-dump php runuser sha256sum systemctl tar; do
+for command in chmod chown flock git gzip id mariadb mariadb-dump php runuser sha256sum systemctl tar touch; do
     command -v "${command}" >/dev/null 2>&1 || {
         echo "Required command is missing: ${command}" >&2
         exit 1
@@ -122,7 +123,11 @@ fi
 
 # Wait for a running scheduler invocation and prevent the next one from
 # starting until the database and media snapshot has completed.
-exec 8>/run/lock/talaye-scheduler.lock
+scheduler_lock=/run/lock/talaye-scheduler.lock
+touch "${scheduler_lock}"
+chown "${APP_USER}:${APP_GROUP}" "${scheduler_lock}"
+chmod 0660 "${scheduler_lock}"
+exec 8<>"${scheduler_lock}"
 flock -w 120 8
 
 mariadb-dump \
